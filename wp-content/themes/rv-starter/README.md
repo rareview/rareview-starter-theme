@@ -1,4 +1,4 @@
-# RV Starter Theme
+# RV Starter Theme (to be updated!)
 
 See how to develop locally RV Starter theme at [Local Development Setup](../../../.local/docs/local-development-setup.md) and [Theme Development](../../../.local/docs/theme-development.md).
 
