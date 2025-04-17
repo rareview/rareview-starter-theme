@@ -1,0 +1,19 @@
+@mixin cover-image() {
+	bottom: 0;
+	height: 100%;
+	left: -999999px;
+	margin: auto;
+	object-fit: cover;
+	position: absolute;
+	right: -999999px;
+	top: 0;
+	width: 100%;
+
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* Only for IE. */
+		width: auto !important;
+	}
+}
+
+.rv-cover-image {
+	@include cover-image;
+}

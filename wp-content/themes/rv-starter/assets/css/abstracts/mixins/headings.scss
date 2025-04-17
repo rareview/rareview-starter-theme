@@ -1,0 +1,39 @@
+/*
+ * Headings global style.
+*/
+
+@mixin heading($h: 1) {
+	line-height: 1;
+	font-weight: 700;
+
+	@if $h == 1 {
+		font-size: clamp(3.24rem, 5.95vw, 6.25rem);
+	}
+
+	@if $h == 2 {
+		font-size: clamp(1.8rem, 3.57vw, 3.75rem);
+	}
+
+	@if $h == 3 {
+		font-size: clamp(1.6rem, 2.85vw, 3rem);
+	}
+
+	@if $h == 4 {
+		font-size: clamp(1.4rem, 2.3vw, 2.4rem);
+	}
+
+	@if $h == 5 {
+		font-size: clamp(1rem, 1.52vw, 1.6rem);
+	}
+
+	@if $h == 6 {
+		font-size: clamp(0.8rem, 0.95vw, 1rem);
+	}
+}
+
+@for $h from 1 to 7 {
+	h#{$h},
+	.has-style-h#{$h} {
+		@include heading($h);
+	}
+}

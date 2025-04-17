@@ -1,0 +1,66 @@
+{
+  "name": "rv-starter-theme",
+  "version": "1.0.0",
+  "description": "WordPress theme for RV Starter by Rareview",
+  "homepage": "https://github.com/rareview/rv-starter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rareview/rv-starter"
+  },
+  "author": {
+    "name": "Rareview",
+    "email": "info@rareview.com",
+    "url": "https://rareview.com",
+    "role": "developer"
+  },
+  "scripts": {
+    "start": "npm run watch",
+    "watch": "10up-toolkit watch --port=5000 --hot",
+    "dev": "10up-toolkit watch",
+    "build": "10up-toolkit build",
+    "format": "npm run format:js && npm run format:json && npm run format:css && npm run format:php",
+    "format:js": "10up-toolkit format-js",
+    "format:json": "prettier --write './**/*.json'",
+    "format:css": "10up-toolkit lint-style --fix",
+    "format:php": "composer run format --working-dir=../../..",
+    "lint": "npm run lint:js && npm run lint:json && npm run lint:css && npm run lint:php",
+    "lint:js": "10up-toolkit lint-js",
+    "lint:json": "prettier --check './**/*.json'",
+    "lint:css": "10up-toolkit lint-style",
+    "lint:php": "composer run lint --working-dir=../../..",
+    "test": "10up-toolkit test-unit-jest",
+    "clean-dist": "rm -rf ./dist"
+  },
+  "testing": {
+    "urls": {
+      "local": "http://rv-starter.local/"
+    },
+    "accessibility": {
+      "compliance": "WCAG2AA"
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "10up-toolkit": "^6.0.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  },
+  "10up-toolkit": {
+    "useBlockAssets": true,
+    "entry": {
+      "admin": "./assets/js/admin/admin.js",
+      "editor-style-overrides": "./assets/js/admin/editor-style-overrides.js",
+      "frontend": "./assets/js/frontend/frontend.js",
+      "shared": "./assets/js/shared/shared.js",
+      "styleguide": "./assets/js/styleguide/styleguide.js",
+      "core-block-overrides": "./includes/core-block-overrides.js"
+    },
+    "devURL": "http://rv-starter.local/"
+  }
+}

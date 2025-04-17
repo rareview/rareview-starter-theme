@@ -1,0 +1,22 @@
+{
+  "name": "rareview/rv-starter",
+  "description": "WordPress theme for RV Starter by Rareview",
+  "type": "wordpress-theme",
+  "authors": [
+    {
+      "name": "Rareview",
+      "email": "hello@rareview.com"
+    }
+  ],
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "RVStarterTheme\\": "includes/classes/"
+    }
+  }
+}

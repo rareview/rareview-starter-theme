@@ -1,0 +1,59 @@
+{
+  "name": "rareview/rv-starter",
+  "description": "RV Starter WordPress",
+  "authors": [
+    {
+      "name": "Rareview",
+      "email": "hello@rareview.com"
+    }
+  ],
+  "type": "project",
+  "license": "MIT",
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "repositories": {
+    "wpackagist": {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "process-timeout": 600,
+    "preferred-install": "dist",
+    "vendor-dir": "vendor",
+    "platform-check": false,
+    "platform": {
+      "php": "8.2"
+    },
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "require": {
+    "php": ">=8.2",
+    "wpackagist-theme/twentytwentyfour": "1.3"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
+    "roave/security-advisories": "dev-latest",
+    "wpackagist-plugin/debug-bar": "1.1.6",
+    "wpackagist-plugin/query-monitor": "3.17.2",
+    "10up/phpcs-composer": "dev-master"
+  },
+  "scripts": {
+    "lint": "phpcs --runtime-set testVersion 8.2- .",
+    "format": "phpcbf ."
+  },
+  "extra": {
+    "installer-paths": {
+      "wp-content/plugins/{$name}": [
+        "type:wordpress-plugin"
+      ],
+      "wp-content/themes/{$name}": [
+        "type:wordpress-theme"
+      ]
+    }
+  }
+}

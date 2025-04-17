@@ -1,0 +1,41 @@
+name: Coding Standards checks
+on:
+  pull_request:
+    branches:
+      - master
+      - staging
+      - development
+
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint PHP, JavaScript, and CSS files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source branch.
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install NPM dependencies for the RV Starter theme
+        run: npm --prefix wp-content/themes/rv-starter install
+
+      - name: Lint the JS files
+        run: npm run lint:js
+
+      - name: Lint the JSON files
+        run: npm run lint:json
+
+      - name: Lint the CSS files
+        run: npm run lint:css
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Lint PHP files
+        run: composer lint

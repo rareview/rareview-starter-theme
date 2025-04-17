@@ -1,0 +1,29 @@
+{
+	"root": true,
+	"extends": [
+		"@10up/eslint-config/wordpress"
+	],
+	"rules": {
+		"no-console": "error",
+		"no-new": 0,
+		"import/export": 0,
+		"camelcase": [
+			"error",
+			{
+				"properties": "always"
+			}
+		],
+		"quotes": [
+			"error",
+			"single",
+			{
+				"allowTemplateLiterals": true
+			}
+		],
+		"quote-props": [
+			"error",
+			"consistent-as-needed"
+		],
+		"indent": ["error", "tab"]
+	}
+}

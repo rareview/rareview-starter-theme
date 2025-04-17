@@ -1,0 +1,7 @@
+@mixin background-dark-select() {
+	background-image: url("../svg/down-arrow-light.svg");
+
+	+ label {
+		color: $color-input-bg-dark-text;
+	}
+}

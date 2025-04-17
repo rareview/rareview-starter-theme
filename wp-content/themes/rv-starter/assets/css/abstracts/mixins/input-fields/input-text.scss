@@ -1,0 +1,42 @@
+/* stylelint-disable scale-unlimited/declaration-strict-value */
+@mixin input-text($background: "light") {
+	background-color: $color-input-bg-light-background;
+	border: 1px solid $color-input-bg-light-border;
+	border-radius: 5px;
+	color: $color-input-bg-light-text;
+	display: flex;
+	flex-wrap: wrap;
+	height: $input-field-height;
+	outline: none;
+	padding: 8px 10px;
+	margin-bottom: 16px;
+	min-width: 300px;
+	box-sizing: border-box;
+
+	/* States. */
+	&:disabled {
+		background-color: transparent;
+		border-color: $color-input-bg-light-disabled;
+		color: $color-input-bg-light-disabled;
+		cursor: no-drop;
+
+		&:focus,
+		&:active {
+			border-color: $color-input-bg-light-disabled;
+		}
+
+		&:hover {
+			border-width: 1px;
+		}
+	}
+
+	&:focus,
+	&:active {
+		border-color: $color-primary !important;
+	}
+
+	/* Dark background. */
+	@if "dark" == $background {
+		@include background-dark-text;
+	}
+}

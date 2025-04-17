@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "ignorePaths": [
+    "wp-content/plugins/**",
+    "wp-content/themes/twenty*"
+  ]
+}

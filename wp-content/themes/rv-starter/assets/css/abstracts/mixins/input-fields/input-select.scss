@@ -1,0 +1,18 @@
+@mixin input-select($background: "light") {
+	@include input-text($background: $background);
+	appearance: none;
+	background-image: url("../svg/down-arrow-dark.svg");
+	background-position: calc(100% - 15px) center;
+	background-repeat: no-repeat;
+	background-size: 20px;
+	width: 100% !important;
+
+	option {
+		font-size: inherit;
+	}
+
+	/* Dark background. */
+	@if "dark" == $background {
+		@include background-dark-select;
+	}
+}

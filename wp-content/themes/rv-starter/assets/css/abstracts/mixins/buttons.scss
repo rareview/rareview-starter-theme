@@ -1,0 +1,54 @@
+/**
+ * Buttons global style.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+@mixin button($style: "primary", $outline: "false") {
+	$color: $color-primary;
+
+	@if $style == "secondary" {
+		$color: $color-secondary;
+	}
+
+	color: $color-black;
+	text-transform: uppercase;
+	border-radius: $border-radius-default;
+	font-weight: 700;
+	font-size: 1.125rem;
+	background-color: $color;
+	border: $border-width-default solid $color;
+	text-align: center;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	text-decoration: none;
+	padding: 8px 30px;
+	height: $input-field-height;
+	cursor: pointer;
+	box-sizing: border-box;
+
+	@if $outline == "true" {
+		background-color: transparent;
+		color: $color;
+	}
+
+	/* Hover. */
+	&:not(:disabled, .disabled):hover {
+		filter: brightness(1.15);
+
+		@if $outline == "true" {
+			background-color: $color;
+			border-color: $color;
+			color: $color-black;
+		}
+	}
+
+	/* Responsiveness. */
+	@media only screen and (min-width: $breakpoint-tablet) {
+		padding: 8px 60px;
+	}
+}
+
+.rv-button {
+	@include button;
+}

@@ -1,0 +1,22 @@
+@mixin background-dark-radio() {
+	&:checked + label::before,
+	&:not(:checked) + label::before {
+		border: 1px solid $color-input-bg-dark-border;
+	}
+
+	&:not(:checked) + label::after {
+		background-color: $color-input-bg-dark-border;
+	}
+
+	&:checked + label::after {
+		background-color: $color-primary;
+	}
+
+	&.rv-focused + label::before {
+		border-color: $color-primary;
+	}
+
+	+ label {
+		color: $color-input-bg-dark-text;
+	}
+}

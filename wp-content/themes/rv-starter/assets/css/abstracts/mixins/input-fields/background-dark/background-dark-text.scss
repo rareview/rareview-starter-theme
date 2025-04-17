@@ -1,0 +1,20 @@
+@mixin background-dark-text() {
+	border-color: $color-input-bg-dark-border;
+	color: $color-input-bg-dark-text;
+	background: $color-input-bg-dark-background;
+
+	+ label {
+		color: $color-input-bg-dark-text;
+	}
+
+	/* States. */
+	&:disabled {
+		border-color: $color-input-bg-dark-background;
+		color: $color-input-bg-dark-background;
+
+		&:focus,
+		&:active {
+			border-color: $color-input-bg-dark-background;
+		}
+	}
+}

@@ -1,0 +1,36 @@
+/*
+ * Typography.
+ */
+
+@font-face {
+	font-display: swap;
+	font-family: "Futura PT";
+	font-style: normal;
+	font-weight: 400;
+	src: url("../fonts/futura-pt/FuturaPT-Book.eot");
+	src:
+		url("../fonts/futura-pt/FuturaPT-Book.woff2") format("woff2"),
+		url("../fonts/futura-pt/FuturaPT-Book.woff") format("woff");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Futura PT";
+	font-style: normal;
+	font-weight: 700;
+	src: url("../fonts/futura-pt/FuturaPT-Bold.eot");
+	src:
+		url("../fonts/futura-pt/FuturaPT-Bold.woff2") format("woff2"),
+		url("../fonts/futura-pt/FuturaPT-Bold.woff") format("woff");
+}
+
+@font-face {
+	font-display: swap;
+	font-family: "Futura PT";
+	font-style: normal;
+	font-weight: 800;
+	src: url("../fonts/futura-pt/FuturaPT-ExtraBold.eot");
+	src:
+		url("../fonts/futura-pt/FuturaPT-ExtraBold.woff2") format("woff2"),
+		url("../fonts/futura-pt/FuturaPT-ExtraBold.woff") format("woff");
+}

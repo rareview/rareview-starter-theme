@@ -1,0 +1,47 @@
+/**
+ * Quotes global style.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@mixin quote() {
+	position: relative;
+
+	*:not(cite, cite span) {
+		@include heading(4);
+		font-style: italic;
+		font-weight: 400;
+	}
+
+	cite {
+		margin-top: calc(var(--wp--custom--spacing--base) * 0.2);
+		display: inline-block;
+		font-style: normal;
+	}
+
+	p {
+		display: inline-block;
+		margin: 0.25em 0;
+		position: relative;
+	}
+
+	cite,
+	p {
+		padding: 0.25em 40px;
+	}
+
+	p::before {
+		content: '"';
+		font-size: 6rem;
+		position: absolute;
+		left: -1rem;
+		top: -1rem;
+	}
+
+	/* Responsiveness. */
+	@media (max-width: $breakpoint-desktop-x-large) {
+		p::before {
+			top: -1.5rem;
+		}
+	}
+}

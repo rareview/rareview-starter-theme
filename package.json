@@ -1,0 +1,46 @@
+{
+  "name": "rv-starter",
+  "version": "0.1.0",
+  "description": "RV Starter WordPress Site by Rareview hosted on WP Engine",
+  "homepage": "https://www.rv-starter.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rareview/rv-starter"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "build": "npm run --prefix wp-content/themes/rv-starter build",
+    "start": "npm run --prefix wp-content/themes/rv-starter start",
+    "watch": "npm run --prefix wp-content/themes/rv-starter watch",
+    "dev": "npm-run-all dev:*",
+    "dev:theme": "npm run dev --prefix wp-content/themes/rv-starter",
+    "format": "npm run --prefix wp-content/themes/rv-starter format",
+    "format:js": "npm run --prefix wp-content/themes/rv-starter format:js",
+    "format:json": "npm run --prefix wp-content/themes/rv-starter format:json",
+    "format:css": "npm run --prefix wp-content/themes/rv-starter format:css",
+    "format:php": "npm run --prefix wp-content/themes/rv-starter format:php",
+    "lint": "npm run --prefix wp-content/themes/rv-starter lint",
+    "lint:js": "npm run --prefix wp-content/themes/rv-starter lint:js",
+    "lint:json": "npm run --prefix wp-content/themes/rv-starter lint:json",
+    "lint:css": "npm run --prefix wp-content/themes/rv-starter lint:css",
+    "lint:php": "npm run --prefix wp-content/themes/rv-starter lint:php",
+    "test": "npm run --prefix wp-content/themes/rv-starter test",
+    "clean-dist": "npm run --prefix wp-content/themes/rv-starter clean-dist"
+  },
+  "author": {
+    "name": "Rareview",
+    "email": "hello@rareview.com",
+    "url": "https://rareview.com",
+    "role": "developer"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "devDependencies": {
+    "husky": "9.1.7",
+    "lint-staged": "15.2.2",
+    "npm-run-all2": "^5.0.0"
+  }
+}

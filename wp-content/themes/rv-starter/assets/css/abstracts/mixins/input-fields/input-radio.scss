@@ -1,0 +1,75 @@
+@mixin input-radio($background: "light") {
+	cursor: pointer;
+	border: 1px solid $color-input-bg-light-border;
+
+	&:checked,
+	&:not(:checked) {
+		height: 0;
+		margin: 0;
+		opacity: 0;
+		padding: 0;
+		position: absolute;
+		width: 0;
+		z-index: -99999;
+	}
+
+	&:checked + label,
+	&:not(:checked) + label {
+		cursor: pointer;
+		display: inline-block;
+		line-height: 24px;
+		padding-left: 38px;
+		position: relative;
+	}
+
+	&:checked + label::before,
+	&:not(:checked) + label::before {
+		background: transparent;
+		border: 1px solid $color-input-bg-light-border;
+		content: "";
+		height: 23px;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 23px;
+	}
+
+	&:checked + label::after,
+	&:not(:checked) + label::after {
+		content: "";
+		height: 15px;
+		left: 5px;
+		position: absolute;
+		top: 5px;
+		transition: all 0.2s ease;
+		width: 15px;
+	}
+
+	&:not(:checked) + label::after {
+		background-color: $color-input-bg-light-border;
+		opacity: 0;
+		transform: scale(0);
+	}
+
+	&:checked + label::after {
+		background-color: $color-primary;
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	&:checked + label::before,
+	&:not(:checked) + label::before,
+	&:checked + label::after,
+	&:not(:checked) + label::after {
+		border-radius: 100%;
+	}
+
+	&.rv-focused + label::before {
+		border-color: $color-primary;
+	}
+
+	/* Dark background. */
+	@if "dark" == $background {
+		@include background-dark-radio;
+	}
+}

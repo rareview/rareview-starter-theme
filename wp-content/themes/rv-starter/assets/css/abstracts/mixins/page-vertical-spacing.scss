@@ -1,0 +1,42 @@
+@mixin page-vertical-spacing( $top: true, $bottom: true ) {
+
+	@if $top == true {
+		padding-top: calc(var(--wp--custom--spacing--base) * 2);
+
+		@media (min-width: $breakpoint-tablet) {
+			padding-top: calc(var(--wp--custom--spacing--base) * 3);
+		}
+
+		@media (min-width: $breakpoint-desktop) {
+			padding-top: calc(var(--wp--custom--spacing--base) * 4);
+		}
+
+		@media (min-width: $breakpoint-desktop-large) {
+			padding-top: calc(var(--wp--custom--spacing--base) * 5);
+		}
+
+		@media (min-width: $breakpoint-desktop-xx-large) {
+			padding-top: calc(var(--wp--custom--spacing--base) * 6);
+		}
+	}
+
+	@if $bottom == true {
+		padding-bottom: calc(var(--wp--custom--spacing--base) * 3);
+
+		@media (min-width: $breakpoint-tablet) {
+			padding-bottom: calc(var(--wp--custom--spacing--base) * 4);
+		}
+
+		@media (min-width: $breakpoint-desktop) {
+			padding-bottom: calc(var(--wp--custom--spacing--base) * 5);
+		}
+
+		@media (min-width: $breakpoint-desktop-large) {
+			padding-bottom: calc(var(--wp--custom--spacing--base) * 6);
+		}
+
+		@media (min-width: $breakpoint-desktop-xx-large) {
+			padding-bottom: calc(var(--wp--custom--spacing--base) * 7);
+		}
+	}
+}

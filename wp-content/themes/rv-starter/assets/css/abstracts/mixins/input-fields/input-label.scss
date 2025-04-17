@@ -1,0 +1,10 @@
+@mixin input-label($background: "light") {
+	color: $color-input-bg-light-text;
+	margin-bottom: 10px;
+	display: inline-block;
+
+	/* Dark background. */
+	@if "dark" == $background {
+		@include background-dark-label;
+	}
+}

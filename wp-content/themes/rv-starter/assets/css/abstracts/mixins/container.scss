@@ -1,0 +1,20 @@
+@mixin container( $max-width: $container-width, $padding: true ) {
+	box-sizing: border-box;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+
+	@if $padding == false {
+		max-width: $max-width;
+		padding-left: 0;
+		padding-right: 0;
+	} @else {
+		max-width: calc(#{$max-width} + (2 * #{$default-content-padding-sides}));
+		padding-right: $default-content-padding-sides;
+		padding-left: $default-content-padding-sides;
+	}
+}
+
+.rv-container {
+	@include container;
+}

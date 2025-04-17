@@ -1,0 +1,101 @@
+/**
+ * Theme global style.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+html {
+	/* Root size for REMs - START. */
+	font-size: 12px;
+
+	@media only screen and (min-width: $breakpoint-mobile) {
+		font-size: 14px;
+	}
+
+	@media only screen and (min-width: $breakpoint-desktop-large) {
+		font-size: 16px; // This is 16px so it corresponds with the block editor font size.
+	}
+
+	/* Root size for REMs - END. */
+}
+
+body {
+	font-size: 1rem;
+	font-family: $font-family;
+	font-weight: 400;
+	line-height: $font-line-height;
+	color: $color-body;
+	background-color: $color-background;
+	letter-spacing: 1px;
+
+	&.admin-bar {
+		#main {
+			min-height: calc(100vh - 46px);
+
+			// wp adminbar breakpoint
+			@media only screen and (width >= 783px) {
+				min-height: calc(100vh - 32px);
+			}
+		}
+	}
+}
+
+input[type="button"],
+input[type="submit"],
+button[type="submit"] {
+	@include button("default-solid");
+}
+
+a {
+	@include link;
+}
+
+textarea,
+input:not([type="submit"]),
+select {
+	@include input-text;
+
+	.rv-background-dark & {
+		@include input-text( $background: "dark" );
+	}
+}
+
+select {
+	@include input-select;
+
+	.rv-background-dark & {
+		@include input-select( $background: "dark" );
+	}
+}
+
+input[type="checkbox"] {
+	@include input-checkbox;
+
+	.rv-background-dark & {
+		@include input-checkbox( $background: "dark" );
+	}
+}
+
+input[type="radio"] {
+	@include input-radio;
+
+	.rv-background-dark & {
+		@include input-radio( $background: "dark" );
+	}
+}
+
+label {
+	@include input-label;
+
+	.rv-background-dark & {
+		@include input-label( $background: "dark" );
+	}
+}
+
+#relevant {
+	height: 0;
+	width: 0;
+	visibility: hidden;
+	opacity: 0;
+	position: absolute;
+	top: calc(0px - var(--main-top-spacing));
+}

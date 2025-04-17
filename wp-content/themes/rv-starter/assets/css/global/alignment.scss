@@ -1,0 +1,46 @@
+/**
+ * Alignment.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+body:not(.home) main {
+	@include page-vertical-spacing;
+}
+
+body main > *:not(.alignfull, .alignleft, .alignright) {
+	@include container;
+}
+
+.alignfull {
+	@include container( $max-width: 100% );
+}
+
+body main > * {
+	&.alignright {
+		float: right;
+		margin: 1rem 0 1rem 1rem;
+	}
+
+	&.alignleft {
+		float: left;
+		margin: 1rem 1rem 1rem 0;
+	}
+
+	&.aligncenter {
+		float: none;
+		margin: 1rem auto;
+	}
+
+	&.alignleft,
+	&.alignright {
+		@media (width < $breakpoint-tablet) and (width > $breakpoint-mobile) {
+			max-width: 50%;
+		}
+
+		@media (width <= $breakpoint-mobile) {
+			float: none;
+			margin: 1rem auto;
+		}
+	}
+}

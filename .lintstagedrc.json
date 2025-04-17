@@ -1,0 +1,14 @@
+{
+  "!(wp-content/plugins/**/*)*.scss": [
+    "npm run lint:css"
+  ],
+  "!(wp-content/plugins/**/*)*.js": [
+    "npm run lint:js"
+  ],
+  "!(wp-content/plugins/**/*)*.jsx": [
+    "npm run lint:js"
+  ],
+  "!(wp-content/plugins/**/*)*.php": [
+    "composer lint"
+  ]
+}
