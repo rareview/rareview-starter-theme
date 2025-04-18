@@ -1,4 +1,4 @@
-name: Starter theme auto-update
+name: Remove unnecessary starter theme Github actions check
 
 on:
   push:

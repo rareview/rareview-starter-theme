@@ -1,4 +1,4 @@
-name: Trigger Workflow in Destination Repo
+name: Update starter themes in the target repositories
 
 on:
   push:
@@ -11,8 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger starter theme update in destination repo
+      - name: Trigger starter theme update in WPE Starter repo
         run: |
           curl -X POST https://api.github.com/repos/rareview/wpe-starter/dispatches \
-          -H "Authorization: token ${{ secrets.WPE_STARTER_ACCESS }}" \
-          -d '{"event_type": "remote-update-trigger", "client_payload": {"ref": "refs/heads/master"}}'
+            -H "Authorization: token ${{ secrets.WPE_STARTER_ACCESS }}" \
+            -d '{"event_type": "remote-update-trigger", "client_payload": {"ref": "refs/heads/master"}}'
+
+      - name: Trigger starter theme update in WP VIP Starter repo
+        run: |
+          curl -X POST https://api.github.com/repos/rareview/wp-vip-starter/dispatches \
+            -H "Authorization: token ${{ secrets.WP_VIP_STARTER_ACCESS }}" \
+            -d '{"event_type": "remote-update-trigger", "client_payload": {"ref": "refs/heads/master"}}'
