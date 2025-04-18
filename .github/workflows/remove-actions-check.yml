@@ -1,0 +1,29 @@
+name: Starter theme auto-update
+
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-actions-check.yml'
+
+jobs:
+  self-destroy-check:
+    runs-on: ubuntu-latest
+    if: github.repository != 'rareview/rv-starter-theme' && github.event_name == 'push'
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: If this is a new project, self-destroy unnecessary starter theme Github actions
+        run: |
+          echo "Self-destructing unnecessary starter theme files in newly created $GITHUB_REPOSITORY repo"
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git rm -f .local/docs/deployment.md || true
+          git rm -f .github/workflows/starter-theme-export.yml || true
+          git rm -f .github/workflows/wpengine-deploy-test.tbd || true
+          git rm -f .github/workflows/remove-actions-check.yml || true
+          git commit -m "Remove starter theme Github actions" || echo "No changes to commit"
+          git push origin HEAD
+          exit 0

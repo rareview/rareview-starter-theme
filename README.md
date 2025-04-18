@@ -5,7 +5,7 @@
 First, create a new repository from one of the options below and clone it to your local machine:
 - For a **WP VIP** project, use https://github.com/rareview/wp-vip-starter as a template.<br>
 - For a **WPEngine** project, use https://github.com/rareview/wpe-starter as a template.<br>
-- For an independent WP site, you can use this repo as a template (Lando-based).
+- For an platform-independent WP project, you can use this repo as a template (Lando-based).
 - Clone a newly created repo to your local machine.
   <br><br><img src="https://docs.github.com/assets/cb-76823/mw-1440/images/help/repository/use-this-template-button.webp" width="400">
 
@@ -24,9 +24,10 @@ After you have it locally, there's a bit of manual work to do:
 - Replace `WEBSITE_URL` below with the relevant information.
 - Follow the instructions in the [Step 1: Local Environment Setup](.local/docs/local-development-setup.md) to set up your local development environment.
 - Follow the instructions in the [Step 2: Theme Development](.local/docs/theme-development.md) to start working on your project locally.
-- Follow the instructions in the [Step 3: Deployment](.local/docs/deployment.md) to deploy your work.
+- **(Only)** If you're working directly in this repo on the starter theme, follow the [Deployment doc](.local/docs/deployment.md) to deploy your work to our test environment.
+  This file won't exist in new projects created by using the starter theme as a template.
 
-**IMPORTANT**: Delete this Step 0 section from this README file after you are done with it.
+**IMPORTANT**: Delete the **Step 0** section from this README file after you are done with the project setup.
 ___________________________________________________________
 
 ## Step 1: Local Environment Setup
@@ -36,7 +37,3 @@ See [Local Development Setup](.local/docs/local-development-setup.md) for detail
 ## Step 2: Theme Development
 
 See [Theme Development](.local/docs/theme-development.md) for details.
-
-## Step 3: Deployment
-
-See [Deployment](.local/docs/deployment.md) for details.
