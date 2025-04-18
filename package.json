@@ -41,6 +41,6 @@
   "devDependencies": {
     "husky": "9.1.7",
     "lint-staged": "15.2.2",
-    "npm-run-all2": "^5.0.0"
+    "npm-run-all2": "^7.0.0"
   }
 }
