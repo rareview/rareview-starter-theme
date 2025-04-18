@@ -9,7 +9,7 @@ on:
 jobs:
   trigger-workflow:
     runs-on: ubuntu-latest
-
+    if: github.repository == 'rareview/rv-starter-thene'
     steps:
       - name: Trigger starter theme update in WPE Starter repo
         run: |
