@@ -1,33 +1,32 @@
 /*
  * Headings global style.
 */
-
 @mixin heading($h: 1) {
 	line-height: 1;
 	font-weight: 700;
 
 	@if $h == 1 {
-		font-size: clamp(3.24rem, 5.95vw, 6.25rem);
+		font-size: clamp(3.24rem, 5.95vw, frem(7.8125));
 	}
 
 	@if $h == 2 {
-		font-size: clamp(1.8rem, 3.57vw, 3.75rem);
+		font-size: clamp(1.8rem, 3.57vw, frem(4.6875));
 	}
 
 	@if $h == 3 {
-		font-size: clamp(1.6rem, 2.85vw, 3rem);
+		font-size: clamp(1.6rem, 2.85vw, frem(3.75));
 	}
 
 	@if $h == 4 {
-		font-size: clamp(1.4rem, 2.3vw, 2.4rem);
+		font-size: clamp(1.4rem, 2.3vw, frem(3));
 	}
 
 	@if $h == 5 {
-		font-size: clamp(1rem, 1.52vw, 1.6rem);
+		font-size: clamp(1rem, 1.52vw, frem(1.75));
 	}
 
 	@if $h == 6 {
-		font-size: clamp(0.8rem, 0.95vw, 1rem);
+		font-size: clamp(0.8rem, 0.95vw, frem(1));
 	}
 }
 
