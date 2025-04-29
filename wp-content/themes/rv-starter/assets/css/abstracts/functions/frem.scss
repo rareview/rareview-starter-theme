@@ -1,0 +1,5 @@
+/* Fluid REMs. */
+@function frem( $size: 1 ) {
+	$size: calc(var(--wp--custom--size--base) * $size);
+	@return $size;
+}

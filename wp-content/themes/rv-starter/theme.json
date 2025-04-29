@@ -67,7 +67,7 @@
       "layout": {
         "contentSize": "1420px"
       },
-      "spacing": {
+      "size": {
         "base": "1rem"
       }
     },
@@ -78,7 +78,7 @@
       "blockGap": true,
       "margin": true,
       "padding": true,
-      "units": ["rem"]
+      "units": ["rem", "%", "vw", "vh"]
     },
     "typography": {
       "customFontSize": false,
@@ -86,19 +86,24 @@
       "dropCap": false,
       "fontSizes": [
         {
+          "name": "Extra Small",
+          "slug": "extra-small",
+          "size": "1rem"
+        },
+        {
           "name": "Small",
           "slug": "small",
-          "size": "0.778rem"
+          "size": "1.125rem"
         },
         {
           "name": "Normal",
           "slug": "normal",
-          "size": "1rem"
+          "size": "1.25rem"
         },
         {
           "name": "Large",
           "slug": "large",
-          "size": "1.111rem"
+          "size": "1.5rem"
         }
       ]
     },
