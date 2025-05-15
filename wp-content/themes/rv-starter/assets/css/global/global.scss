@@ -15,6 +15,10 @@ html {
 		font-size: $rem-root-desktop; // This must be 16px so it corresponds with the block editor font size.
 	}
 
+	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+		font-size: 0.84vw; // This must be 16px so it corresponds with the block editor font size.
+	}
+
 	/* Root size for REMs - END. */
 }
 
