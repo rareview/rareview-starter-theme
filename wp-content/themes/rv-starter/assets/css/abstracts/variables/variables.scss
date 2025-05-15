@@ -80,10 +80,8 @@ $breakpoint-mobile: 500px;
 
 /* Conditionally apply endless fluid responsiveness on huge screens. */
 @if $fluid-responsiveness == true {
-	/* Endless fluid responsiveness on huge screens. */
 	@media (width >= 1920px) {
 		:root {
-			/* theme.json vars. */
 			--wp--custom--layout--content-size: 74vw; /* Equivalent to 1420px at 1920px */
 		}
 	}
