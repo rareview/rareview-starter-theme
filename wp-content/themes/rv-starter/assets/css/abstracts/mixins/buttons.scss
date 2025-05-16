@@ -14,7 +14,7 @@
 	text-transform: uppercase;
 	border-radius: $border-radius-default;
 	font-weight: 700;
-	font-size: frem(1.125);
+	font-size: 1.125rem;
 	background-color: $color;
 	border: $border-width-default solid $color;
 	text-align: center;
@@ -22,7 +22,7 @@
 	flex-direction: column;
 	justify-content: center;
 	text-decoration: none;
-	padding: frem(0.5) frem(0.625);
+	padding: 0.5rem 0.625rem;
 	height: $input-field-height;
 	cursor: pointer;
 	box-sizing: border-box;
@@ -45,7 +45,7 @@
 
 	/* Responsiveness. */
 	@media only screen and (min-width: $breakpoint-tablet) {
-		padding: frem(0.5) frem(0.9375);
+		padding: 0.5rem 0.9375rem;
 	}
 }
 

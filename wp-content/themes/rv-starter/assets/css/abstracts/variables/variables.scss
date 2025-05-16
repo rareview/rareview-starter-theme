@@ -11,15 +11,15 @@
 $fluid-responsiveness: true;
 
 /* $transition-default: 0.2s ease-out; */
-$input-field-height: frem(3.2);
+$input-field-height: 3.2rem;
 $border-radius-default: 999px;
 $border-width-default: 2px;
 $disabled-opacity: 0.4;
 $container-width: var(--wp--custom--layout--content-size);
 
 /* Spacings. */
-$default-content-padding: frem(1.2);
-$default-content-padding-sides: frem(1.2);
+$default-content-padding: 1.2rem;
+$default-content-padding-sides: 1.2rem;
 
 /* Font. */
 $rem-root-mobile: 12px;
@@ -80,24 +80,9 @@ $breakpoint-mobile: 500px;
 
 /* Conditionally apply endless fluid responsiveness on huge screens. */
 @if $fluid-responsiveness == true {
-	/* Endless fluid responsiveness on huge screens. */
 	@media (width >= 1920px) {
 		:root {
-			/* theme.json vars. */
-			--wp--custom--size--base: 0.83vw; /* Equivalent to 1rem at 1920px */
 			--wp--custom--layout--content-size: 74vw; /* Equivalent to 1420px at 1920px */
-			--wp--preset--font-size--small: 0.94vw; /* Equivalent to 1.125rem at 1920px */
-			--wp--preset--font-size--normal: 1.0425vw; /* Equivalent to 1.25rem at 1920px */
-			--wp--preset--font-size--large: 1.25vw; /* Equivalent to 1.5rem at 1920px */
-
-			/* WP-core vars. */
-			--wp--preset--spacing--20: 0.37vw; /* 0.44rem */
-			--wp--preset--spacing--30: 0.56vw; /* 0.67rem */
-			--wp--preset--spacing--40: 0.84vw; /* 1rem */
-			--wp--preset--spacing--50: 1.26vw; /* 1.5rem */
-			--wp--preset--spacing--60: 1.89vw; /* 2.25rem */
-			--wp--preset--spacing--70: 2.84vw; /* 3.38rem */
-			--wp--preset--spacing--80: 4.26vw; /* 5.06rem */
 		}
 	}
 }
