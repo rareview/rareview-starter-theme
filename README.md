@@ -27,7 +27,7 @@ After you have it locally, there's a bit of manual work to do:
 - **(Only)** If you're working directly in this repo on the starter theme, follow the [Deployment doc](.local/docs/deployment.md) to deploy your work to our test environment.
   This file won't exist in new projects created by using the starter theme as a template.
 
-**IMPORTANT**: Delete the **Step 0** section from this README file after you are done with the project setup.
+**IMPORTANT**: Delete the **Step 0** section from this README.md file after you are done with the project setup.
 ___________________________________________________________
 
 ## Step 1: Local Environment Setup
