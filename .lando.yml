@@ -26,9 +26,16 @@ services:
     portforward: true
   appserver:
     build_as_root:
+      # Install required packages
       - apt-get update -y
+      - apt-get install -y zlib1g-dev libzip-dev unzip curl
+
+      # Install memcache
       - yes | pecl install memcache-8.0
       - docker-php-ext-enable memcache
+
+      # Install Composer globally
+      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
     memcached:
       type: memcached:1.6.21
       portforward: true
