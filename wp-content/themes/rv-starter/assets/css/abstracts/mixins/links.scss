@@ -4,7 +4,7 @@
  * @author Rareview <hello@rareview.com>
  */
 @mixin link( $color: $color-link) {
-	&:not(.rv-prevent-link-style) { // Try to use "rv-prevent-link-style" instead of adding new CSS classes here, to avoid making this rule hard to override.
+	&:not(.rv-prevent-link-style, .rv-button, .wp-block-button__link) { // Try to use "rv-prevent-link-style" instead of adding new CSS classes here, to avoid making this rule hard to override.
 		color: $color;
 	}
 }
