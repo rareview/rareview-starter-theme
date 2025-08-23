@@ -34,12 +34,26 @@
 
 	/* Hover. */
 	&:not(:disabled, .disabled):hover {
-		filter: brightness(1.15);
+		&,
+		&:not(:disabled, .disabled) & { // if button or anchor is inside a parent element with "disabled" class or attr.
+			filter: brightness(1.15);
 
-		@if $outline == "true" {
-			background-color: $color;
-			border-color: $color;
-			color: $color-black;
+			@if $outline == "true" {
+				background-color: $color;
+				border-color: $color;
+				color: $color-black;
+			}
+		}
+	}
+
+	/* Disabled */
+	&:disabled,
+	&.disabled {
+		&,
+		&:disabled &,
+		&.disabled & { // if button or anchor is inside a parent element with "disabled" class or attr.
+			opacity: $disabled-opacity;
+			cursor: not-allowed;
 		}
 	}
 
