@@ -34,26 +34,13 @@
 }
 
 /* Disabled styles. */
-div.wp-block-button.disabled {
+div.wp-block-button.disabled,
+.wp-block-button.is-style-default-white.disabled,
+.wp-block-button.is-style-pill-white.disabled {
 	opacity: $disabled-opacity;
-
-	a.wp-block-button__link {
-		cursor: not-allowed;
-
-		&:hover {
-			filter: brightness(1) !important;
-		}
-	}
-}
-
-.wp-block-button.is-style-default-outline.disabled,
-.wp-block-button.is-style-secondary-outline.disabled {
 	cursor: not-allowed;
 
 	.wp-block-button__link:hover {
 		pointer-events: none;
-		background-color: transparent !important;
-		transition-delay: 250ms;
-		transition-property: color;
 	}
 }
