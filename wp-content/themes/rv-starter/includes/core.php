@@ -140,16 +140,13 @@ function scripts(): void {
 	 * If you're not shipping any shared js wrap this enqueue in a SCRIPT_DEBUG check.
 	 */
 
-	/*
-	 * Uncomment this to use the shared.js file.
-		wp_enqueue_script(
-			'shared',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/shared.js',
-			Utility\get_asset_info( 'shared', 'dependencies' ),
-			Utility\get_asset_info( 'shared', 'version' ),
-			true
-		);
-	*/
+	wp_enqueue_script(
+		'shared',
+		RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/shared.js',
+		Utility\get_asset_info( 'shared', 'dependencies' ),
+		Utility\get_asset_info( 'shared', 'version' ),
+		true
+	);
 }
 
 /**
@@ -166,16 +163,13 @@ function admin_scripts(): void {
 		true
 	);
 
-	/*
-	 * Uncomment this to use the shared.js file.
-		wp_enqueue_script(
-			'shared',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/shared.js',
-			Utility\get_asset_info( 'shared', 'dependencies' ),
-			Utility\get_asset_info( 'shared', 'version' ),
-			true
-		);
-	*/
+	wp_enqueue_script(
+		'shared',
+		RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/shared.js',
+		Utility\get_asset_info( 'shared', 'dependencies' ),
+		Utility\get_asset_info( 'shared', 'version' ),
+		true
+	);
 }
 
 /**
