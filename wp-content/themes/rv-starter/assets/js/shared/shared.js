@@ -1,1 +1,3 @@
-// import foo from './bar'
+import fluidInit from './fluid';
+
+fluidInit();
