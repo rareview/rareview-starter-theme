@@ -22,6 +22,12 @@ To start a watcher that will compile your assets as you make changes to them.
 npm run start or npm run watch
 ```
 
+To watch and compile code without browser sync.
+
+```sh
+npm run dev
+```
+
 To do one time build of the theme.
 
 ```sh
@@ -91,6 +97,14 @@ npm run format:css
 ```sh
 npm run format:php
 ```
+
+## Set global styles and elements
+Your theme will start looking like the provided design in no time. Simply follow this variable-mapping spreadsheet and update the corresponding variables with values from your Figma file or any other design source you’re using:
+https://docs.google.com/spreadsheets/d/1fyyUmWrsYlabspKkzFC4CmYOx5GC1nFYcEP3lceJCnQ/edit?usp=sharing
+
+The spreadsheet defines a growing set of global design variables, covering layout settings, typography scales, heading sizes, color palette, responsive breakpoints, and more.
+
+Using these variables to set global styles and elements will make Gutenberg compatibility, fluid responsiveness, and other useful features work out of the box.
 
 ## Extra information
 
