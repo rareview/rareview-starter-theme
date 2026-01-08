@@ -4,29 +4,81 @@
 @mixin heading($h: 1) {
 	line-height: 1;
 	font-weight: 700;
+	margin-block-start: 0.5em !important; // override block editor styles, if gap in theme.json is "true"
+	margin-block-end: 0.5em !important; // override block editor styles, if gap in theme.json is "true"
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 
 	@if $h == 1 {
-		font-size: clamp(3.24rem, 5.95vw, 7.8125rem);
+		font-size: clamp(
+			$font-size-mobile-heading-1,
+			$font-size-tablet-heading-1,
+			$font-size-desktop-heading-1
+		);
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $font-size-desktop-heading-1-rem;
+		}
 	}
 
 	@if $h == 2 {
-		font-size: clamp(1.8rem, 3.57vw, 4.6875rem);
+		font-size: clamp(
+			$font-size-mobile-heading-2,
+			$font-size-tablet-heading-2,
+			$font-size-desktop-heading-2
+		);
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $font-size-desktop-heading-2-rem;
+		}
 	}
 
 	@if $h == 3 {
-		font-size: clamp(1.6rem, 2.85vw, 3.75rem);
+		font-size: clamp(
+			$font-size-mobile-heading-3,
+			$font-size-tablet-heading-3,
+			$font-size-desktop-heading-3
+		);
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $font-size-desktop-heading-3-rem;
+		}
 	}
 
 	@if $h == 4 {
-		font-size: clamp(1.4rem, 2.3vw, 3rem);
+		font-size: clamp(
+			$font-size-mobile-heading-4,
+			$font-size-tablet-heading-4,
+			$font-size-desktop-heading-4
+		);
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $font-size-desktop-heading-4-rem;
+		}
 	}
 
 	@if $h == 5 {
-		font-size: clamp(1rem, 1.52vw, 1.75rem);
+		font-size: clamp(
+			$font-size-mobile-heading-5,
+			$font-size-tablet-heading-5,
+			$font-size-desktop-heading-5
+		);
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $font-size-desktop-heading-5-rem;
+		}
 	}
 
 	@if $h == 6 {
-		font-size: clamp(0.8rem, 0.95vw, 1rem);
+		font-size: clamp(
+			$font-size-mobile-heading-6,
+			$font-size-tablet-heading-6,
+			$font-size-desktop-heading-6
+		);
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $font-size-desktop-heading-6-rem;
+		}
 	}
 }
 

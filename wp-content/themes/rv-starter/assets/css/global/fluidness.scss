@@ -1,0 +1,62 @@
+// Roots for REMs.
+html {
+	// Mobile.
+	font-size: $root-size-mobile;
+
+	// Fluid on tablets.
+	@media only screen and (min-width: $breakpoint-mobile) {
+		font-size: clamp($root-size-mobile, $root-size-tablet, $root-size-desktop);
+	}
+
+	// Desktop.
+	@media only screen and (min-width: $breakpoint-desktop-large) {
+		font-size: $root-size-desktop;
+	}
+
+	// Fluid (endless) on huge screens.
+	@if $endless-fluid-responsiveness == true {
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: 0.835vw;
+		}
+	}
+}
+
+// Normal body size.
+body,
+.has-medium-font-size {
+	font-size: $font-size-mobile-medium !important;
+
+	@media only screen and (min-width: $breakpoint-mobile) {
+		font-size: clamp($font-size-mobile-medium, $font-size-tablet-medium, $font-size-desktop-medium) !important;
+	}
+
+	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+		font-size: $font-size-desktop-medium-rem !important;
+	}
+}
+
+// Small body size.
+.has-small-font-size {
+	font-size: $font-size-mobile-small !important;
+
+	@media only screen and (min-width: $breakpoint-mobile) {
+		font-size: clamp($font-size-mobile-small, $font-size-tablet-small, $font-size-desktop-small) !important;
+	}
+
+	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+		font-size: $font-size-desktop-small-rem !important;
+	}
+}
+
+// Large body size.
+.has-large-font-size {
+	font-size: $font-size-mobile-large !important;
+
+	@media only screen and (min-width: $breakpoint-mobile) {
+		font-size: clamp($font-size-mobile-large, $font-size-tablet-large, $font-size-desktop-large) !important;
+	}
+
+	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+		font-size: $font-size-desktop-large-rem !important;
+	}
+}

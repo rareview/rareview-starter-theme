@@ -9,9 +9,9 @@
 		padding-left: 0;
 		padding-right: 0;
 	} @else {
-		max-width: calc(#{$max-width} + (2 * #{$default-content-padding-sides}));
-		padding-right: $default-content-padding-sides;
-		padding-left: $default-content-padding-sides;
+		max-width: calc(#{$max-width} + (2 * #{$container-padding-sides}));
+		padding-right: $container-padding-sides;
+		padding-left: $container-padding-sides;
 	}
 }
 
