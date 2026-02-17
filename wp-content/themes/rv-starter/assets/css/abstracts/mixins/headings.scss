@@ -10,6 +10,7 @@
 	margin-bottom: 0.5em;
 
 	@if $h == 1 {
+		font-family: $font-family-secondary;
 		font-size: clamp(
 			$font-size-mobile-heading-1,
 			$font-size-tablet-heading-1,
@@ -22,6 +23,7 @@
 	}
 
 	@if $h == 2 {
+		font-family: $font-family-secondary;
 		font-size: clamp(
 			$font-size-mobile-heading-2,
 			$font-size-tablet-heading-2,
@@ -34,6 +36,7 @@
 	}
 
 	@if $h == 3 {
+		font-family: $font-family-secondary;
 		font-size: clamp(
 			$font-size-mobile-heading-3,
 			$font-size-tablet-heading-3,
@@ -46,6 +49,7 @@
 	}
 
 	@if $h == 4 {
+		font-family: $font-family-secondary;
 		font-size: clamp(
 			$font-size-mobile-heading-4,
 			$font-size-tablet-heading-4,
@@ -58,6 +62,7 @@
 	}
 
 	@if $h == 5 {
+		font-family: $font-family-secondary;
 		font-size: clamp(
 			$font-size-mobile-heading-5,
 			$font-size-tablet-heading-5,
@@ -70,6 +75,7 @@
 	}
 
 	@if $h == 6 {
+		font-family: $font-family;
 		font-size: clamp(
 			$font-size-mobile-heading-6,
 			$font-size-tablet-heading-6,

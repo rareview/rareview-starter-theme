@@ -62,7 +62,8 @@
     },
     "custom": {
       "typography": {
-        "fontFamily": "Futura PT, Arial"
+        "fontFamily": "Futura PT, Arial",
+        "fontFamilySecondary": "Georgia, 'Times New Roman', Times, serif"
       },
       "layout": {
         "contentSize": "1420px"
