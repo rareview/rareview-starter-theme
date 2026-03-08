@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c716ff13f27786164d4c891b546155fc",
+    "content-hash": "a1b5a0471fdb7371aa2021ab6d3c579d",
     "packages": [
         {
             "name": "composer/installers",
@@ -1437,15 +1437,15 @@
         },
         {
             "name": "wpackagist-plugin/debug-bar",
-            "version": "1.1.6",
+            "version": "1.1.8",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/debug-bar/",
-                "reference": "tags/1.1.6"
+                "reference": "tags/1.1.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/debug-bar.1.1.6.zip"
+                "url": "https://downloads.wordpress.org/plugin/debug-bar.1.1.8.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -1487,5 +1487,5 @@
     "platform-overrides": {
         "php": "8.2"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
