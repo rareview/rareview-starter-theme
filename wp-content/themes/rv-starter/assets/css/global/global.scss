@@ -5,11 +5,11 @@
  */
 body {
 	font-family: $font-family;
-	font-weight: 400;
+	font-weight: $font-weight;
 	line-height: $font-line-height;
+	letter-spacing: $letter-spacing;
 	color: $color-body;
 	background-color: $color-background;
-	letter-spacing: 1px;
 
 	&.admin-bar {
 		#main {
@@ -26,7 +26,7 @@ body {
 input[type="button"],
 input[type="submit"],
 button[type="submit"] {
-	@include button("default-solid");
+	@include button-primary;
 }
 
 a {
