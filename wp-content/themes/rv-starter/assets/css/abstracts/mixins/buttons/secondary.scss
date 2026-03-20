@@ -16,7 +16,7 @@
 	text-transform: $button-secondary-text-transform;
 	border: $default-border-width solid $button-secondary-background-color;
 	border-radius: $button-secondary-border-radius;
-	padding: $button-secondary-padding-x $button-secondary-padding-y;
+	padding: $button-secondary-padding-y $button-secondary-padding-x;
 	height: $default-input-field-height;
 	text-align: center;
 	display: inline-flex;

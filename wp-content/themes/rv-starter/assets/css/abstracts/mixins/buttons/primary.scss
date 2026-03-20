@@ -16,7 +16,7 @@
 	text-transform: $button-primary-text-transform;
 	border: $default-border-width solid $button-primary-background-color;
 	border-radius: $button-primary-border-radius;
-	padding: $button-primary-padding-x $button-primary-padding-y;
+	padding: $button-primary-padding-y $button-primary-padding-x;
 	height: $default-input-field-height;
 	text-align: center;
 	display: inline-flex;

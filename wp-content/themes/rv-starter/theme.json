@@ -128,7 +128,7 @@
           "name": "LG"
         },
         {
-          "size": "var(--wp--custom--spacing--50)",
+          "size": "var(--wp--custom--spacing--60)",
           "slug": "60",
           "name": "XL"
         },
@@ -194,7 +194,7 @@
         {
           "name": "Instrument Serif",
           "slug": "instrument-serif",
-          "fontFamily": "Instrument Serif, sans-serif",
+          "fontFamily": "Instrument Serif, serif",
           "fontFace": [
             {
               "fontFamily": "Instrument Serif",
