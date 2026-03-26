@@ -118,8 +118,7 @@ $breakpoint-mobile: 500px;
 
 /* Root. */
 :root {
-	/* See ./assets/js/frontend/components/body-top-margin.js */
-	--main-top-spacing: 150px;
+	--header-height: 150px; // Default/fallback value, updated dynamically in ./assets/js/frontend/features/header-height.js
 }
 
 /* Conditionally apply endless fluid responsiveness on huge screens. */

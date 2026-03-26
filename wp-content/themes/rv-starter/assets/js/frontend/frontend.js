@@ -1,3 +1,5 @@
 import '../../css/frontend.scss';
 
-// import foo from './components/bar';
+import headerHeight from './features/header-height';
+
+headerHeight();
