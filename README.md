@@ -9,23 +9,21 @@ First, create a new repository from one of the options below and clone it to you
 - Clone a newly created repo to your local machine.
   <br><br><img src="https://docs.github.com/assets/cb-76823/mw-1440/images/help/repository/use-this-template-button.webp" width="400">
 
+After cloning, run the interactive setup script:
 
+```bash
+npm run setup
+```
 
-After you have it locally, there's a bit of manual work to do:
-- Rename the `wp-content/themes/rv-starter` directory to the name of the site you are working on.
-- Rename the `wp-content/themes/rv-starter/languages/RVStarterTheme.pot` file to the relevant name related to the site you are working on.
-- Replace all the instances of `rv-starter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `RV Starter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `RVStarter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `RV_STARTER` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `rv_starter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `TBD` (case sensitive) with the relevant information.
-- Replace `WEBSITE_NAME` below with the relevant information.
-- Replace `WEBSITE_URL` below with the relevant information.
-- Follow the instructions in the [Step 1: Local Environment Setup](.local/docs/local-development-setup.md) to set up your local development environment.
-- Follow the instructions in the [Step 2: Theme Development](.local/docs/theme-development.md) to start working on your project locally.
-- **(Only)** If you're working directly in this repo on the starter theme, follow the [Deployment doc](.local/docs/deployment.md) to deploy your work to our test environment.
-  This file won't exist in new projects created by using the starter theme as a template.
+This handles all renaming, rebranding, and configuration automatically:
+- Renames the theme directory, translation files, and all references
+- Performs case-sensitive find-and-replace across all project files
+- Updates Lando config, deploy scripts, and CI workflows
+- Generates a project-specific `AGENTS.md` for AI-assisted development
+- Optionally runs `npm install` and `lando start`
+
+For CI or non-interactive use: `npm run setup -- --yes`
+To preview changes: `npm run setup -- --dry-run`
 
 **IMPORTANT**: Delete the **Step 0** section from this README.md file after you are done with the project setup.
 ___________________________________________________________

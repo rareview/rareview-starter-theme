@@ -57,9 +57,9 @@
 
 	<rule ref="10up-Default" />
 
-	<rule ref="WordPress.PHP.DisallowShortTernary.Found">
-		<exclude-pattern>*.php</exclude-pattern>
-	</rule>
+		<rule ref="Universal.Operators.DisallowShortTernary.Found">
+			<exclude-pattern>*.php</exclude-pattern>
+		</rule>
 
 	<!--
 	Prevent errors caused by WordPress Coding Standards not supporting PHP 8.0+.

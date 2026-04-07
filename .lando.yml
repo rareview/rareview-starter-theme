@@ -6,6 +6,7 @@ config:
   php: 8.2
   composer_version: 2
   webroot: .
+  database: mysql:8.0
   cache: memcached
   ssl: false
   via: nginx

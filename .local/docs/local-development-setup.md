@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- [Lando](https://lando.dev) Latest Release
+- [Lando](https://lando.dev) v3.25.6+ recommended
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) For Mac and Windows only.
 - PHP >= 8.2
 - Node >= 20
@@ -17,6 +17,10 @@
 - Simply run `lando start` to start the environment.
 - if `wp-config.php` does not exist copy `wp-config.local.php` to `wp-config.php`.
 - Login at [http://rv-starter.local](http://rv-starter.local) using `lando` and `password`.
+
+If you change the database type or version in `.lando.yml`, run `lando destroy -y` and then `lando start` instead of `lando rebuild`.
+
+Older Lando releases may still try to pull deprecated `bitnami/mysql:*` images and fail with `manifest unknown`. If that happens, upgrade Lando before starting the app.
 
 ## Lando
 

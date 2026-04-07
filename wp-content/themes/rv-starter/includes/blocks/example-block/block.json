@@ -1,12 +1,13 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "title": "Example Block",
   "description": "An Example Block",
   "textdomain": "rv-starter-theme",
   "name": "rv-starter/example",
   "icon": "feedback",
   "category": "formatting",
+  "keywords": ["example", "demo", "starter"],
   "attributes": {
     "title": {
       "type": "string"
@@ -18,6 +19,9 @@
     }
   },
   "supports": {
+    "align": true,
+    "anchor": true,
+    "customClassName": true,
     "html": false
   },
   "editorScript": "file:./index.js"

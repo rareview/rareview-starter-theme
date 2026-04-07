@@ -33,14 +33,14 @@
   },
   "require": {
     "php": ">=8.2",
-    "wpackagist-theme/twentytwentyfour": "1.3"
+    "wpackagist-theme/twentytwentyfive": "1.4"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
+    "10up/phpcs-composer": "^3.0.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
     "roave/security-advisories": "dev-latest",
-    "wpackagist-plugin/debug-bar": "1.1.6",
-    "wpackagist-plugin/query-monitor": "3.18",
-    "10up/phpcs-composer": "dev-master"
+    "wpackagist-plugin/debug-bar": "1.1.8",
+    "wpackagist-plugin/query-monitor": "3.20.4"
   },
   "scripts": {
     "lint": "phpcs --runtime-set testVersion 8.2- .",

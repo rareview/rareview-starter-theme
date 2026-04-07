@@ -15,8 +15,8 @@ use RVStarterTheme\Utility;
  * @return void
  */
 function setup(): void {
-	$n = static function ( $function ) {
-		return __NAMESPACE__ . "\\$function";
+	$n = static function ( $callback_name ) {
+		return __NAMESPACE__ . "\\$callback_name";
 	};
 
 	add_action( 'init', $n( 'init' ), apply_filters( 'rv_starter_theme_init_priority', 8 ) );

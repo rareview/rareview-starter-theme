@@ -16,6 +16,7 @@ $border-width-default: 2px;
 $disabled-opacity: 0.4;
 $container-width: var(--wp--custom--layout--content-size);
 $container-padding-sides: 1.2rem;
+$scrollbar-width: var(--scrollbar-width, 0);
 
 /* REM root sizes. */
 $root-size-desktop: var(--rv--size-desktop--root);

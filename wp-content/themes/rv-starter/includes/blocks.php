@@ -15,12 +15,14 @@ use RVStarterTheme\Utility;
  * @return void
  */
 function setup(): void {
-	$n = static function ( $function ) {
-		return __NAMESPACE__ . "\\$function";
+
+	$n = static function ( $callback_name ) {
+
+		return __NAMESPACE__ . "\\$callback_name";
 	};
 
-	add_action( 'enqueue_block_editor_assets', $n( 'blocks_editor_styles' ) );
-
+	add_action( 'enqueue_block_editor_assets', $n( 'blocks_editor_frame_styles' ) );
+	add_action( 'enqueue_block_assets', $n( 'blocks_editor_canvas_styles' ) );
 	add_action( 'init', $n( 'register_theme_blocks' ) );
 
 	add_action( 'init', $n( 'register_block_pattern_categories' ) );
@@ -109,25 +111,51 @@ function filter_plugins_url( string $url, string $path ): string {
  *
  * @return void
  */
-function blocks_editor_styles(): void {
+function blocks_editor_frame_styles(): void {
+
+	enqueue_editor_override_asset( 'editor-frame-overrides' );
+}
+
+/**
+ * Enqueue editor canvas JavaScript/CSS for blocks.
+ *
+ * @return void
+ */
+function blocks_editor_canvas_styles(): void {
+
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	enqueue_editor_override_asset( 'editor-canvas-overrides' );
+}
+
+/**
+ * Enqueue an editor override asset pair.
+ *
+ * @param string $handle The asset handle.
+ *
+ * @return void
+ */
+function enqueue_editor_override_asset( string $handle ): void {
+
 	wp_enqueue_style(
-		'editor-style-overrides',
-		RV_STARTER_THEME_TEMPLATE_URL . '/dist/css/editor-style-overrides.css',
+		$handle,
+		RV_STARTER_THEME_TEMPLATE_URL . "/dist/css/{$handle}.css",
 		[],
-		Utility\get_asset_info( 'editor-style-overrides', 'version' )
+		Utility\get_asset_info( $handle, 'version' )
 	);
 
 	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
 		wp_enqueue_script(
-			'editor-style-overrides',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/editor-style-overrides.js',
-			Utility\get_asset_info( 'editor-style-overrides', 'dependencies' ),
-			Utility\get_asset_info( 'editor-style-overrides', 'version' ),
+			$handle,
+			RV_STARTER_THEME_TEMPLATE_URL . "/dist/js/{$handle}.js",
+			Utility\get_asset_info( $handle, 'dependencies' ),
+			Utility\get_asset_info( $handle, 'version' ),
 			true
 		);
 	}
 }
-
 /**
  * Register block pattern categories
  *
@@ -136,9 +164,10 @@ function blocks_editor_styles(): void {
  * @return void
  */
 function register_block_pattern_categories(): void {
+
 	// Register a block pattern category.
 	register_block_pattern_category(
-		'rv-starter-theme',
+		'rv-starter',
 		[ 'label' => __( 'RV Starter', 'rv-starter-theme' ) ]
 	);
 }
