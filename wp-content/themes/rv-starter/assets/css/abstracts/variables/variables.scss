@@ -1,3 +1,5 @@
+@use 'sass:math'; // stylelint-disable-line at-rule-no-unknown
+
 /**
  * Variables.
  *
@@ -201,7 +203,7 @@ $breakpoint-mobile: 500px;
 @if $endless-fluid-responsiveness == true {
 	@media (width >= $breakpoint-desktop-xx-large) {
 		:root {
-			--wp--custom--layout--content-size: 74vw; /* Equivalent to 1420px at 1920px. todo: automatize */
+			--wp--custom--layout--content-size: #{math.div(1420px, $breakpoint-desktop-xx-large) * 100}vw; // todo: Replace 1420px with the $container-width.
 			--wp--custom--root--size-desktop: $root-size-desktop;
 			--wp--custom--root--size-mobile: $root-size-mobile;
 		}
