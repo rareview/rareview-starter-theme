@@ -41,7 +41,7 @@
 			@if $outline == "true" {
 				background-color: $button-secondary-background-color;
 				border-color: $button-secondary-background-color;
-				color: $color-black;
+				color: $button-secondary-font-color;
 			}
 		}
 	}
