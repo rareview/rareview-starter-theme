@@ -1,43 +1,52 @@
+@use 'sass:math'; // stylelint-disable-line at-rule-no-unknown
+
 /**
  * Variables.
  *
  * NOTE: Some variables are pulling values from the theme.json
  * This is to keep them consistent with the block editor options.
  *
+ * todo: variables naming - currently, some variables start with CSS param and some with component name.
+    We should choose one way and stick to it, to make it easier to find variables.
+ *
  * @author Rareview <hello@rareview.com>
  */
 
 /* Various. */
-$endless-fluid-responsiveness: true;
-$transition-default: 0.2s ease-out;
-$input-field-height: 3.2rem;
-$border-radius-default: 999px;
-$border-width-default: 2px;
+$default-transition-duration: 0.2s;
+$default-transition-easing: ease-out;
+$default-transition: $default-transition-duration $default-transition-easing;
+$default-input-field-height: 3.2rem;
+$default-border-radius: 999px;
+$default-border-width: 2px;
 $disabled-opacity: 0.4;
+$endless-fluid-responsiveness: true;
 $container-width: var(--wp--custom--layout--content-size);
-$container-padding-sides: 1.2rem;
+$container-padding-sides: var(--wp--preset--spacing--40);
 
 /* REM root sizes. */
 $root-size-desktop: var(--rv--size-desktop--root);
 $root-size-tablet: var(--rv--fluid-size-tablet--root);
 $root-size-mobile: var(--rv--size-mobile--root);
 
-/* Fonts. */
-$font-family: var(--wp--custom--typography--font-family);
-$font-family-secondary: var(--wp--custom--typography--font-family-secondary);
+/* Body. */
+$font-family: var(--wp--preset--font-family--futura-pt);
+$font-family-secondary: var(--wp--preset--font-family--instrument-serif);
 $font-line-height: 1.3;
+$font-weight: 400;
+$letter-spacing: 0;
 
-/* Body size - Mobile. */
+/* Body - Mobile sizes. */
 $font-size-mobile-small: var(--wp--custom--font-size--mobile--body-small);
 $font-size-mobile-medium: var(--wp--custom--font-size--mobile--body-medium);
 $font-size-mobile-large: var(--wp--custom--font-size--mobile--body-large);
 
-/* Body size - Tablet. */
+/* Body - Tablet sizes. */
 $font-size-tablet-small: var(--rv--fluid-size-tablet--body-small);
 $font-size-tablet-medium: var(--rv--fluid-size-tablet--body-medium);
 $font-size-tablet-large: var(--rv--fluid-size-tablet--body-large);
 
-/* Body size - Desktop. */
+/* Body - Desktop sizes. */
 $font-size-desktop-small: var(--wp--custom--font-size--desktop--body-small);
 $font-size-desktop-medium: var(--wp--custom--font-size--desktop--body-medium);
 $font-size-desktop-large: var(--wp--custom--font-size--desktop--body-large);
@@ -51,7 +60,7 @@ $font-size-desktop-heading-4-rem: var(--rv--rem--font-size--desktop--heading-4);
 $font-size-desktop-heading-5-rem: var(--rv--rem--font-size--desktop--heading-5);
 $font-size-desktop-heading-6-rem: var(--rv--rem--font-size--desktop--heading-6);
 
-/* Headings size - Mobile. */
+/* Headings - Mobile sizes. */
 $font-size-mobile-heading-1: var(--wp--custom--font-size--mobile--heading-1);
 $font-size-mobile-heading-2: var(--wp--custom--font-size--mobile--heading-2);
 $font-size-mobile-heading-3: var(--wp--custom--font-size--mobile--heading-3);
@@ -59,7 +68,7 @@ $font-size-mobile-heading-4: var(--wp--custom--font-size--mobile--heading-4);
 $font-size-mobile-heading-5: var(--wp--custom--font-size--mobile--heading-5);
 $font-size-mobile-heading-6: var(--wp--custom--font-size--mobile--heading-6);
 
-/* Headings size - Tablet. */
+/* Headings - Tablet sizes. */
 $font-size-tablet-heading-1: var(--rv--fluid-size-tablet--heading-1);
 $font-size-tablet-heading-2: var(--rv--fluid-size-tablet--heading-2);
 $font-size-tablet-heading-3: var(--rv--fluid-size-tablet--heading-3);
@@ -67,13 +76,53 @@ $font-size-tablet-heading-4: var(--rv--fluid-size-tablet--heading-4);
 $font-size-tablet-heading-5: var(--rv--fluid-size-tablet--heading-5);
 $font-size-tablet-heading-6: var(--rv--fluid-size-tablet--heading-6);
 
-/* Headings size - Desktop. */
+/* Headings - Desktop sizes. */
 $font-size-desktop-heading-1: var(--wp--custom--font-size--desktop--heading-1);
 $font-size-desktop-heading-2: var(--wp--custom--font-size--desktop--heading-2);
 $font-size-desktop-heading-3: var(--wp--custom--font-size--desktop--heading-3);
 $font-size-desktop-heading-4: var(--wp--custom--font-size--desktop--heading-4);
 $font-size-desktop-heading-5: var(--wp--custom--font-size--desktop--heading-5);
 $font-size-desktop-heading-6: var(--wp--custom--font-size--desktop--heading-6);
+
+/* Headings - Font family. */
+$font-family-heading-1: $font-family-secondary;
+$font-family-heading-2: $font-family-secondary;
+$font-family-heading-3: $font-family-secondary;
+$font-family-heading-4: $font-family-secondary;
+$font-family-heading-5: $font-family-secondary;
+$font-family-heading-6: $font-family;
+
+/* Headings - Font weight. */
+$font-weight-heading-1: 400;
+$font-weight-heading-2: 400;
+$font-weight-heading-3: 400;
+$font-weight-heading-4: 400;
+$font-weight-heading-5: 400;
+$font-weight-heading-6: 700;
+
+/* Headings - Line height. */
+$line-height-heading-1: 1.3;
+$line-height-heading-2: 1.3;
+$line-height-heading-3: 1.3;
+$line-height-heading-4: 1.3;
+$line-height-heading-5: 1.3;
+$line-height-heading-6: 1.3;
+
+/* Headings - Letter spacing. */
+$letter-spacing-heading-1: normal;
+$letter-spacing-heading-2: normal;
+$letter-spacing-heading-3: normal;
+$letter-spacing-heading-4: normal;
+$letter-spacing-heading-5: normal;
+$letter-spacing-heading-6: normal;
+
+/* Headings - Text transform. */
+$text-transform-heading-1: none;
+$text-transform-heading-2: none;
+$text-transform-heading-3: none;
+$text-transform-heading-4: none;
+$text-transform-heading-5: none;
+$text-transform-heading-6: none;
 
 /* Colors - Mono. */
 $color-black: var(--wp--preset--color--black);
@@ -91,7 +140,6 @@ $color-orange: var(--wp--preset--color--orange);
 /* Colors - Theme colors. */
 $color-primary: $color-green;
 $color-secondary: $color-purple;
-$color-link: $color-orange;
 $color-background: $color-black;
 $color-body: $color-white;
 
@@ -106,6 +154,36 @@ $color-input-bg-dark-border: $color-white;
 $color-input-bg-dark-text: $color-white;
 $color-input-bg-dark-disabled: $color-dark-grey;
 $color-input-bg-dark-background: transparent;
+
+/* Links. */
+$link-text-decoration: underline;
+$link-text-decoration-hover: underline;
+$link-font-weight: inherit;
+$link-letter-spacing: normal;
+$color-link: $color-orange;
+$color-link-hover: color-mix(in srgb, $color-orange 80%, white);
+
+/* Buttons - Primary style. */
+$button-primary-font-color: $color-dark;
+$button-primary-background-color: $color-primary;
+$button-primary-border-radius: $default-border-radius;
+$button-primary-padding-x: 1.5rem;
+$button-primary-padding-y: 0.5rem;
+$button-primary-font-size: 1.125rem;
+$button-primary-font-weight: 700;
+$button-primary-letter-spacing: 0.05em;
+$button-primary-text-transform: uppercase;
+
+/* Buttons - Secondary style. */
+$button-secondary-font-color: $color-dark;
+$button-secondary-background-color: $color-secondary;
+$button-secondary-border-radius: $default-border-radius;
+$button-secondary-padding-x: 1.5rem;
+$button-secondary-padding-y: 0.5rem;
+$button-secondary-font-size: 1.125rem;
+$button-secondary-font-weight: 700;
+$button-secondary-letter-spacing: 0.05em;
+$button-secondary-text-transform: uppercase;
 
 /* Responsive breakpoints. */
 $breakpoint-desktop-xx-large: 1920px;
@@ -125,7 +203,7 @@ $breakpoint-mobile: 500px;
 @if $endless-fluid-responsiveness == true {
 	@media (width >= $breakpoint-desktop-xx-large) {
 		:root {
-			--wp--custom--layout--content-size: 74vw; /* Equivalent to 1420px at 1920px */
+			--wp--custom--layout--content-size: #{math.div(1420px, $breakpoint-desktop-xx-large) * 100}vw; // todo: Replace 1420px with the $container-width.
 			--wp--custom--root--size-desktop: $root-size-desktop;
 			--wp--custom--root--size-mobile: $root-size-mobile;
 		}

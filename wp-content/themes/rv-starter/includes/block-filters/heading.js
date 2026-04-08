@@ -69,7 +69,7 @@ const HeadingBlockUI = createHigherOrderComponent((BlockEdit) => {
 								value={hasStyleHeading}
 								options={[
 									{
-										label: __('Default Heading Style', 'rv-starter-theme'),
+										label: __('Default', 'rv-starter-theme'),
 										value: '',
 									},
 									{

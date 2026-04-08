@@ -61,12 +61,17 @@
       ]
     },
     "custom": {
-      "typography": {
-        "fontFamily": "Futura PT, Arial",
-        "fontFamilySecondary": "Georgia, 'Times New Roman', Times, serif"
-      },
       "layout": {
         "contentSize": "1420px"
+      },
+      "spacing": {
+        "20": "0.25rem",
+        "30": "0.5rem",
+        "40": "1rem",
+        "50": "1.5rem",
+        "60": "2rem",
+        "70": "3rem",
+        "80": "4rem"
       },
       "font-size": {
         "mobile": {
@@ -75,7 +80,7 @@
           "heading3": "44px",
           "heading4": "38px",
           "heading5": "24px",
-          "heading6": "20px",
+          "heading6": "16px",
           "bodySmall": "12px",
           "bodyMedium": "14px",
           "bodyLarge": "16px"
@@ -86,7 +91,7 @@
           "heading3": "60px",
           "heading4": "50px",
           "heading5": "40px",
-          "heading6": "34px",
+          "heading6": "24px",
           "bodySmall": "16px",
           "bodyMedium": "18px",
           "bodyLarge": "20px"
@@ -100,7 +105,44 @@
       "blockGap": true,
       "margin": true,
       "padding": true,
-      "units": ["rem", "%", "vw", "vh"]
+      "units": ["rem", "%", "vw", "vh"],
+      "spacingSizes": [
+        {
+          "size": "var(--wp--custom--spacing--20)",
+          "slug": "20",
+          "name": "XS"
+        },
+        {
+          "size": "var(--wp--custom--spacing--30)",
+          "slug": "30",
+          "name": "SM"
+        },
+        {
+          "size": "var(--wp--custom--spacing--40)",
+          "slug": "40",
+          "name": "MD"
+        },
+        {
+          "size": "var(--wp--custom--spacing--50)",
+          "slug": "50",
+          "name": "LG"
+        },
+        {
+          "size": "var(--wp--custom--spacing--60)",
+          "slug": "60",
+          "name": "XL"
+        },
+        {
+          "size": "var(--wp--custom--spacing--70)",
+          "slug": "70",
+          "name": "2XL"
+        },
+        {
+          "size": "var(--wp--custom--spacing--80)",
+          "slug": "80",
+          "name": "3XL"
+        }
+      ]
     },
     "typography": {
       "customFontSize": false,
@@ -121,6 +163,48 @@
           "name": "Large",
           "slug": "large",
           "size": "var(--wp--custom--font-size--desktop--body-large)"
+        }
+      ],
+      "fontFamilies": [
+        {
+          "name": "Futura PT",
+          "slug": "futura-pt",
+          "fontFamily": "Futura PT, Arial, sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Futura PT",
+              "fontWeight": "400",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/futura-pt/FuturaPT-Book.woff2"]
+            },
+            {
+              "fontFamily": "Futura PT",
+              "fontWeight": "700",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/futura-pt/FuturaPT-Bold.woff2"]
+            },
+            {
+              "fontFamily": "Futura PT",
+              "fontWeight": "800",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/futura-pt/FuturaPT-ExtraBold.woff2"]
+            }
+          ]
+        },
+        {
+          "name": "Instrument Serif",
+          "slug": "instrument-serif",
+          "fontFamily": "Instrument Serif, serif",
+          "fontFace": [
+            {
+              "fontFamily": "Instrument Serif",
+              "fontWeight": "400",
+              "fontStyle": "normal",
+              "src": [
+                "file:./assets/fonts/instrument-serif/InstrumentSerif-Regular.woff2"
+              ]
+            }
+          ]
         }
       ]
     },
