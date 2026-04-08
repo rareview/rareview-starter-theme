@@ -7,7 +7,7 @@
  * @author Rareview <hello@rareview.com>
  */
 
-@mixin button-secondary($outline: "false") {
+@mixin button-secondary($outline: false) {
 	color: $button-secondary-font-color;
 	background-color: $button-secondary-background-color;
 	font-size: $button-secondary-font-size;
@@ -27,7 +27,7 @@
 	box-sizing: border-box;
 	transition: background-color $default-transition, color $default-transition, filter $default-transition;
 
-	@if $outline == "true" {
+	@if $outline == true {
 		background-color: transparent;
 		color: $button-secondary-background-color;
 	}
@@ -38,7 +38,7 @@
 		&:not(:disabled, .disabled) & {
 			filter: brightness(1.15);
 
-			@if $outline == "true" {
+			@if $outline == true {
 				background-color: $button-secondary-background-color;
 				border-color: $button-secondary-background-color;
 				color: $button-secondary-font-color;
