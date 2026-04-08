@@ -17,10 +17,8 @@ class App {
 
 	public const REST_API_CUSTOM_NAMESPACE = 'rv-starter/v1';
 
-	public const SOCIAL_NETWORK_FACEBOOK_URL_OPTION  = 'rv_starter_social_network_facebook_url';
-	public const SOCIAL_NETWORK_TWITTER_URL_OPTION   = 'rv_starter_social_network_twitter_url';
-	public const SOCIAL_NETWORK_YOUTUBE_URL_OPTION   = 'rv_starter_social_network_youtube_url';
-	public const SOCIAL_NETWORK_INSTAGRAM_URL_OPTION = 'rv_starter_social_network_instagram_url';
+	public const ANALYTICS_GTM_ID_OPTION = 'rv_starter_analytics_gtm_id';
+	public const ANALYTICS_GA_ID_OPTION  = 'rv_starter_analytics_ga_id';
 
 	/**
 	 * The providers of the application.
