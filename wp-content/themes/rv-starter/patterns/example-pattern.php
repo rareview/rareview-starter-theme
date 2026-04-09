@@ -2,7 +2,7 @@
 /**
  * Title: Example Pattern
  * Slug: rv-starter/example
- * Categories: rv-starter
+ * Categories: rv-starter-theme
  *
  * @package RVStarterTheme
  */
