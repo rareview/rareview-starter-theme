@@ -127,16 +127,6 @@ function scripts(): void {
 		true
 	);
 
-	if ( is_page_template( 'templates/page-styleguide.php' ) ) {
-		wp_enqueue_script(
-			'styleguide',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/styleguide.js',
-			Utility\get_asset_info( 'styleguide', 'dependencies' ),
-			Utility\get_asset_info( 'styleguide', 'version' ),
-			true
-		);
-	}
-
 	/**
 	 * Enqueuing shared.js is required to get css hot reloading working in the frontend
 	 * If you're not shipping any shared js wrap this enqueue in a SCRIPT_DEBUG check.
@@ -229,15 +219,6 @@ function styles(): void {
 		[],
 		Utility\get_asset_info( 'frontend', 'version' )
 	);
-
-	if ( is_page_template( 'templates/page-styleguide.php' ) ) {
-		wp_enqueue_style(
-			'styleguide',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/css/styleguide.css',
-			[],
-			Utility\get_asset_info( 'styleguide-style', 'version' )
-		);
-	}
 }
 
 /**
