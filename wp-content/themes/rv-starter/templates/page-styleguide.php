@@ -10,7 +10,7 @@ namespace RVStarterTheme\Utility;
 get_header();
 ?>
 
-<main id="main" class="uikit__container" role="main" tabindex="-1">
+<main id="main" class="uikit__container" tabindex="-1">
 	<h1 class="uikit__heading">
 		<div class="uikit__block">
 			<span><?php echo esc_html( get_the_title() ); ?></span>
