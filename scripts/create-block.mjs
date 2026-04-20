@@ -49,7 +49,7 @@ async function findThemeConfig() {
 		if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
 
 		try {
-			const pkgPath = resolve(themesDir, entry.name, 'package.json');
+			const pkgPath = resolve(themesDir, entry.name, 'package.json'); // todo: Fix this so it doesn't just pick the first theme with package.json, which may not be our starter theme.
 			const raw = await readFile(pkgPath, 'utf-8');
 			const pkg = JSON.parse(raw);
 
@@ -142,6 +142,8 @@ function generateBlockJson(config) {
 
 /**
  * Generate edit.js (editor component)
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
  */
 function generateEditJs(config) {
 	const componentName = toPascalCase(config.slug) + 'Edit';
@@ -172,6 +174,8 @@ export default ${componentName};
 
 /**
  * Generate index.js (block registration)
+ * 
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
  */
 function generateIndexJs(config) {
 	let imports = `/**
@@ -210,6 +214,8 @@ registerBlockType(metadata.name, {
 
 /**
  * Generate save.js for static blocks
+ * 
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
  */
 function generateSaveJs(config) {
 	const componentName = toPascalCase(config.slug) + 'Save';
@@ -240,6 +246,8 @@ export default ${componentName};
 
 /**
  * Generate markup.php for dynamic blocks
+ * 
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
  */
 function generateMarkupPhp(config) {
 	return `<?php
@@ -263,6 +271,8 @@ function generateMarkupPhp(config) {
 
 /**
  * Generate style.scss
+ * 
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
  */
 function generateStyleScss(config) {
 	return `/**
