@@ -8,7 +8,7 @@
  */
 
 ?>
-		<footer class="rv-footer" role="contentinfo">
+		<footer class="rv-footer">
 			<div class="rv-footer__scripts">
 				<?php wp_footer(); ?>
 			</div>

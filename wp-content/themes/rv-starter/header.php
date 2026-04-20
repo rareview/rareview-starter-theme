@@ -21,7 +21,7 @@
 			<?php esc_html_e( 'Skip to content', 'rv-starter-theme' ); ?>
 		</a>
 
-		<header class="rv-header" role="banner">
+		<header class="rv-header">
 			<?php if ( has_nav_menu( 'primary' ) ) : ?>
 				<nav class="rv-header__nav" aria-label="<?php esc_attr_e( 'Primary Navigation', 'rv-starter-theme' ); ?>">
 					<?php
