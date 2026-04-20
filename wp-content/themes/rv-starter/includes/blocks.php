@@ -21,8 +21,8 @@ function setup(): void {
 		return __NAMESPACE__ . "\\$callback_name";
 	};
 
-	add_action( 'enqueue_block_editor_assets', $n( 'blocks_editor_frame_styles' ) );
-	add_action( 'enqueue_block_assets', $n( 'blocks_editor_canvas_styles' ) );
+	add_action( 'enqueue_block_editor_assets', $n( 'blocks_editor_ui_styles' ) );
+	add_action( 'enqueue_block_assets', $n( 'blocks_editor_content_styles' ) );
 	add_action( 'init', $n( 'register_theme_blocks' ) );
 
 	add_action( 'init', $n( 'register_block_pattern_categories' ) );
@@ -111,9 +111,9 @@ function filter_plugins_url( string $url, string $path ): string {
  *
  * @return void
  */
-function blocks_editor_frame_styles(): void {
+function blocks_editor_ui_styles(): void {
 
-	enqueue_editor_override_asset( 'editor-frame-overrides' );
+	enqueue_editor_override_asset( 'editor-ui-overrides' );
 }
 
 /**
@@ -121,13 +121,13 @@ function blocks_editor_frame_styles(): void {
  *
  * @return void
  */
-function blocks_editor_canvas_styles(): void {
+function blocks_editor_content_styles(): void {
 
 	if ( ! is_admin() ) {
 		return;
 	}
 
-	enqueue_editor_override_asset( 'editor-canvas-overrides' );
+	enqueue_editor_override_asset( 'editor-content-overrides' );
 }
 
 /**

@@ -1,0 +1,15 @@
+/**
+ * Editor UI Overrides.
+ *
+ * Styles for editor UI outside the block content iframe.
+ * Use this for sidebar panel adjustments, block inserter customizations,
+ * and other editor chrome modifications.
+ *
+ * Enqueued via `enqueue_block_editor_assets` (see `includes/blocks.php`),
+ * the recommended hook for Editor UI assets (not the content inside the
+ * iframed Editor).
+ *
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/#editor-scripts-and-styles
+ *
+ * @author Rareview <hello@rareview.com>
+ */
