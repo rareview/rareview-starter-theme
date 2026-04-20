@@ -17,7 +17,7 @@
 	</head>
 	<body <?php body_class(); ?>>
 		<?php wp_body_open(); ?>
-		<a class="rv-skip-link screen-reader-text" href="#main">
+		<a class="rv-skip-link" href="#main">
 			<?php esc_html_e( 'Skip to content', 'rv-starter-theme' ); ?>
 		</a>
 
