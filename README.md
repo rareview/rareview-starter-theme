@@ -33,35 +33,27 @@ First, create a new repository from one of the options below and clone it to you
   <br><br><img src="https://docs.github.com/assets/cb-76823/mw-1440/images/help/repository/use-this-template-button.webp" width="400">
 
 ## Renaming placeholders
+After cloning, run the interactive setup script:
 
-After cloning, there's a bit of manual work to do:
+```bash
+npm run setup
+```
 
-- Rename `wp-content/themes/rv-starter` to `wp-content/themes/your-project`
-- Rename `wp-content/themes/rv-starter/languages/RVStarterTheme.pot` to `wp-content/themes/rv-starter/languages/YourProjectTheme.pot`
-- Replace all instances of:
-	- `rv-starter` -> `your-project`
-	- `RV Starter` -> `Your Project`
-	- `RVStarter` -> `YourProject`
-	- `RV_STARTER` -> `YOUR_PROJECT`
-	- `rv_starter` -> `your_project`
-	- `TBD`
-	- `WEBSITE_NAME`
-	- `WEBSITE_URL`
+This handles all renaming, rebranding, and configuration automatically:
+- Renames the theme directory, translation files, and all references
+- Performs case-sensitive find-and-replace across all project files
+- Updates Lando config, deploy scripts, and CI workflows
+- Generates a project-specific `AGENTS.md` for AI-assisted development
+- Optionally runs `npm install` and `lando start`
 
-## Local environment setup
+For CI or non-interactive use: `npm run setup -- --yes`
+To preview changes: `npm run setup -- --dry-run`
+___________________________________________________________
 
-1. Add `rv-starter.local` to your hosts file.
-2. Run `npm install` in the project root.
-3. Run `npm --prefix wp-content/themes/rv-starter install`.
-4. Start services with `lando start`.
-5. If `wp-config.php` does not exist, copy `wp-config.local.php` to `wp-config.php`.
-6. Build assets with `npm run build`.
-7. Log in at [http://rv-starter.local](http://rv-starter.local) using:
-	- username: `lando`
-	- password: `password`
+## Step 1: Local Environment Setup
 
-## Theme development
+See [Local Development Setup](.local/docs/local-development-setup.md) for details.
 
-Theme-specific setup, build scripts, linting, formatting, and conventions are documented in:
+## Step 2: Theme Development
 
-- [`wp-content/themes/rv-starter/README.md`](wp-content/themes/rv-starter/README.md)
+See [Theme Development](.local/docs/theme-development.md) for details.

@@ -29,7 +29,9 @@
     "lint:css": "10up-toolkit lint-style",
     "lint:php": "composer run lint --working-dir=../../..",
     "test": "10up-toolkit test-unit-jest",
-    "clean-dist": "rm -rf ./dist"
+    "clean-dist": "rm -rf ./dist",
+    "design-system": "node ../../../scripts/design-system.mjs",
+    "create-block": "node ../../../scripts/create-block.mjs"
   },
   "testing": {
     "urls": {
@@ -44,19 +46,20 @@
     "npm": ">=10.0.0"
   },
   "devDependencies": {
-    "10up-toolkit": "^6.0.1",
-    "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0"
+    "10up-toolkit": "^6.5.1",
+    "autoprefixer": "^10.4.27",
+    "eslint": "^8.57.1"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
-    "classnames": "^2.3.2"
+    "classnames": "^2.5.1"
   },
   "10up-toolkit": {
     "useBlockAssets": true,
     "entry": {
       "admin": "./assets/js/admin/admin.js",
-      "editor-style-overrides": "./assets/js/admin/editor-style-overrides.js",
+      "editor-content-overrides": "./assets/js/admin/editor-content-overrides.js",
+      "editor-ui-overrides": "./assets/js/admin/editor-ui-overrides.js",
       "frontend": "./assets/js/frontend/frontend.js",
       "shared": "./assets/js/shared/shared.js",
       "core-block-overrides": "./includes/core-block-overrides.js"

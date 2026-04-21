@@ -25,7 +25,7 @@ class App {
 	 *
 	 * @var array
 	 */
-	public static array $providers = [
+	public static array $service_providers = [
 		RestServiceProvider::class,
 		ThemeServiceProvider::class,
 	];
@@ -45,7 +45,7 @@ class App {
 	 * @return void
 	 */
 	public function boot(): void {
-		foreach ( static::$providers as $provider ) {
+		foreach ( static::$service_providers as $provider ) {
 			new $provider();
 		}
 	}

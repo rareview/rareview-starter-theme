@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-	<main class="rv-page-404">
+	<main id="main" class="rv-page-404" tabindex="-1">
 		<h1 class="rv-404__heading">
 			<?php echo esc_html__( '404', 'rv-starter-theme' ); ?>
 		</h1>

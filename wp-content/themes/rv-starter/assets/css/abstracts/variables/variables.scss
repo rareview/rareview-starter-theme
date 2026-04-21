@@ -23,6 +23,7 @@ $disabled-opacity: 0.4;
 $endless-fluid-responsiveness: true;
 $container-width: var(--wp--custom--layout--content-size);
 $container-padding-sides: var(--wp--preset--spacing--40);
+$scrollbar-width: var(--scrollbar-width, 0);
 
 /* REM root sizes. */
 $root-size-desktop: var(--rv--size-desktop--root);

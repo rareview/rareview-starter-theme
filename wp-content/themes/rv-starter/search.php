@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-	<main class="rv-page-search" itemscope itemtype="https://schema.org/SearchResultsPage" tabindex="-1">
+	<main id="main" class="rv-page-search" itemscope itemtype="https://schema.org/SearchResultsPage" tabindex="-1">
 		<?php if ( have_posts() ) : ?>
 			<h1 class="rv-search__heading">
 				<?php

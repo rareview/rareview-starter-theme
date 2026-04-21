@@ -3,6 +3,32 @@
  *
  * @author Rareview <hello@rareview.com>
  */
+
+/* Skip link — visible only on focus for keyboard users. */
+.rv-skip-link {
+	position: fixed;
+	top: -100%;
+	left: 50%;
+	z-index: 100000;
+	padding: 0.8rem 1.6rem;
+	font-size: 1rem;
+	font-weight: 700;
+	color: $color-background;
+	text-decoration: none;
+	background: $color-body;
+	border-radius: $border-radius-default;
+	transform: translateX(-50%);
+	opacity: 0;
+	transition: top $transition-default, opacity $transition-default;
+
+	&:focus {
+		top: 1rem;
+		opacity: 1;
+		outline: 2px solid $color-primary;
+		outline-offset: 2px;
+	}
+}
+
 body {
 	font-family: $font-family;
 	font-weight: $font-weight;

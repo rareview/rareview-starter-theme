@@ -25,7 +25,10 @@
     "lint:css": "npm run --prefix wp-content/themes/rv-starter lint:css",
     "lint:php": "npm run --prefix wp-content/themes/rv-starter lint:php",
     "test": "npm run --prefix wp-content/themes/rv-starter test",
-    "clean-dist": "npm run --prefix wp-content/themes/rv-starter clean-dist"
+    "clean-dist": "npm run --prefix wp-content/themes/rv-starter clean-dist",
+    "setup": "node scripts/setup.mjs",
+    "design-system": "npm run --prefix wp-content/themes/rv-starter design-system --",
+    "create-block": "npm run --prefix wp-content/themes/rv-starter create-block --"
   },
   "author": {
     "name": "Rareview",
@@ -39,8 +42,8 @@
     "npm": ">=10.0.0"
   },
   "devDependencies": {
-    "husky": "9.1.7",
-    "lint-staged": "15.2.2",
-    "npm-run-all2": "^5.0.0"
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "npm-run-all2": "^8.0.4"
   }
 }

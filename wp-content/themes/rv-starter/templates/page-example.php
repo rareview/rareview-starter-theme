@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-	<main class="rv-page-example">
+		<main id="main" class="rv-page-example" tabindex="-1">
 		<?php
 		if ( have_posts() ) :
 			while ( have_posts() ) : the_post();

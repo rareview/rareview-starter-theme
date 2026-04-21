@@ -1,5 +1,14 @@
 /**
- * Editor Styles overrides.
+ * Editor Content Overrides.
+ *
+ * Styles that apply inside the block editor iframe (the block content canvas).
+ * Use this for typography, color, spacing, and layout consistency
+ * between the editor and the frontend.
+ *
+ * Enqueued via `enqueue_block_assets` (see `includes/blocks.php`), which is
+ * the recommended hook for Editor content assets as of WordPress 6.3.
+ *
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/#editor-content-scripts-and-styles
  *
  * @author Rareview <hello@rareview.com>
  */
