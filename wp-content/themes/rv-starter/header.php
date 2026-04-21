@@ -17,11 +17,11 @@
 	</head>
 	<body <?php body_class(); ?>>
 		<?php wp_body_open(); ?>
-		<a class="rv-skip-link screen-reader-text" href="#main">
+		<a class="rv-skip-link" href="#main">
 			<?php esc_html_e( 'Skip to content', 'rv-starter-theme' ); ?>
 		</a>
 
-		<header class="rv-header" role="banner">
+		<header class="rv-header">
 			<?php if ( has_nav_menu( 'primary' ) ) : ?>
 				<nav class="rv-header__nav" aria-label="<?php esc_attr_e( 'Primary Navigation', 'rv-starter-theme' ); ?>">
 					<?php

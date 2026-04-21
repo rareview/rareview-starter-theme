@@ -5,14 +5,34 @@
 The theme uses a Service Provider pattern for initializing classes:
 
 ```
-App.php → ServiceProviders → Services
+functions.php → App.php → ServiceProviders initialized
 ```
 
-- `App.php` — bootstraps the application, registers service providers
-- `ServiceProviders/` — register hooks, filters, and services
-  - `RestServiceProvider.php` — REST API endpoints
-  - `ThemeServiceProvider.php` — theme-specific services
-- `Services/` — business logic classes
+- `functions.php` — loads Composer autoloader and instantiates `App`
+- `App.php` — instantiates each provider in `App::$service_providers`
+- Service providers are organized by domain under `includes/classes/`:
+  - `Rest/RestServiceProvider.php` — boots REST-related services
+  - `Theme/ThemeServiceProvider.php` — boots theme/admin services
+  - ...
+- Services register their own WordPress hooks in their constructors
+
+Current class structure:
+
+```
+includes/classes/
+├── App.php
+├── Rest/
+│   ├── RestServiceProvider.php
+│   ├── SocialNetworksRestEndpoint.php
+│   └── Add new feature
+├── Theme/
+│   ├── ThemeServiceProvider.php
+│   ├── ThemeOptions.php
+│   └── Add new feature
+└── NewDomain/                  # Add new service provider folder/group here.
+    ├── NewDomainServiceProvider.php
+    └── NewFeature.php
+```
 
 ## PSR-4 Autoloading
 
@@ -41,8 +61,8 @@ Non-class code is organized as namespaced functions in `includes/`:
 All hook callbacks use a namespace helper:
 
 ```php
-$n = static function ( $function ) {
-    return __NAMESPACE__ . "\\$function";
+$n = static function ( $callback_name ) {
+    return __NAMESPACE__ . "\\$callback_name";
 };
 
 add_action( 'init', $n( 'init' ) );

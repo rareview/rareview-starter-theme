@@ -63,8 +63,8 @@ Entry points are defined in the theme's `package.json` under `10up-toolkit.entry
 - `frontend` — front-end JS and CSS
 - `admin` — admin-only styles and scripts
 - `shared` — code shared between front-end and admin
-- `editor-canvas-overrides` — styles for the editor canvas iframe
-- `editor-frame-overrides` — styles for the editor UI outside the canvas
+- `editor-content-overrides` — styles for block/content rendering inside the editor iframe
+- `editor-ui-overrides` — styles for editor UI outside the content iframe
 - `styleguide` — styleguide page assets
 - `core-block-overrides` — core block modifications
 

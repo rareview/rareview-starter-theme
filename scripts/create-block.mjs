@@ -49,7 +49,7 @@ async function findThemeConfig() {
 		if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
 
 		try {
-			const pkgPath = resolve(themesDir, entry.name, 'package.json');
+			const pkgPath = resolve(themesDir, entry.name, 'package.json'); // todo: Fix this so it doesn't just pick the first theme with package.json, which may not be our starter theme.
 			const raw = await readFile(pkgPath, 'utf-8');
 			const pkg = JSON.parse(raw);
 
@@ -142,6 +142,8 @@ function generateBlockJson(config) {
 
 /**
  * Generate edit.js (editor component)
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateEditJs(config) {
 	const componentName = toPascalCase(config.slug) + 'Edit';
@@ -172,6 +174,8 @@ export default ${componentName};
 
 /**
  * Generate index.js (block registration)
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateIndexJs(config) {
 	let imports = `/**
@@ -210,6 +214,8 @@ registerBlockType(metadata.name, {
 
 /**
  * Generate save.js for static blocks
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateSaveJs(config) {
 	const componentName = toPascalCase(config.slug) + 'Save';
@@ -240,6 +246,8 @@ export default ${componentName};
 
 /**
  * Generate markup.php for dynamic blocks
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateMarkupPhp(config) {
 	return `<?php
@@ -263,6 +271,8 @@ function generateMarkupPhp(config) {
 
 /**
  * Generate style.scss
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateStyleScss(config) {
 	return `/**
@@ -288,27 +298,13 @@ async function main() {
 	const themeConfig = await findThemeConfig();
 
 	let slug, title, description, category, renderType;
+	const rl = createInterface({ input: stdin, output: stdout });
 
-	if (NAME_ARG) {
-		slug = toSlug(NAME_ARG);
-		title = toTitle(slug);
-
-		const rl = createInterface({ input: stdin, output: stdout });
-		try {
-			description = await rl.question(`  Block description: ${color.dim(`(${title})`) } `);
-			description = description.trim() || title;
-
-			const catAnswer = await rl.question(`  Category ${color.dim('(theme/media/text/design)')} ${color.dim('(theme)')} `);
-			category = catAnswer.trim() || 'theme';
-
-			const renderAnswer = await rl.question(`  Render type ${color.dim('(static/dynamic)')} ${color.dim('(dynamic)')} `);
-			renderType = renderAnswer.trim() || 'dynamic';
-		} finally {
-			rl.close();
-		}
-	} else {
-		const rl = createInterface({ input: stdin, output: stdout });
-		try {
+	try {
+		if (NAME_ARG) {
+			slug = toSlug(NAME_ARG);
+			title = toTitle(slug);
+		} else {
 			const nameInput = await rl.question('  Block name (kebab-case): ');
 			if (!nameInput.trim()) {
 				console.log(color.red('\n  Block name is required.\n'));
@@ -319,18 +315,18 @@ async function main() {
 
 			const titleInput = await rl.question(`  Block title: ${color.dim(`(${title})`)} `);
 			title = titleInput.trim() || title;
-
-			const descInput = await rl.question(`  Block description: ${color.dim(`(${title})`)} `);
-			description = descInput.trim() || title;
-
-			const catAnswer = await rl.question(`  Category ${color.dim('(theme/media/text/design)')} ${color.dim('(theme)')} `);
-			category = catAnswer.trim() || 'theme';
-
-			const renderAnswer = await rl.question(`  Render type ${color.dim('(static/dynamic)')} ${color.dim('(dynamic)')} `);
-			renderType = renderAnswer.trim() || 'dynamic';
-		} finally {
-			rl.close();
 		}
+
+		const descInput = await rl.question(`  Block description: ${color.dim(`(${title})`)} `);
+		description = descInput.trim() || title;
+
+		const catAnswer = await rl.question(`  Category ${color.dim('(theme/media/text/design)')} ${color.dim('(theme)')} `);
+		category = catAnswer.trim() || 'theme';
+
+		const renderAnswer = await rl.question(`  Render type ${color.dim('(static/dynamic)')} ${color.dim('(dynamic)')} `);
+		renderType = renderAnswer.trim() || 'dynamic';
+	} finally {
+		rl.close();
 	}
 
 	const config = {

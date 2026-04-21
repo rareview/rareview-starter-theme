@@ -48,8 +48,7 @@
   "devDependencies": {
     "10up-toolkit": "^6.5.1",
     "autoprefixer": "^10.4.27",
-    "eslint": "^8.57.1",
-    "jest-environment-jsdom": "^29.7.0"
+    "eslint": "^8.57.1"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
@@ -59,8 +58,8 @@
     "useBlockAssets": true,
     "entry": {
       "admin": "./assets/js/admin/admin.js",
-      "editor-canvas-overrides": "./assets/js/admin/editor-canvas-overrides.js",
-      "editor-frame-overrides": "./assets/js/admin/editor-frame-overrides.js",
+      "editor-content-overrides": "./assets/js/admin/editor-content-overrides.js",
+      "editor-ui-overrides": "./assets/js/admin/editor-ui-overrides.js",
       "frontend": "./assets/js/frontend/frontend.js",
       "shared": "./assets/js/shared/shared.js",
       "styleguide": "./assets/js/styleguide/styleguide.js",
