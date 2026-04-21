@@ -18,7 +18,7 @@
 - if `wp-config.php` does not exist copy `wp-config.local.php` to `wp-config.php`.
 - Login at [http://rv-starter.local](http://rv-starter.local) using `lando` and `password`.
 
-If you change the database type or version in `.lando.yml`, run `lando destroy -y` and then `lando start` instead of `lando rebuild`.
+If you change the database type or version in `.lando.yml`, run `lando destroy -y` **(will delete database)** and then `lando start` instead of `lando rebuild`.
 
 Older Lando releases may still try to pull deprecated `bitnami/mysql:*` images and fail with `manifest unknown`. If that happens, upgrade Lando before starting the app.
 
