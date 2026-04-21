@@ -143,7 +143,7 @@ function generateBlockJson(config) {
 /**
  * Generate edit.js (editor component)
  *
- * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateEditJs(config) {
 	const componentName = toPascalCase(config.slug) + 'Edit';
@@ -174,8 +174,8 @@ export default ${componentName};
 
 /**
  * Generate index.js (block registration)
- * 
- * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateIndexJs(config) {
 	let imports = `/**
@@ -214,8 +214,8 @@ registerBlockType(metadata.name, {
 
 /**
  * Generate save.js for static blocks
- * 
- * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateSaveJs(config) {
 	const componentName = toPascalCase(config.slug) + 'Save';
@@ -246,8 +246,8 @@ export default ${componentName};
 
 /**
  * Generate markup.php for dynamic blocks
- * 
- * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateMarkupPhp(config) {
 	return `<?php
@@ -271,8 +271,8 @@ function generateMarkupPhp(config) {
 
 /**
  * Generate style.scss
- * 
- * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point.
+ *
+ * todo: extract this to a real example block in the theme — one source of truth for the scaffold, a live example for developers, and an easy place to maintain the starting point, easier for AI to understand.
  */
 function generateStyleScss(config) {
 	return `/**
