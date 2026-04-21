@@ -62,7 +62,6 @@
       "editor-ui-overrides": "./assets/js/admin/editor-ui-overrides.js",
       "frontend": "./assets/js/frontend/frontend.js",
       "shared": "./assets/js/shared/shared.js",
-      "styleguide": "./assets/js/styleguide/styleguide.js",
       "core-block-overrides": "./includes/core-block-overrides.js"
     },
     "devURL": "http://rv-starter.local/"

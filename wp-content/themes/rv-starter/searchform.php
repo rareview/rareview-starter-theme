@@ -13,7 +13,7 @@
 		<label for="search-field">
 			<?php echo esc_html_x( 'Search for:', 'label', 'rv-starter-theme' ); ?>
 		</label>
-		<input itemprop="query-input" type="search" id="search-field" value="<?php echo get_search_query(); ?>" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'rv-starter-theme' ); ?>" name="s" />
+		<input itemprop="query-input" type="search" id="search-field" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php echo esc_attr_x( 'Search &hellip;', 'placeholder', 'rv-starter-theme' ); ?>" name="s" />
 		<input type="submit" value="<?php echo esc_attr_x( 'Submit', 'submit button', 'rv-starter-theme' ); ?>">
 	</form>
 </div>

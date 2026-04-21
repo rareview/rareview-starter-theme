@@ -3,6 +3,8 @@
 /**
  * Buttons block global style.
  *
+ * Makes global button styles compatible with block editor options.
+ *
  * @author Rareview <hello@rareview.com>
  */
 
@@ -13,19 +15,19 @@
 
 .wp-block-button .wp-block-button__link,
 .wp-block-button.is-style-default .wp-block-button__link {
-	@include button;
+	@include button-primary;
 }
 
 .wp-block-button.is-style-default-outline .wp-block-button__link {
-	@include button($outline: "true");
+	@include button-primary($outline: true);
 }
 
 .wp-block-button.is-style-secondary .wp-block-button__link {
-	@include button($style: "secondary");
+	@include button-secondary;
 }
 
 .wp-block-button.is-style-secondary-outline .wp-block-button__link {
-	@include button($style: "secondary", $outline: "true");
+	@include button-secondary($outline: true);
 }
 
 .block-editor-block-list__block.wp-block-buttons .wp-block-button__link {
@@ -33,7 +35,7 @@
 	vertical-align: middle;
 }
 
-/* Disabled styles. */
+/* Additional "disabled" styles for button blocks. */
 div.wp-block-button.disabled,
 .wp-block-button.is-style-default-white.disabled,
 .wp-block-button.is-style-pill-white.disabled {
