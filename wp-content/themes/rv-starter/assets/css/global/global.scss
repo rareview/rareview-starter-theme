@@ -16,10 +16,10 @@
 	color: $color-background;
 	text-decoration: none;
 	background: $color-body;
-	border-radius: $border-radius-default;
+	border-radius: $default-border-radius;
 	transform: translateX(-50%);
 	opacity: 0;
-	transition: top $transition-default, opacity $transition-default;
+	transition: top $default-transition, opacity $default-transition;
 
 	&:focus {
 		top: 1rem;
