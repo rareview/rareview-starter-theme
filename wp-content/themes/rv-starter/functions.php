@@ -5,8 +5,6 @@
  * @package RVStarterTheme
  */
 
-use RVStarterTheme\App;
-
 // Useful global constants.
 define( 'RV_STARTER_THEME_VERSION', '0.1.0' );
 define( 'RV_STARTER_THEME_TEMPLATE_URL', get_template_directory_uri() );
@@ -37,13 +35,40 @@ require_once RV_STARTER_THEME_INC . 'helpers.php';
 RVStarterTheme\Core\setup();
 RVStarterTheme\Blocks\setup();
 
-// Require Composer autoloader if it exists.
+// Require Composer autoloader if it exists (see README.md for setup).
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
-	new App();
+	new RVStarterTheme\App();
 } else {
-	/** @noinspection ForgottenDebugOutputInspection */ // phpcs:ignore
-	wp_die( 'You must install Composer packages before running this theme.' );
+	add_action(
+		'admin_notices',
+		static function (): void {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+			$theme_name = 'RV Starter';
+			echo '<div class="notice notice-error"><p>';
+			printf(
+				/* translators: %s: theme name */
+				esc_html__(
+					'%s is running without Composer dependencies.
+				Please run:',
+					'rv-starter-theme'
+				),
+				esc_html( $theme_name )
+			);
+			echo '</p><p><code>composer install';
+			echo '</code> ';
+			printf(
+				/* translators: %s: npm command */
+				esc_html__( 'then %s to build assets (from this theme folder).', 'rv-starter-theme' ),
+				'<code>npm install &amp;&amp; npm run build</code>'
+			);
+			echo ' ';
+			esc_html_e( 'See the theme README for full setup steps.', 'rv-starter-theme' );
+			echo '</p></div>';
+		}
+	);
 }
 
 if ( ! function_exists( 'wp_body_open' ) ) {

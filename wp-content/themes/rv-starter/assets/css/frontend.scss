@@ -16,7 +16,8 @@
 @import "abstracts/mixins/input-fields/input-checkbox";
 @import "abstracts/mixins/input-fields/input-radio";
 
-@import "abstracts/mixins/buttons";
+@import "abstracts/mixins/buttons/primary";
+@import "abstracts/mixins/buttons/secondary";
 @import "abstracts/mixins/container";
 @import "abstracts/mixins/cover-image";
 @import "abstracts/mixins/headings";
@@ -33,7 +34,6 @@
 @import "global/alignment";
 @import "global/fluidness";
 @import "global/global";
-@import "global/typography";
 @import "global/utilities";
 
 @import "plugins/jetpack";

@@ -1,107 +1,62 @@
-# RV Starter Theme (to be updated!)
+# RV Starter Theme
 
-See how to develop locally RV Starter theme at [Local Development Setup](../../../.local/docs/local-development-setup.md) and [Theme Development](../../../.local/docs/theme-development.md).
+## Intro
 
-## Working with `theme.json`
-The default theme scaffold now ships with a very basic version of the `theme.json` file. This is to ensure all the side effects of introducing this file are there from the beginning of a project and therefore set projects up for success if they want to adopt more features through the `theme.json` mechanism.
+Welcome to the RV Starter Theme, based on the [10Up Scaffold Theme](https://github.com/10up/wp-scaffold/tree/trunk/themes/10up-theme),
+a best base for high-end WordPress builds.
 
-### Basics of `theme.json`
-The `theme.json` file allows you to take control of your blocks in both the editor and the frontend. The file is structured in a `settings` and a `styles` section where you can define options on a global level and then override them / adjust them on a block level.
+Compiling, minifying, and bundling JS/CSS is handled by [10up Toolkit](https://github.com/10up/10up-toolkit).
 
-The values that you provide in the `theme.json` file will be added both on the frontend and in the editor as [CSS custom properties following a fixed naming scheme](https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-json/#css-custom-properties-presets-custom).
+For Docker, Lando, hosts file, and other project-wide local setup, see the root [`README.md`](../../../README.md).
 
-### 🙋 FAQ
-<details>
-<summary>Where has the `.wp-block-group__inner-container` gone?</summary>
-<br />
+## Requirements
+1. PHP 8.2+
+2. Composer
+3. Node.js (current LTS)
 
-Core has made the decision to drop the additional inner container of the group block. The rationale behind that decision is that the additional `div` semantically isn't necessary and modern layout techniques don't rely on it anymore. The container is still present for _legacy_ themes (themes without a `theme.json` file).
 
-For new builds it is suggested that we use the `settings.layout.contentWidth` and `settings.layout.wideWidth` options of the `theme.json` for this. The group block has an option in the editor to allow editors to inherit the width for its inner elements.
+## Setup
 
-<img width="1904" alt="Screen Shot 2021-10-20 at 12 45 15" src="https://user-images.githubusercontent.com/20684594/138079160-44a28c10-417b-4769-905d-cd5c104e78c0.png">
+After cloning or copying this theme, install dependencies **from the theme directory** (`wp-content/themes/rv-starter`):
 
-```json
-{
-    "version": 1,
-    "settings": {
-        "layout": {
-            "contentSize": "800px",
-            "wideSize": "900px"
-        }
-    }
-}
+1. Run **`composer install`** to install PHP tools and autoload. (`vendor/`)
+2. Run **`npm install`** to install JS/CSS dependencies (`node_modules/`)
+3. Choose one of the options to build assets (`dist/`)
+   1. **`npm run dev`** — Just watch for changes and rebuild as you work.
+   2. **`npm run watch`** — Watch for changes and rebuild as you work, with changes automatically reflecting in the browser (also called hot reload, browser sync etc.).
+   3. **`npm run build`** — For one-off build. This is how the assets will be built on the server on deployment.
+
+## Linting
+
+```bash
+npm run lint        # all
+npm run lint:js
+npm run lint:json
+npm run lint:css
+npm run lint:php
 ```
 
-For this, there isn't even any custom CSS needed.
+## Formatting
 
-There isn't the best story for responsive overrides in here but the recommendation at this point in time would be using `clamp` as we have officially dropped the IE11 support and that would allow us to have a fluid with scale here for the elements.
-[https://caniuse.com/css-math-functions](https://caniuse.com/css-math-functions)
-
-
-If we need to use different content widths here we can stick to the core way and apply the `max-width` settings to the children of the group block instead of the wrapper element.
-
-```css
-.wp-block-group > * {
-    max-width: var(--site-max-width);
-}
+```bash
+npm run format      # all
+npm run format:js
+npm run format:json
+npm run format:css
+npm run format:php
 ```
 
-If there are instances where we really cannot get by with styling the child blocks directly there is a hook in PHP that allows us to filter the block editor settings and therefore allows us to override the underlying `supportsLayout` property:
+## Global design variables
 
-```php
-add_filter(
-	'block_editor_settings_all',
-	'remove_layout_support_from_editor_settings'
-);
+This starter theme is not FSE theme, but it is a Gutenberg / block editor theme, therefore it leverages the theme.json file to keep it compatible with the block editor.
 
-/**
- * This function sets the `supportsLayout` option in the editor settings to false
- * Therefore it adds back the `wp-block-group__inner-container` element
- *
- * As a side effect of this change the `contentWidth` and `wideWidth` defined in the theme.json
- * no longer have any effect and all the blocks in the editor won't have any width restrictions
- * applied to them. So that needs to do be manually done by the theme.
- *
- * @param array $settings block editor settings
- */
-function remove_layout_support_from_editor_settings( $settings ) {
-	$settings['supportsLayout'] = false;
-	return $settings;
-}
-```
-</details>
+It uses SCSS variables in the code, but the values and options that suppose to be compatible with the block editor are defined in the `theme.json` first, and the SCSS variables then reference those theme.json values.
 
-<details>
-<summary>Where can I find documentation for `theme.json`</summary>
+Use this variable-mapping spreadsheet to align globals with your design source (e.g. Figma):
+https://docs.google.com/spreadsheets/d/1zmItLvX_qZ0Lz713tzVgxnR9WjOd1fWdckj7hA8aM_E/edit?usp=sharing
 
-### Core Handbook
-You can find the Core Documentation here: [https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-json/](https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-json/). This should give you an overview of the options that are available and be a starting point for you to explore. In the Code examples you will get ones for `WordPress` and ones for `Gutenberg`. The ones for WordPress always are for the version in Core and therefore what we would want to look at.
+It covers layout, typography scales, headings, color palette, breakpoints, and more. Driving global styles from these tokens helps Gutenberg compatibility, fluid responsiveness, and related features work smoothly.
 
-### Code completion and validation
-Additionally, you can add inline documentation & code completion to your editor by adding the `JSON Schema` to your editor.
+## Blocks and `@wordpress/*` packages
 
-For VSCode you can add the following to your Settings. But other editors also support this and you can find more information on the topic here: [https://json.schemastore.org](https://json.schemastore.org)
-```json
-{
-	"json.schemas": [
-		{
-			"fileMatch": [
-				"/theme.json"
-			],
-			"url": "https://json.schemastore.org/theme-v1.json"
-		}
-	],
-}
-```
-
-</details>
-
-# Performance Utilities
-The theme now supports `ct.css`. Uh what?
-`ct.css` is a diagnostic stylesheet that exposes potential performance issues in your pages `<head>` element. `ct.css` will return color-coded visual cues in regard to render blocking elements in the theme. This provides a great way for engineers to debug and identify problem resources.
-
-You can activate `ct.css` on any page load by including `?debug_perf=1` in the URL.
-
-Considering we do not want to load script everywhere throughout the theme, we have provided engineers with a way to trigger the `ct.css` output by using a query param.
-
+If you build Gutenberg blocks and import `@wordpress/*` packages, you do not need to install those manually—10up-toolkit wires them in for this workflow.

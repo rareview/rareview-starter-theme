@@ -19,7 +19,7 @@ class RestServiceProvider {
 	 * @var array
 	 */
 	public static array $services = [
-		SocialNetworksRestEndpoint::class,
+		AnalyticsIdsRestEndpoint::class,
 	];
 
 	/**

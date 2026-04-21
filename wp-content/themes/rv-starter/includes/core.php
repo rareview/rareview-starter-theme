@@ -8,6 +8,7 @@
 namespace RVStarterTheme\Core;
 
 use RVStarterTheme\Utility;
+use RVStarterTheme\App;
 
 /**
  * Set up theme defaults and register supported WordPress features.
@@ -27,6 +28,7 @@ function setup(): void {
 	add_action( 'admin_enqueue_scripts', $n( 'admin_scripts' ) );
 	add_action( 'enqueue_block_editor_assets', $n( 'core_block_overrides' ) );
 	add_action( 'wp_enqueue_scripts', $n( 'styles' ) );
+	add_action( 'wp_enqueue_scripts', $n( 'analytics_tags' ) );
 	add_action( 'wp_head', $n( 'js_detection' ), 0 );
 	add_action( 'wp_head', $n( 'embed_ct_css' ), 0 );
 	add_action( 'wp_enqueue_scripts', $n( 'assets_cleanup' ) );
@@ -125,16 +127,6 @@ function scripts(): void {
 		true
 	);
 
-	if ( is_page_template( 'templates/page-styleguide.php' ) ) {
-		wp_enqueue_script(
-			'styleguide',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/js/styleguide.js',
-			Utility\get_asset_info( 'styleguide', 'dependencies' ),
-			Utility\get_asset_info( 'styleguide', 'version' ),
-			true
-		);
-	}
-
 	/**
 	 * Enqueuing shared.js is required to get css hot reloading working in the frontend
 	 * If you're not shipping any shared js wrap this enqueue in a SCRIPT_DEBUG check.
@@ -227,15 +219,6 @@ function styles(): void {
 		[],
 		Utility\get_asset_info( 'frontend', 'version' )
 	);
-
-	if ( is_page_template( 'templates/page-styleguide.php' ) ) {
-		wp_enqueue_style(
-			'styleguide',
-			RV_STARTER_THEME_TEMPLATE_URL . '/dist/css/styleguide.css',
-			[],
-			Utility\get_asset_info( 'styleguide-style', 'version' )
-		);
-	}
 }
 
 /**
@@ -247,6 +230,83 @@ function styles(): void {
  */
 function js_detection(): void {
 	echo "<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>\n";
+}
+
+/**
+ * Enqueue Google Tag Manager and/or Google Analytics scripts when IDs are configured in Theme Settings.
+ *
+ * GTM and GA use different loading mechanisms:
+ * - GTM: inline IIFE in <head> + noscript <iframe> after <body> via wp_body_open.
+ * - GA:  async gtag.js loaded via wp_enqueue_script (only when GTM is not configured).
+ *
+ * When GTM is active, GA should be configured as a tag inside GTM, and in that case there is no need to enter both IDs.
+ *
+ * @return void
+ */
+function analytics_tags(): void {
+	$gtm_id = sanitize_analytics_id( get_option( App::ANALYTICS_GTM_ID_OPTION ) );
+	$ga_id  = sanitize_analytics_id( get_option( App::ANALYTICS_GA_ID_OPTION ) );
+
+	if ( ! $gtm_id && ! $ga_id ) {
+		return;
+	}
+
+	if ( $gtm_id ) {
+		// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_register_script( 'google-gtm', false, [], null, false );
+		wp_enqueue_script( 'google-gtm' );
+
+		wp_add_inline_script(
+			'google-gtm',
+			sprintf(
+				"(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','%s');",
+				esc_js( $gtm_id )
+			)
+		);
+
+		add_action(
+			'wp_body_open',
+			function () use ( $gtm_id ): void {
+				printf(
+					'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=%s" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>',
+					esc_attr( $gtm_id )
+				);
+			}
+		);
+
+		return;
+	}
+
+	// Load GA directly only when GTM is not configured, because otherwise GA is already set within GTM.
+	wp_enqueue_script( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		'google-gtag',
+		'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $ga_id ),
+		[],
+		null,
+		false
+	);
+
+	wp_script_add_data( 'google-gtag', 'script_execution', 'async' );
+
+	wp_add_inline_script(
+		'google-gtag',
+		"window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', '" . esc_js( $ga_id ) . "');",
+		'before'
+	);
+}
+
+/**
+ * Sanitize analytics ID values.
+ *
+ * @param mixed $id Analytics identifier value from options.
+ * @return string
+ */
+function sanitize_analytics_id( mixed $id ): string {
+	if ( ! is_string( $id ) ) {
+		return '';
+	}
+
+	return preg_replace( '/[^A-Za-z0-9\-_]/', '', $id );
 }
 
 /**

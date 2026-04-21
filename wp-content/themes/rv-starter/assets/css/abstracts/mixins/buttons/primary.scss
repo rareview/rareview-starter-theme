@@ -1,0 +1,64 @@
+/**
+ * Button primary style mixin.
+ *
+ * See rv-starter/assets/css/blocks/button.scss
+ * See button, input[type="button"], input[type="submit"], button[type="submit"] etc. in rv-starter/assets/css/global/global.scss
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@mixin button-primary($outline: false) {
+	color: $button-primary-font-color;
+	background-color: $button-primary-background-color;
+	font-size: $button-primary-font-size;
+	font-weight: $button-primary-font-weight;
+	letter-spacing: $button-primary-letter-spacing;
+	text-transform: $button-primary-text-transform;
+	border: $default-border-width solid $button-primary-background-color;
+	border-radius: $button-primary-border-radius;
+	padding: $button-primary-padding-y $button-primary-padding-x;
+	height: $default-input-field-height;
+	text-align: center;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	text-decoration: none;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: background-color $default-transition, color $default-transition, filter $default-transition;
+
+	@if $outline == true {
+		background-color: transparent;
+		color: $button-primary-background-color;
+	}
+
+	/* Hover. */
+	&:not(:disabled, .disabled):hover {
+		&,
+		&:not(:disabled, .disabled) & {
+			filter: brightness(1.15);
+
+			@if $outline == true {
+				background-color: $button-primary-background-color;
+				border-color: $button-primary-background-color;
+				color: $button-primary-font-color;
+			}
+		}
+	}
+
+	/* Disabled */
+	&:disabled,
+	&.disabled {
+		&,
+		&:disabled &,
+		&.disabled & {
+			opacity: $disabled-opacity;
+			cursor: not-allowed;
+		}
+	}
+}
+
+.rv-button--primary,
+.rv-button {
+	@include button-primary;
+}

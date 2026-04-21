@@ -2,8 +2,8 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from 'react';
 import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
-import { SOCIAL_NETWORK_ENDPOINT, SOCIAL_NETWORK_STATE_KEY } from '../../shared/constant';
-import SocialNetworks from './settings/SocialNetworks';
+import { ANALYTICS_IDS_ENDPOINT, ANALYTICS_IDS_STATE_KEY } from '../../shared/constant';
+import AnalyticsIds from './settings/AnalyticsIds';
 
 import './style.scss';
 
@@ -62,12 +62,12 @@ const ThemeOptions = () => {
 	};
 
 	const submitChanges = () => {
-		updateAPI(SOCIAL_NETWORK_ENDPOINT, data[SOCIAL_NETWORK_STATE_KEY]);
+		updateAPI(ANALYTICS_IDS_ENDPOINT, data[ANALYTICS_IDS_STATE_KEY]);
 	};
 
 	return (
 		<div className="rv-starter-theme-options rv-starter-theme-options__main">
-			<SocialNetworks updateData={changeData} isOpen />
+			<AnalyticsIds updateData={changeData} isOpen />
 
 			<Button className="button button-primary" onClick={submitChanges}>
 				{isLoading ? __('Saving...', 'rv-starter-theme') : __('Save', 'rv-starter-theme')}
