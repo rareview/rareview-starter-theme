@@ -134,13 +134,20 @@ $color-grey-light: var(--wp--preset--color--grey-light);
 $color-white: var(--wp--preset--color--white);
 
 /* Colors - Colored. */
-$color-green: var(--wp--preset--color--green);
-$color-purple: var(--wp--preset--color--purple);
-$color-orange: var(--wp--preset--color--orange);
+$color-brand-1: var(--wp--preset--color--brand-1);
+$color-brand-2: var(--wp--preset--color--brand-2);
+$color-brand-3: var(--wp--preset--color--brand-3);
+$color-brand-4: var(--wp--preset--color--brand-4);
+$color-brand-5: var(--wp--preset--color--brand-5);
+$color-brand-6: var(--wp--preset--color--brand-6);
+$color-brand-7: var(--wp--preset--color--brand-7);
+$color-brand-8: var(--wp--preset--color--brand-8);
+$color-brand-9: var(--wp--preset--color--brand-9);
+$color-brand-10: var(--wp--preset--color--brand-10);
 
 /* Colors - Theme colors. */
-$color-primary: $color-green;
-$color-secondary: $color-purple;
+$color-primary: $color-brand-1;
+$color-secondary: $color-brand-2;
 $color-background: $color-black;
 $color-body: $color-white;
 
