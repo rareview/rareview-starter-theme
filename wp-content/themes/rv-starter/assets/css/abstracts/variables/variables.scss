@@ -168,8 +168,8 @@ $link-text-decoration: underline;
 $link-text-decoration-hover: underline;
 $link-font-weight: inherit;
 $link-letter-spacing: normal;
-$color-link: $color-orange;
-$color-link-hover: color-mix(in srgb, $color-orange 80%, white);
+$color-link: $color-primary;
+$color-link-hover: color-mix(in srgb, $color-primary 80%, white);
 
 /* Buttons - Primary style. */
 $button-primary-font-color: $color-dark;
