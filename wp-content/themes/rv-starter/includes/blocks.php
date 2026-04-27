@@ -146,7 +146,7 @@ function enqueue_editor_override_asset( string $handle ): void {
 		Utility\get_asset_info( $handle, 'version' )
 	);
 
-	if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+	if ( 'editor-content-overrides' === $handle || ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ) {
 		wp_enqueue_script(
 			$handle,
 			RV_STARTER_THEME_TEMPLATE_URL . "/dist/js/{$handle}.js",

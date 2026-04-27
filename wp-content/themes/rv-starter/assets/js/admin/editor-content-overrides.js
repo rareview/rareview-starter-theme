@@ -7,3 +7,6 @@
  * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/#editor-content-scripts-and-styles
  */
 import '../../css/editor-content-overrides.scss';
+import fluidInit from '../shared/fluid';
+
+fluidInit();
