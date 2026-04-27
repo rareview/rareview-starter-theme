@@ -13,9 +13,9 @@ WordPress generates CSS custom properties from `theme.json`. SCSS variables refe
 
 ```scss
 // variables.scss references theme.json via CSS custom properties
-$font-family: var(--wp--custom--typography--font-family);
+$body-font-family: var(--wp--custom--typography--font-family);
 $color-black: var(--wp--preset--color--black);
-$font-size-desktop-heading-1: var(--wp--custom--font-size--desktop--heading-1);
+$heading-1-font-size-desktop: var(--wp--custom--font-size--desktop--heading-1);
 ```
 
 This means colors and font sizes only need to be updated in `theme.json` — the SCSS variables automatically pick up the changes.
@@ -42,8 +42,8 @@ npm run design-system -- --dry-run
 ```json
 {
   "colors": {
-    "primary": { "name": "Blue", "slug": "blue", "color": "#3B82F6" },
-    "secondary": { "name": "Purple", "slug": "purple", "color": "#8B5CF6" }
+    "primary": { "name": "Brand Color 1", "slug": "brand-1", "color": "#00b0be" },
+    "secondary": { "name": "Brand Color 2", "slug": "brand-2", "color": "#ffcb2f" }
   },
   "typography": {
     "fontFamily": "Inter, sans-serif",
@@ -69,9 +69,9 @@ Defined in `theme.json` under `settings.color.palette`. Available in the block e
 Map theme roles to palette colors:
 
 ```scss
-$color-primary: $color-green;
-$color-secondary: $color-purple;
-$color-link: $color-orange;
+$color-primary: $color-brand-1;
+$color-secondary: $color-brand-2;
+$link-color: $color-brand-1;
 $color-background: $color-black;
 $color-body: $color-white;
 ```

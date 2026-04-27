@@ -1,11 +1,11 @@
 @mixin background-dark-radio() {
 	&:checked + label::before,
 	&:not(:checked) + label::before {
-		border: 1px solid $color-input-bg-dark-border;
+		border: 1px solid $input-dark-border-color;
 	}
 
 	&:not(:checked) + label::after {
-		background-color: $color-input-bg-dark-border;
+		background-color: $input-dark-border-color;
 	}
 
 	&:checked + label::after {
@@ -17,6 +17,6 @@
 	}
 
 	+ label {
-		color: $color-input-bg-dark-text;
+		color: $input-dark-text-color;
 	}
 }

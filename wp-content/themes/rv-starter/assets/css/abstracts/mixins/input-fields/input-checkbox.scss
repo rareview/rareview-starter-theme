@@ -1,6 +1,6 @@
 @mixin input-checkbox($background: "light") {
 	cursor: pointer;
-	border: 1px solid $color-input-bg-light-border;
+	border: 1px solid $input-light-border-color;
 	appearance: none;
 	height: 25px;
 	margin-right: 15px;
