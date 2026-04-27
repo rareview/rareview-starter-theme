@@ -16,53 +16,88 @@
         {
           "name": "Black",
           "slug": "black",
-          "color": "#000"
+          "color": "#000000"
         },
         {
           "name": "Dark",
           "slug": "dark",
-          "color": "#211d1e"
+          "color": "#1F1F1F"
         },
         {
           "name": "Dark Grey",
           "slug": "dark-grey",
-          "color": "#4a4a4a"
+          "color": "#404040"
         },
         {
           "name": "Grey",
           "slug": "grey",
-          "color": "#7f7f7f"
+          "color": "#808080"
         },
         {
           "name": "Grey Light",
           "slug": "grey-light",
-          "color": "#fbfbfb"
+          "color": "#BFBFBF"
         },
         {
           "name": "White",
           "slug": "white",
-          "color": "#fff"
+          "color": "#ffffff"
         },
         {
-          "name": "Green",
-          "slug": "green",
-          "color": "#00e8cc"
+          "name": "Brand Color 1",
+          "slug": "brand-1",
+          "color": "#00b0be"
         },
         {
-          "name": "Purple",
-          "slug": "purple",
-          "color": "#ab71ff"
+          "name": "Brand Color 2",
+          "slug": "brand-2",
+          "color": "#ffcb2f"
         },
         {
-          "name": "Orange",
-          "slug": "orange",
-          "color": "#fb3"
+          "name": "Brand Color 3",
+          "slug": "brand-3",
+          "color": "#00585f"
+        },
+        {
+          "name": "Brand Color 4",
+          "slug": "brand-4",
+          "color": "#5794f7"
+        },
+        {
+          "name": "Brand Color 5",
+          "slug": "brand-5",
+          "color": "#afbccf"
+        },
+        {
+          "name": "Brand Color 6",
+          "slug": "brand-6",
+          "color": "#2f3464"
+        },
+        {
+          "name": "Brand Color 7",
+          "slug": "brand-7",
+          "color": "#4ba9ce"
+        },
+        {
+          "name": "Brand Color 8",
+          "slug": "brand-8",
+          "color": "#99dfe5"
+        },
+        {
+          "name": "Brand Color 9",
+          "slug": "brand-9",
+          "color": "#67ce67"
+        },
+        {
+          "name": "Brand Color 10",
+          "slug": "brand-10",
+          "color": "#d9edff"
         }
       ]
     },
     "custom": {
       "layout": {
-        "contentSize": "1420px"
+        "contentSize": "1440px"
       },
       "spacing": {
         "20": "0.25rem",

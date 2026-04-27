@@ -6,8 +6,8 @@
  * NOTE: Some variables are pulling values from the theme.json
  * This is to keep them consistent with the block editor options.
  *
- * todo: variables naming - currently, some variables start with CSS param and some with component name.
-    We should choose one way and stick to it, to make it easier to find variables.
+ * Naming convention: primitive tokens use category-first names; scoped tokens
+ * use scope-first names, e.g. $color-primary and $button-primary-font-size.
  *
  * @author Rareview <hello@rareview.com>
  */
@@ -17,7 +17,7 @@ $default-transition-duration: 0.2s;
 $default-transition-easing: ease-out;
 $default-transition: $default-transition-duration $default-transition-easing;
 $default-input-field-height: 3.2rem;
-$default-border-radius: 999px;
+$default-border-radius: 60px;
 $default-border-width: 2px;
 $disabled-opacity: 0.4;
 $endless-fluid-responsiveness: true;
@@ -31,99 +31,95 @@ $root-size-tablet: var(--rv--fluid-size-tablet--root);
 $root-size-mobile: var(--rv--size-mobile--root);
 
 /* Body. */
-$font-family: var(--wp--preset--font-family--futura-pt);
+$body-font-family: var(--wp--preset--font-family--futura-pt);
 $font-family-secondary: var(--wp--preset--font-family--instrument-serif);
-$font-line-height: 1.3;
-$font-weight: 400;
-$letter-spacing: 0;
+$body-line-height: 1.3;
+$body-font-weight: 400;
+$body-letter-spacing: 0;
 
 /* Body - Mobile sizes. */
-$font-size-mobile-small: var(--wp--custom--font-size--mobile--body-small);
-$font-size-mobile-medium: var(--wp--custom--font-size--mobile--body-medium);
-$font-size-mobile-large: var(--wp--custom--font-size--mobile--body-large);
+$body-font-size-mobile-small: var(--wp--custom--font-size--mobile--body-small);
+$body-font-size-mobile-medium: var(--wp--custom--font-size--mobile--body-medium);
+$body-font-size-mobile-large: var(--wp--custom--font-size--mobile--body-large);
 
 /* Body - Tablet sizes. */
-$font-size-tablet-small: var(--rv--fluid-size-tablet--body-small);
-$font-size-tablet-medium: var(--rv--fluid-size-tablet--body-medium);
-$font-size-tablet-large: var(--rv--fluid-size-tablet--body-large);
+$body-font-size-tablet-small: var(--rv--fluid-size-tablet--body-small);
+$body-font-size-tablet-medium: var(--rv--fluid-size-tablet--body-medium);
+$body-font-size-tablet-large: var(--rv--fluid-size-tablet--body-large);
 
 /* Body - Desktop sizes. */
-$font-size-desktop-small: var(--wp--custom--font-size--desktop--body-small);
-$font-size-desktop-medium: var(--wp--custom--font-size--desktop--body-medium);
-$font-size-desktop-large: var(--wp--custom--font-size--desktop--body-large);
-$font-size-desktop-small-rem: var(--rv--rem--font-size--desktop--body-small);
-$font-size-desktop-medium-rem: var(--rv--rem--font-size--desktop--body-medium);
-$font-size-desktop-large-rem: var(--rv--rem--font-size--desktop--body-large);
-$font-size-desktop-heading-1-rem: var(--rv--rem--font-size--desktop--heading-1);
-$font-size-desktop-heading-2-rem: var(--rv--rem--font-size--desktop--heading-2);
-$font-size-desktop-heading-3-rem: var(--rv--rem--font-size--desktop--heading-3);
-$font-size-desktop-heading-4-rem: var(--rv--rem--font-size--desktop--heading-4);
-$font-size-desktop-heading-5-rem: var(--rv--rem--font-size--desktop--heading-5);
-$font-size-desktop-heading-6-rem: var(--rv--rem--font-size--desktop--heading-6);
+$body-font-size-desktop-small: var(--wp--custom--font-size--desktop--body-small);
+$body-font-size-desktop-medium: var(--wp--custom--font-size--desktop--body-medium);
+$body-font-size-desktop-large: var(--wp--custom--font-size--desktop--body-large);
+$body-font-size-desktop-small-rem: var(--rv--rem--font-size--desktop--body-small);
+$body-font-size-desktop-medium-rem: var(--rv--rem--font-size--desktop--body-medium);
+$body-font-size-desktop-large-rem: var(--rv--rem--font-size--desktop--body-large);
 
-/* Headings - Mobile sizes. */
-$font-size-mobile-heading-1: var(--wp--custom--font-size--mobile--heading-1);
-$font-size-mobile-heading-2: var(--wp--custom--font-size--mobile--heading-2);
-$font-size-mobile-heading-3: var(--wp--custom--font-size--mobile--heading-3);
-$font-size-mobile-heading-4: var(--wp--custom--font-size--mobile--heading-4);
-$font-size-mobile-heading-5: var(--wp--custom--font-size--mobile--heading-5);
-$font-size-mobile-heading-6: var(--wp--custom--font-size--mobile--heading-6);
+/* Heading 1. */
+$heading-1-font-family: $font-family-secondary;
+$heading-1-font-weight: 400;
+$heading-1-line-height: 1.3;
+$heading-1-letter-spacing: normal;
+$heading-1-text-transform: none;
+$heading-1-font-size-mobile: var(--wp--custom--font-size--mobile--heading-1);
+$heading-1-font-size-tablet: var(--rv--fluid-size-tablet--heading-1);
+$heading-1-font-size-desktop: var(--wp--custom--font-size--desktop--heading-1);
+$heading-1-font-size-desktop-rem: var(--rv--rem--font-size--desktop--heading-1);
 
-/* Headings - Tablet sizes. */
-$font-size-tablet-heading-1: var(--rv--fluid-size-tablet--heading-1);
-$font-size-tablet-heading-2: var(--rv--fluid-size-tablet--heading-2);
-$font-size-tablet-heading-3: var(--rv--fluid-size-tablet--heading-3);
-$font-size-tablet-heading-4: var(--rv--fluid-size-tablet--heading-4);
-$font-size-tablet-heading-5: var(--rv--fluid-size-tablet--heading-5);
-$font-size-tablet-heading-6: var(--rv--fluid-size-tablet--heading-6);
+/* Heading 2. */
+$heading-2-font-family: $font-family-secondary;
+$heading-2-font-weight: 400;
+$heading-2-line-height: 1.3;
+$heading-2-letter-spacing: normal;
+$heading-2-text-transform: none;
+$heading-2-font-size-mobile: var(--wp--custom--font-size--mobile--heading-2);
+$heading-2-font-size-tablet: var(--rv--fluid-size-tablet--heading-2);
+$heading-2-font-size-desktop: var(--wp--custom--font-size--desktop--heading-2);
+$heading-2-font-size-desktop-rem: var(--rv--rem--font-size--desktop--heading-2);
 
-/* Headings - Desktop sizes. */
-$font-size-desktop-heading-1: var(--wp--custom--font-size--desktop--heading-1);
-$font-size-desktop-heading-2: var(--wp--custom--font-size--desktop--heading-2);
-$font-size-desktop-heading-3: var(--wp--custom--font-size--desktop--heading-3);
-$font-size-desktop-heading-4: var(--wp--custom--font-size--desktop--heading-4);
-$font-size-desktop-heading-5: var(--wp--custom--font-size--desktop--heading-5);
-$font-size-desktop-heading-6: var(--wp--custom--font-size--desktop--heading-6);
+/* Heading 3. */
+$heading-3-font-family: $font-family-secondary;
+$heading-3-font-weight: 400;
+$heading-3-line-height: 1.3;
+$heading-3-letter-spacing: normal;
+$heading-3-text-transform: none;
+$heading-3-font-size-mobile: var(--wp--custom--font-size--mobile--heading-3);
+$heading-3-font-size-tablet: var(--rv--fluid-size-tablet--heading-3);
+$heading-3-font-size-desktop: var(--wp--custom--font-size--desktop--heading-3);
+$heading-3-font-size-desktop-rem: var(--rv--rem--font-size--desktop--heading-3);
 
-/* Headings - Font family. */
-$font-family-heading-1: $font-family-secondary;
-$font-family-heading-2: $font-family-secondary;
-$font-family-heading-3: $font-family-secondary;
-$font-family-heading-4: $font-family-secondary;
-$font-family-heading-5: $font-family-secondary;
-$font-family-heading-6: $font-family;
+/* Heading 4. */
+$heading-4-font-family: $font-family-secondary;
+$heading-4-font-weight: 400;
+$heading-4-line-height: 1.3;
+$heading-4-letter-spacing: normal;
+$heading-4-text-transform: none;
+$heading-4-font-size-mobile: var(--wp--custom--font-size--mobile--heading-4);
+$heading-4-font-size-tablet: var(--rv--fluid-size-tablet--heading-4);
+$heading-4-font-size-desktop: var(--wp--custom--font-size--desktop--heading-4);
+$heading-4-font-size-desktop-rem: var(--rv--rem--font-size--desktop--heading-4);
 
-/* Headings - Font weight. */
-$font-weight-heading-1: 400;
-$font-weight-heading-2: 400;
-$font-weight-heading-3: 400;
-$font-weight-heading-4: 400;
-$font-weight-heading-5: 400;
-$font-weight-heading-6: 700;
+/* Heading 5. */
+$heading-5-font-family: $font-family-secondary;
+$heading-5-font-weight: 400;
+$heading-5-line-height: 1.3;
+$heading-5-letter-spacing: normal;
+$heading-5-text-transform: none;
+$heading-5-font-size-mobile: var(--wp--custom--font-size--mobile--heading-5);
+$heading-5-font-size-tablet: var(--rv--fluid-size-tablet--heading-5);
+$heading-5-font-size-desktop: var(--wp--custom--font-size--desktop--heading-5);
+$heading-5-font-size-desktop-rem: var(--rv--rem--font-size--desktop--heading-5);
 
-/* Headings - Line height. */
-$line-height-heading-1: 1.3;
-$line-height-heading-2: 1.3;
-$line-height-heading-3: 1.3;
-$line-height-heading-4: 1.3;
-$line-height-heading-5: 1.3;
-$line-height-heading-6: 1.3;
-
-/* Headings - Letter spacing. */
-$letter-spacing-heading-1: normal;
-$letter-spacing-heading-2: normal;
-$letter-spacing-heading-3: normal;
-$letter-spacing-heading-4: normal;
-$letter-spacing-heading-5: normal;
-$letter-spacing-heading-6: normal;
-
-/* Headings - Text transform. */
-$text-transform-heading-1: none;
-$text-transform-heading-2: none;
-$text-transform-heading-3: none;
-$text-transform-heading-4: none;
-$text-transform-heading-5: none;
-$text-transform-heading-6: none;
+/* Heading 6. */
+$heading-6-font-family: $body-font-family;
+$heading-6-font-weight: 700;
+$heading-6-line-height: 1.3;
+$heading-6-letter-spacing: normal;
+$heading-6-text-transform: none;
+$heading-6-font-size-mobile: var(--wp--custom--font-size--mobile--heading-6);
+$heading-6-font-size-tablet: var(--rv--fluid-size-tablet--heading-6);
+$heading-6-font-size-desktop: var(--wp--custom--font-size--desktop--heading-6);
+$heading-6-font-size-desktop-rem: var(--rv--rem--font-size--desktop--heading-6);
 
 /* Colors - Mono. */
 $color-black: var(--wp--preset--color--black);
@@ -134,35 +130,42 @@ $color-grey-light: var(--wp--preset--color--grey-light);
 $color-white: var(--wp--preset--color--white);
 
 /* Colors - Colored. */
-$color-green: var(--wp--preset--color--green);
-$color-purple: var(--wp--preset--color--purple);
-$color-orange: var(--wp--preset--color--orange);
+$color-brand-1: var(--wp--preset--color--brand-1);
+$color-brand-2: var(--wp--preset--color--brand-2);
+$color-brand-3: var(--wp--preset--color--brand-3);
+$color-brand-4: var(--wp--preset--color--brand-4);
+$color-brand-5: var(--wp--preset--color--brand-5);
+$color-brand-6: var(--wp--preset--color--brand-6);
+$color-brand-7: var(--wp--preset--color--brand-7);
+$color-brand-8: var(--wp--preset--color--brand-8);
+$color-brand-9: var(--wp--preset--color--brand-9);
+$color-brand-10: var(--wp--preset--color--brand-10);
 
 /* Colors - Theme colors. */
-$color-primary: $color-green;
-$color-secondary: $color-purple;
+$color-primary: $color-brand-1;
+$color-secondary: $color-brand-2;
 $color-background: $color-black;
 $color-body: $color-white;
 
 /* Colors - Input fields - Light background. */
-$color-input-bg-light-border: $color-dark-grey;
-$color-input-bg-light-text: $color-dark;
-$color-input-bg-light-disabled: $color-grey;
-$color-input-bg-light-background: transparent;
+$input-light-border-color: $color-dark-grey;
+$input-light-text-color: $color-dark;
+$input-light-disabled-color: $color-grey;
+$input-light-background-color: transparent;
 
 /* Colors - Input fields - Dark background. */
-$color-input-bg-dark-border: $color-white;
-$color-input-bg-dark-text: $color-white;
-$color-input-bg-dark-disabled: $color-dark-grey;
-$color-input-bg-dark-background: transparent;
+$input-dark-border-color: $color-white;
+$input-dark-text-color: $color-white;
+$input-dark-disabled-color: $color-dark-grey;
+$input-dark-background-color: transparent;
 
 /* Links. */
 $link-text-decoration: underline;
-$link-text-decoration-hover: underline;
+$link-hover-text-decoration: underline;
 $link-font-weight: inherit;
 $link-letter-spacing: normal;
-$color-link: $color-orange;
-$color-link-hover: color-mix(in srgb, $color-orange 80%, white);
+$link-color: $color-brand-1;
+$link-hover-color: color-mix(in srgb, $color-brand-1 80%, white);
 
 /* Buttons - Primary style. */
 $button-primary-font-color: $color-dark;
@@ -205,8 +208,8 @@ $breakpoint-mobile: 500px;
 	@media (width >= $breakpoint-desktop-xx-large) {
 		:root {
 			--wp--custom--layout--content-size: #{math.div(1420px, $breakpoint-desktop-xx-large) * 100}vw; // todo: Replace 1420px with the $container-width.
-			--wp--custom--root--size-desktop: $root-size-desktop;
-			--wp--custom--root--size-mobile: $root-size-mobile;
+			--wp--custom--root--size-desktop: #{$root-size-desktop};
+			--wp--custom--root--size-mobile: #{$root-size-mobile};
 		}
 	}
 }

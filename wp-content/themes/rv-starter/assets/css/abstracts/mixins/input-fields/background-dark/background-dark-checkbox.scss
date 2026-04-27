@@ -1,7 +1,7 @@
 @mixin background-dark-checkbox() {
-	border-color: $color-input-bg-dark-border;
+	border-color: $input-dark-border-color;
 
 	+ label {
-		color: $color-input-bg-dark-text;
+		color: $input-dark-text-color;
 	}
 }

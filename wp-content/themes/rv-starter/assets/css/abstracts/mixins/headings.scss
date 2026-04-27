@@ -8,110 +8,111 @@
 	margin-bottom: 0.5em;
 
 	@if $h == 1 {
-		font-family: $font-family-heading-1;
-		font-weight: $font-weight-heading-1;
-		line-height: $line-height-heading-1;
-		letter-spacing: $letter-spacing-heading-1;
-		text-transform: $text-transform-heading-1;
+		font-family: $heading-1-font-family;
+		font-weight: $heading-1-font-weight;
+		line-height: $heading-1-line-height;
+		letter-spacing: $heading-1-letter-spacing;
+		text-transform: $heading-1-text-transform;
 		font-size: clamp(
-			$font-size-mobile-heading-1,
-			$font-size-tablet-heading-1,
-			$font-size-desktop-heading-1
+			$heading-1-font-size-mobile,
+			$heading-1-font-size-tablet,
+			$heading-1-font-size-desktop
 		);
 
 		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-			font-size: $font-size-desktop-heading-1-rem;
+			font-size: $heading-1-font-size-desktop-rem;
 		}
 	}
 
 	@if $h == 2 {
-		font-family: $font-family-heading-2;
-		font-weight: $font-weight-heading-2;
-		line-height: $line-height-heading-2;
-		letter-spacing: $letter-spacing-heading-2;
-		text-transform: $text-transform-heading-2;
+		font-family: $heading-2-font-family;
+		font-weight: $heading-2-font-weight;
+		line-height: $heading-2-line-height;
+		letter-spacing: $heading-2-letter-spacing;
+		text-transform: $heading-2-text-transform;
 		font-size: clamp(
-			$font-size-mobile-heading-2,
-			$font-size-tablet-heading-2,
-			$font-size-desktop-heading-2
+			$heading-2-font-size-mobile,
+			$heading-2-font-size-tablet,
+			$heading-2-font-size-desktop
 		);
 
 		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-			font-size: $font-size-desktop-heading-2-rem;
+			font-size: $heading-2-font-size-desktop-rem;
 		}
 	}
 
 	@if $h == 3 {
-		font-family: $font-family-heading-3;
-		font-weight: $font-weight-heading-3;
-		line-height: $line-height-heading-3;
-		letter-spacing: $letter-spacing-heading-3;
-		text-transform: $text-transform-heading-3;
+		font-family: $heading-3-font-family;
+		font-weight: $heading-3-font-weight;
+		line-height: $heading-3-line-height;
+		letter-spacing: $heading-3-letter-spacing;
+		text-transform: $heading-3-text-transform;
 		font-size: clamp(
-			$font-size-mobile-heading-3,
-			$font-size-tablet-heading-3,
-			$font-size-desktop-heading-3
+			$heading-3-font-size-mobile,
+			$heading-3-font-size-tablet,
+			$heading-3-font-size-desktop
 		);
 
 		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-			font-size: $font-size-desktop-heading-3-rem;
+			font-size: $heading-3-font-size-desktop-rem;
 		}
 	}
 
 	@if $h == 4 {
-		font-family: $font-family-heading-4;
-		font-weight: $font-weight-heading-4;
-		line-height: $line-height-heading-4;
-		letter-spacing: $letter-spacing-heading-4;
-		text-transform: $text-transform-heading-4;
+		font-family: $heading-4-font-family;
+		font-weight: $heading-4-font-weight;
+		line-height: $heading-4-line-height;
+		letter-spacing: $heading-4-letter-spacing;
+		text-transform: $heading-4-text-transform;
 		font-size: clamp(
-			$font-size-mobile-heading-4,
-			$font-size-tablet-heading-4,
-			$font-size-desktop-heading-4
+			$heading-4-font-size-mobile,
+			$heading-4-font-size-tablet,
+			$heading-4-font-size-desktop
 		);
 
 		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-			font-size: $font-size-desktop-heading-4-rem;
+			font-size: $heading-4-font-size-desktop-rem;
 		}
 	}
 
 	@if $h == 5 {
-		font-family: $font-family-heading-5;
-		font-weight: $font-weight-heading-5;
-		line-height: $line-height-heading-5;
-		letter-spacing: $letter-spacing-heading-5;
-		text-transform: $text-transform-heading-5;
+		font-family: $heading-5-font-family;
+		font-weight: $heading-5-font-weight;
+		line-height: $heading-5-line-height;
+		letter-spacing: $heading-5-letter-spacing;
+		text-transform: $heading-5-text-transform;
 		font-size: clamp(
-			$font-size-mobile-heading-5,
-			$font-size-tablet-heading-5,
-			$font-size-desktop-heading-5
+			$heading-5-font-size-mobile,
+			$heading-5-font-size-tablet,
+			$heading-5-font-size-desktop
 		);
 
 		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-			font-size: $font-size-desktop-heading-5-rem;
+			font-size: $heading-5-font-size-desktop-rem;
 		}
 	}
 
 	@if $h == 6 {
-		font-family: $font-family-heading-6;
-		font-weight: $font-weight-heading-6;
-		line-height: $line-height-heading-6;
-		letter-spacing: $letter-spacing-heading-6;
-		text-transform: $text-transform-heading-6;
+		font-family: $heading-6-font-family;
+		font-weight: $heading-6-font-weight;
+		line-height: $heading-6-line-height;
+		letter-spacing: $heading-6-letter-spacing;
+		text-transform: $heading-6-text-transform;
 		font-size: clamp(
-			$font-size-mobile-heading-6,
-			$font-size-tablet-heading-6,
-			$font-size-desktop-heading-6
+			$heading-6-font-size-mobile,
+			$heading-6-font-size-tablet,
+			$heading-6-font-size-desktop
 		);
 
 		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-			font-size: $font-size-desktop-heading-6-rem;
+			font-size: $heading-6-font-size-desktop-rem;
 		}
 	}
 }
 
 @for $h from 1 through 6 {
 	h#{$h},
+	.editor-styles-wrapper h#{$h},
 	.has-style-h#{$h} {
 		@include heading($h);
 	}

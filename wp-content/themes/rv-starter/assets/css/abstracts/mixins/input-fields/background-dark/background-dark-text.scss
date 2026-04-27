@@ -1,20 +1,20 @@
 @mixin background-dark-text() {
-	border-color: $color-input-bg-dark-border;
-	color: $color-input-bg-dark-text;
-	background: $color-input-bg-dark-background;
+	border-color: $input-dark-border-color;
+	color: $input-dark-text-color;
+	background: $input-dark-background-color;
 
 	+ label {
-		color: $color-input-bg-dark-text;
+		color: $input-dark-text-color;
 	}
 
 	/* States. */
 	&:disabled {
-		border-color: $color-input-bg-dark-background;
-		color: $color-input-bg-dark-background;
+		border-color: $input-dark-background-color;
+		color: $input-dark-background-color;
 
 		&:focus,
 		&:active {
-			border-color: $color-input-bg-dark-background;
+			border-color: $input-dark-background-color;
 		}
 	}
 }

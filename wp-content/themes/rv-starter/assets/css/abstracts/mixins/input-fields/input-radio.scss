@@ -1,6 +1,6 @@
 @mixin input-radio($background: "light") {
 	cursor: pointer;
-	border: 1px solid $color-input-bg-light-border;
+	border: 1px solid $input-light-border-color;
 
 	&:checked,
 	&:not(:checked) {
@@ -25,7 +25,7 @@
 	&:checked + label::before,
 	&:not(:checked) + label::before {
 		background: transparent;
-		border: 1px solid $color-input-bg-light-border;
+		border: 1px solid $input-light-border-color;
 		content: "";
 		height: 23px;
 		left: 0;
@@ -46,7 +46,7 @@
 	}
 
 	&:not(:checked) + label::after {
-		background-color: $color-input-bg-light-border;
+		background-color: $input-light-border-color;
 		opacity: 0;
 		transform: scale(0);
 	}
