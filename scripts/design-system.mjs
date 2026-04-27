@@ -179,9 +179,9 @@ function getScssDefaults(scssContent) {
 		breakpointDesktopXLarge: extract(/\$breakpoint-desktop-x-large:\s*([^;]+);/) || '1600px',
 		breakpointDesktopXXLarge: extract(/\$breakpoint-desktop-xx-large:\s*([^;]+);/) || '1920px',
 		// Detect semantic color mappings
-		colorPrimary: extract(/\$color-primary:\s*\$color-([^;]+);/) || 'green',
-		colorSecondary: extract(/\$color-secondary:\s*\$color-([^;]+);/) || 'purple',
-		colorLink: extract(/\$color-link:\s*\$color-([^;]+);/) || 'orange',
+		colorPrimary: extract(/\$color-primary:\s*\$color-([^;]+);/) || 'brand-1',
+		colorSecondary: extract(/\$color-secondary:\s*\$color-([^;]+);/) || 'brand-2',
+		colorLink: extract(/\$link-color:\s*\$color-([^;]+);/) || 'brand-1',
 		colorBackground: extract(/\$color-background:\s*\$color-([^;]+);/) || 'black',
 		colorBody: extract(/\$color-body:\s*\$color-([^;]+);/) || 'white',
 	};
@@ -589,7 +589,7 @@ function applyToVariablesScss(scssContent, tokens) {
 		replaceVar('color-secondary', `$color-${tokens.colors.semantics.secondary}`);
 	}
 	if (tokens.colors.semantics.link) {
-		replaceVar('color-link', `$color-${tokens.colors.semantics.link}`);
+		replaceVar('link-color', `$color-${tokens.colors.semantics.link}`);
 	}
 	if (tokens.colors.semantics.background) {
 		replaceVar('color-background', `$color-${tokens.colors.semantics.background}`);
@@ -614,12 +614,9 @@ function applyToVariablesScss(scssContent, tokens) {
 				'dark',
 				'dark-grey',
 				'grey',
-			'grey-light',
-			'white',
-			'green',
-			'purple',
-			'orange',
-		]);
+				'grey-light',
+				'white',
+			]);
 
 			for (const c of tokens.colors.palette) {
 				if (!existingSlugs.has(c.slug)) {
