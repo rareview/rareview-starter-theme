@@ -1,12 +1,12 @@
 /* stylelint-disable scale-unlimited/declaration-strict-value */
 @mixin input-text($background: "light") {
 	background-color: $input-light-background-color;
-	border: 1px solid $input-light-border-color;
-	border-radius: 5px;
+	border: $input-field-border-width solid $input-light-border-color;
+	border-radius: $input-field-border-radius;
 	color: $input-light-text-color;
 	display: flex;
 	flex-wrap: wrap;
-	height: $default-input-field-height;
+	height: $input-field-height;
 	outline: none;
 	padding: 8px 10px;
 	margin-bottom: 16px;

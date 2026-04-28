@@ -140,7 +140,12 @@
       "blockGap": true,
       "margin": true,
       "padding": true,
-      "units": ["rem", "%", "vw", "vh"],
+      "units": [
+        "rem",
+        "%",
+        "vw",
+        "vh"
+      ],
       "spacingSizes": [
         {
           "size": "var(--wp--custom--spacing--20)",
@@ -210,19 +215,25 @@
               "fontFamily": "Futura PT",
               "fontWeight": "400",
               "fontStyle": "normal",
-              "src": ["file:./assets/fonts/futura-pt/FuturaPT-Book.woff2"]
+              "src": [
+                "file:./assets/fonts/futura-pt/FuturaPT-Book.woff2"
+              ]
             },
             {
               "fontFamily": "Futura PT",
               "fontWeight": "700",
               "fontStyle": "normal",
-              "src": ["file:./assets/fonts/futura-pt/FuturaPT-Bold.woff2"]
+              "src": [
+                "file:./assets/fonts/futura-pt/FuturaPT-Bold.woff2"
+              ]
             },
             {
               "fontFamily": "Futura PT",
               "fontWeight": "800",
               "fontStyle": "normal",
-              "src": ["file:./assets/fonts/futura-pt/FuturaPT-ExtraBold.woff2"]
+              "src": [
+                "file:./assets/fonts/futura-pt/FuturaPT-ExtraBold.woff2"
+              ]
             }
           ]
         },
