@@ -110,6 +110,8 @@ function hasMissingScope(error) {
 
 async function fetchFigmaFile(fileKey, figmaToken) {
 	const endpoint = new URL(`https://api.figma.com/v1/files/${fileKey}`);
+
+
 	const response = await fetch(endpoint, {
 		headers: { 'X-Figma-Token': figmaToken.trim() },
 	});
@@ -131,11 +133,9 @@ async function fetchFigmaFile(fileKey, figmaToken) {
 
 	log('Downloading Figma JSON...');
 
-	while (true) {
+	for (;;) {
 		const { done, value } = await reader.read();
-		if (done) {
-			break;
-		}
+		if (done) break;
 		chunks.push(value);
 		received += value.byteLength;
 
@@ -915,6 +915,41 @@ function extractInputBorderWidth(nodes) {
 }
 
 // ---------------------------------------------------------------------------
+// Input height — most common from input / textarea nodes
+// ---------------------------------------------------------------------------
+
+function extractInputHeight(nodes) {
+	const counts = new Map();
+	for (const node of nodes) {
+		if (!/input|text.?field|textarea|search.?field|form.?field/i.test(node.name ?? '')) {
+			continue;
+		}
+		const h = node.absoluteBoundingBox?.height;
+		if (typeof h !== 'number' || h <= 0) {
+			continue;
+		}
+		const rounded = Math.round(h);
+		counts.set(rounded, (counts.get(rounded) ?? 0) + 1);
+	}
+	if (!counts.size) {
+		return null;
+	}
+	return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+}
+
+// ---------------------------------------------------------------------------
+// Input border radius — most common from input / textarea nodes
+// ---------------------------------------------------------------------------
+
+function extractInputBorderRadius(nodes) {
+	const counts = countCornerRadiusByNamePattern(nodes, /(input|text.?field|textarea|search.?field|form.?field)/i);
+	if (!counts.size) {
+		return null;
+	}
+	return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
+}
+
+// ---------------------------------------------------------------------------
 // Border radius — most common from button nodes
 // ---------------------------------------------------------------------------
 
@@ -1064,13 +1099,15 @@ const SECONDARY_BUTTON_RE = /(^|\b|=|\(|\s)(secondary)(\b|\)|\s|,|$)/i;
 const SKIP_STATE_RE = /(hover|hovered|focus|active|pressed|disabled)/i;
 
 function buildButtonEntry(node) {
-	const textChild = Array.isArray(node.children) ? node.children.find((c) => c?.type === 'TEXT') : null;
+	const textChild = findFirstTextNode(node);
 	const s = textChild?.style ?? {};
 	return {
 		name: node.name,
 		backgroundColor: firstSolidHex(node.fills),
 		borderColor: firstSolidHex(node.strokes),
-		borderWidth: node.strokeWeight ?? null,
+		borderWidth: Array.isArray(node.strokes) && node.strokes.length > 0 && (node.strokeWeight ?? 0) > 0
+			? node.strokeWeight
+			: null,
 		borderRadius: node.cornerRadius ?? null,
 		paddingX: node.paddingLeft ?? null,
 		paddingY: node.paddingTop ?? null,
@@ -1294,7 +1331,7 @@ function extractLinks(nodes, styleRegistry) {
  */
 function parseVariableMappingCsvForKeyed(csvPath) {
 	const raw = readFileSync(
-		csvPath ?? path.resolve(process.cwd(), 'scripts/variable_mapping.csv'),
+		csvPath ?? path.resolve(process.cwd(), 'scripts/variable_mapping_figma_sync.csv'),
 		'utf-8',
 	);
 	const lines = raw.split('\n');
@@ -1337,26 +1374,32 @@ function parseVariableMappingCsvForKeyed(csvPath) {
 	};
 
 	const header = parseLine(first.trim());
-	const idxSlug = header.indexOf('slug');
-	const idxFigmaKey = header.indexOf('figma_key');
+	// Support both old schema (slug/figma_key) and new schema (figma_sync_slug/figma_tag)
+	const idxSlug = header.indexOf('figma_sync_slug') >= 0 ? header.indexOf('figma_sync_slug') : header.indexOf('slug');
+	const idxFigmaKey = header.indexOf('figma_tag') >= 0 ? header.indexOf('figma_tag') : header.indexOf('figma_key');
 	const idxFigmaPath = header.indexOf('figma_path');
 	if (idxSlug < 0 || idxFigmaPath < 0 || idxFigmaKey < 0) {
 		return [];
 	}
 
+	const slugCol = idxSlug === header.indexOf('figma_sync_slug') ? 'figma_sync_slug' : 'slug';
+
 	const rows = [];
 	for (const line of lines) {
 		const t = line.trim();
-		if (!t || t.startsWith('slug,')) {
+		if (!t || t.startsWith(`${slugCol},`) || t.startsWith('slug,') || t.startsWith('figma_sync_slug,')) {
 			continue;
 		}
 		const cells = parseLine(t);
 		const slug = (cells[idxSlug] ?? '').trim();
-		if (!slug || /^(VARIOUS|SPACING|COLORS|TYPOGRAPHY|TYPOGRAPHY|BUTTONS|BREAKPOINTS|LINKS)/.test(slug)) {
+		if (!slug || /^(VARIOUS|SPACING|COLORS|TYPOGRAPHY|BUTTONS|BREAKPOINTS|LINKS|BODY|HEADING|INPUT)/.test(slug)) {
 			continue;
 		}
 		const key = (cells[idxFigmaKey] ?? '').trim();
 		const fig = (cells[idxFigmaPath] ?? '').trim();
+		if (fig === 'NULL' || key === 'NULL') {
+			continue;
+		}
 		if (key && fig) {
 			rows.push({ slug, figmaKey: key, figmaPath: fig });
 		}
@@ -1377,6 +1420,22 @@ function extractByKey(allNodes, key) {
 }
 
 /**
+ * All nodes in document order whose name includes `key` (case-insensitive).
+ */
+function extractAllByKey(allNodes, key) {
+	if (!key) return [];
+	const k = key.toLowerCase();
+	// Prefer nodes whose name is exactly the tag (or wrapped in brackets like "(RV tag)")
+	const exact = allNodes.filter((n) => {
+		const name = (n.name ?? '').toLowerCase();
+		return name === k || name === `(${k})` || name === `[${k}]`;
+	});
+	if (exact.length > 0) return exact;
+	// Fall back to substring match
+	return allNodes.filter((n) => (n.name ?? '').toString().toLowerCase().includes(k));
+}
+
+/**
  * Extract a value from a Figma node to align with a figma_path from variable_mapping.
  */
 function extractFigmaValueForKeyNode(node, figmaPath) {
@@ -1392,6 +1451,8 @@ function extractFigmaValueForKeyNode(node, figmaPath) {
 		}
 	}
 	if (p === 'bodyBackgroundColor') {
+		// TEXT nodes are labels/annotations, not background containers — skip them
+		if (node.type === 'TEXT') return null;
 		return getNodeFillHex(node);
 	}
 	if (p === 'body.color' && node.type === 'TEXT') {
@@ -1455,7 +1516,10 @@ function extractFigmaValueForKeyNode(node, figmaPath) {
 		if (node.type === 'TEXT' && p.includes('body')) {
 			return null;
 		}
-		return node.strokeWeight ?? null;
+		if (!Array.isArray(node.strokes) || !node.strokes.length || !(node.strokeWeight > 0)) {
+			return null;
+		}
+		return node.strokeWeight;
 	}
 	if (p === 'borderRadius' || last === 'borderRadius' || p.includes('borderRadius')) {
 		return node.cornerRadius ?? null;
@@ -1494,6 +1558,15 @@ function extractFigmaValueForKeyNode(node, figmaPath) {
 		}
 		return firstSolidHex(findFirstTextNode(node)?.fills);
 	}
+	if (last === 'fontFamily' || p.includes('fontFamily')) {
+		if (node.type === 'TEXT' && node.style?.fontFamily) {
+			return node.style.fontFamily;
+		}
+		return findFirstTextNode(node)?.style?.fontFamily ?? null;
+	}
+	if (last === 'height' || p === 'inputHeight' || p.includes('Height')) {
+		return node.absoluteBoundingBox?.height != null ? Math.round(node.absoluteBoundingBox.height) : null;
+	}
 	// last resort: if node is TEXT, try fontSize and fills
 	if (node.type === 'TEXT' && last === 'fontSize') {
 		return node.style?.fontSize ?? null;
@@ -1521,6 +1594,68 @@ function buildKeyedBySlug(allNodes) {
 			continue;
 		}
 		out[slug] = v;
+	}
+	return Object.keys(out).length ? out : null;
+}
+
+/**
+ * Build a map of { [figmaTag]: { [figmaPath]: extractedValue } } for every
+ * unique figma_tag in the CSV.  The node is looked up ONCE per unique tag;
+ * every figma_path associated with that tag is then extracted from that node.
+ * This lets figma-apply resolve any (tag, path) pair against the
+ * authoritative tagged element rather than falling back to heuristic extraction.
+ *
+ * @returns {Record<string, Record<string, string|number>> | null}
+ */
+function buildTaggedNodes(allNodes) {
+	const spec = parseVariableMappingCsvForKeyed();
+	if (spec.length === 0) return null;
+
+	// Group paths by figma_tag
+	/** @type {Map<string, string[]>} */
+	const pathsByTag = new Map();
+	for (const { figmaKey, figmaPath } of spec) {
+		if (!figmaKey || !figmaPath) continue;
+		if (!pathsByTag.has(figmaKey)) pathsByTag.set(figmaKey, []);
+		pathsByTag.get(figmaKey).push(figmaPath);
+	}
+
+	/** Node-type priority: structural containers first, then components, then text labels last */
+	const nodeTypePriority = (type) => {
+		if (['FRAME', 'SECTION', 'RECTANGLE', 'ELLIPSE', 'VECTOR', 'POLYGON', 'STAR'].includes(type)) return 0;
+		if (['COMPONENT', 'INSTANCE', 'COMPONENT_SET'].includes(type)) return 1;
+		if (['GROUP'].includes(type)) return 2;
+		if (type === 'TEXT') return 10; // labels/annotations always last for fill extraction
+		return 5;
+	};
+
+	const out = {};
+	for (const [tag, paths] of pathsByTag) {
+		const allMatches = extractAllByKey(allNodes, tag);
+		if (allMatches.length === 0) continue;
+
+		// Sort: exact or close name matches first, then by node type (containers before text)
+		const tagLower = tag.toLowerCase();
+		const candidateNodes = [...allMatches].sort((a, b) => {
+			const aName = (a.name ?? '').toLowerCase();
+			const bName = (b.name ?? '').toLowerCase();
+			// Prefer nodes whose name *is* (or closely wraps) the tag — e.g. "(RV background color)"
+			const aExact = aName === tagLower || aName === `(${tagLower})` || aName === `[${tagLower}]`;
+			const bExact = bName === tagLower || bName === `(${tagLower})` || bName === `[${tagLower}]`;
+			if (aExact !== bExact) return aExact ? -1 : 1;
+			// Then prefer structural node types over text labels
+			return nodeTypePriority(a.type) - nodeTypePriority(b.type);
+		});
+
+		const props = {};
+		for (const figmaPath of paths) {
+			// Use the first candidate that can provide a non-null value for this path.
+			const v = candidateNodes
+				.map((n) => extractFigmaValueForKeyNode(n, figmaPath))
+				.find((val) => val != null);
+			if (v != null) props[figmaPath] = v;
+		}
+		if (Object.keys(props).length > 0) out[tag] = props;
 	}
 	return Object.keys(out).length ? out : null;
 }
@@ -1565,6 +1700,12 @@ function buildCssStyleExport(figmaPayload, sourceInfo) {
 	const borderWidth = extractInputBorderWidth(allNodes);
 	tick();
 
+	log('Extracting input height...');
+	const inputHeight = extractInputHeight(allNodes);
+
+	log('Extracting input border radius...');
+	const inputBorderRadius = extractInputBorderRadius(allNodes);
+
 	log('Extracting button border radius...');
 	const borderRadius = extractButtonBorderRadius(allNodes);
 	tick();
@@ -1585,6 +1726,32 @@ function buildCssStyleExport(figmaPayload, sourceInfo) {
 	const links = extractLinks(allNodes, styleRegistry);
 	tick();
 
+	// ── Secondary font family: prefer headings → buttons → body fallback ──────
+	// Override whatever extractBody detected as secondary with the dominant font
+	// found in headings (most semantically intentional source), then buttons,
+	// only keeping the body-text fallback if neither differs from the primary.
+	if (body) {
+		const hFonts = [...(headings.desktop ?? []), ...(headings.mobile ?? [])]
+			.map((h) => h.fontFamily)
+			.filter(Boolean);
+		const hCounts = hFonts.reduce((m, f) => m.set(f, (m.get(f) ?? 0) + 1), new Map());
+		const dominantHeadingFont = [...hCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+
+		if (dominantHeadingFont && dominantHeadingFont !== body.fontFamilyPrimary) {
+			body.fontFamilySecondary = dominantHeadingFont;
+			log(`  Secondary font resolved from headings: ${dominantHeadingFont}`);
+		} else {
+			// Fall back to button font if it differs from primary
+			const btnFont = buttons[0]?.fontFamily ?? null;
+			if (btnFont && btnFont !== body.fontFamilyPrimary) {
+				body.fontFamilySecondary = btnFont;
+				log(`  Secondary font resolved from buttons: ${btnFont}`);
+			} else if (body.fontFamilySecondary) {
+				log(`  Secondary font kept from body detection: ${body.fontFamilySecondary}`);
+			}
+		}
+	}
+
 	const sections = ['colors', 'headings'];
 	if (paragraphSizes) {
 		sections.push('paragraphSizes');
@@ -1594,6 +1761,12 @@ function buildCssStyleExport(figmaPayload, sourceInfo) {
 	}
 	if (borderWidth != null) {
 		sections.push('borderWidth');
+	}
+	if (inputHeight != null) {
+		sections.push('inputHeight');
+	}
+	if (inputBorderRadius != null) {
+		sections.push('inputBorderRadius');
 	}
 	if (borderRadius != null) {
 		sections.push('borderRadius');
@@ -1612,6 +1785,11 @@ function buildCssStyleExport(figmaPayload, sourceInfo) {
 	const keyedBySlug = buildKeyedBySlug(allNodes);
 	if (keyedBySlug) {
 		sections.push('keyedBySlug');
+	}
+
+	const taggedNodes = buildTaggedNodes(allNodes);
+	if (taggedNodes) {
+		sections.push('taggedNodes');
 	}
 
 	const result = {
@@ -1634,6 +1812,12 @@ function buildCssStyleExport(figmaPayload, sourceInfo) {
 	if (borderWidth != null) {
 		result.borderWidth = borderWidth;
 	}
+	if (inputHeight != null) {
+		result.inputHeight = inputHeight;
+	}
+	if (inputBorderRadius != null) {
+		result.inputBorderRadius = inputBorderRadius;
+	}
 	if (borderRadius != null) {
 		result.borderRadius = borderRadius;
 	}
@@ -1650,6 +1834,9 @@ function buildCssStyleExport(figmaPayload, sourceInfo) {
 	if (keyedBySlug) {
 		result.keyedBySlug = keyedBySlug;
 	}
+	if (taggedNodes) {
+		result.taggedNodes = taggedNodes;
+	}
 
 	return result;
 }
@@ -1662,6 +1849,16 @@ async function main() {
 	const rl = readline.createInterface({ input, output });
 
 	try {
+		// Fail fast if token is missing before asking for the URL
+		const tokenCheck = getFigmaTokenFromEnv();
+		if (!tokenCheck) {
+			console.error(`\n  ✖  FIGMA_ACCESS_TOKEN is not set in .env`);
+			console.error(`  Add the following to your .env file and re-run:\n`);
+			console.error(`  FIGMA_ACCESS_TOKEN=your_personal_access_token\n`);
+			console.error(`  Get a token at: https://www.figma.com/developers/api#access-tokens\n`);
+			process.exit(1);
+		}
+
 		const figmaUrlInput = await rl.question('Figma URL: ');
 		let figmaToken = await waitForFigmaToken(
 			rl,
@@ -1708,7 +1905,7 @@ async function main() {
 				if (exportPayload.bodyBackgroundColor) {
 					log(`  Body background color: ${exportPayload.bodyBackgroundColor}`);
 				}
-				log(`  Border width: ${exportPayload.borderWidth ?? 'n/a'}  Border radius: ${exportPayload.borderRadius ?? 'n/a'}`);
+				log(`  Border width: ${exportPayload.borderWidth ?? 'n/a'}  Border radius: ${exportPayload.borderRadius ?? 'n/a'}  Input height: ${exportPayload.inputHeight ?? 'n/a'}  Input border radius: ${exportPayload.inputBorderRadius ?? 'n/a'}`);
 				log(`  Container width: ${exportPayload.containerWidth ?? 'n/a'}`);
 				log(`  Buttons: ${exportPayload.buttons.length}  Links: ${exportPayload.links ? 1 : 0}`);
 				await writeSyncLog();

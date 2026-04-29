@@ -3,16 +3,16 @@
 ![RV Starter Theme Banner](.local/docs/rv-starter-theme-banner.jpg)
 
 Modern WordPress starter theme for fast, scalable builds.
-- Based on the 10up Scaffold Theme
+- Based on the 10up Scaffold
 - Follows WP VIP coding standards and best practices
 - Supports WP VIP and WPE platforms
 - Supports fast global styles setup
 	- 130+ variables covering global styles
-	- One-command Figma global styles sync
+	- One-command Figma global styles sync (beta)
 	- Gutenberg compatibility out of the box
 	- Fluid responsiveness out of the box
 	- Consistent appearance between frontend and block editor
-- Uses the latest PHP without complex templating languages
+- Uses the latest PHP without fancy templating languages
 - Built with SEO and accessibility in mind
 - Translation-ready
 - And much more!
@@ -55,12 +55,23 @@ To preview changes: `npm run setup -- --dry-run`
 
 <hr>
 
-## Figma Global Styles Sync
-This theme uses SCSS variables and mixins to power global styles. You can update values manually (see the variable mapping guide in [Local Development Setup](.local/docs/local-development-setup.md)), or run the Figma sync command by providing a Figma file URL. The sync automatically pulls common design tokens such as typography styles (headings/body), buttons, links, color palette, and container width.
+## Global Styles Setup
+
+This starter theme relies on theme.json variables and SCSS variables and mixins to set up global styles.
+Run the design-system CLI command to choose how you want to configure them:
 
 ```bash
-npm run figma-sync
+npm run design-system
 ```
+
+You will see three options:
+
+1. **Set variables in the terminal**: Interactive prompts walk through variables setup.
+2. **Set variables manually**: Opens the variable mapping guide at `docs/variable-mapping.md`.
+3. **Figma auto sync (beta)**: Simply paste a Figma design URL and hit Enter. Extraction quality depends on the Figma design's consistency and structure.
+
+Setting up these variables will make most of the global elements such as headings, buttons, color palette etc. work out of the box, fluid responsive, Gutenberg compatible, looking same in frontend and editor, and easy to maintain and scale because everything comes from a single source of truth - variables and mixins.
+
 ___________________________________________________________
 
 ## Local Environment Setup

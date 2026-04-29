@@ -27,7 +27,7 @@
     "test": "npm run --prefix wp-content/themes/rv-starter test",
     "clean-dist": "npm run --prefix wp-content/themes/rv-starter clean-dist",
     "setup": "node scripts/setup.mjs",
-    "design-system": "npm run --prefix wp-content/themes/rv-starter design-system --",
+    "design-system": "node scripts/design-system.mjs",
     "create-block": "npm run --prefix wp-content/themes/rv-starter create-block --",
     "figma-sync": "sh -c 'node scripts/figma-sync.mjs \"$@\" && node scripts/figma-apply.mjs \"$@\"' --"
   },

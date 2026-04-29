@@ -3,7 +3,7 @@
 /**
  * RV Starter Theme — Figma Apply
  *
- * Reads scripts/figma-sync/figma-export.json and scripts/variable_mapping.csv,
+ * Reads scripts/figma-sync/figma-export.json and scripts/variable_mapping_figma_sync.csv,
  * resolves each token (Figma value first, CSV default as fallback), then writes
  * the resolved values to theme.json and variables.scss.
  *
@@ -11,22 +11,24 @@
  *   npm run figma-apply               # Apply and write
  *   npm run figma-apply -- --dry-run  # Preview without writing
  *
- * CSV column schema (variable_mapping.csv):
- *   slug            – machine-readable key (used for logs)
- *   label           – human description
- *   figma_key       – optional: first Figma node whose name contains this string; overrides figma_path when a value is stored in keyedBySlug
- *   figma_path      – dot-notation path into figma-export.json (empty = no figma source)
- *   type            – px | hex | rem | number | string | font-family | scss-ref | scss-color-match
- *   default_value   – fallback when figma path is absent or empty
- *   scss_target     – SCSS variable name without $ (empty = skip SCSS)
- *   theme_json_target – custom.<dot.path> | palette:<slug> | empty
+ * CSV column schema (variable_mapping_figma_sync.csv):
+ *   figma_sync_slug         – machine-readable key (used for logs)
+ *   label                   – human description
+ *   figma_tag               – optional: first Figma node whose name contains this string; used as priority lookup via taggedNodes[tag][figma_path]
+ *   figma_path              – dot-notation path into figma-export.json (empty/NULL = no figma source)
+ *   theme_json_target       – custom.<dot.path> | palette:<slug> | typography:<slug> | NULL
+ *   theme_json_value_type   – px | hex | rem | number | string | font-family | scss-color-match | NULL
+ *   theme_json_default_value – fallback value for theme.json when figma path absent | NULL
+ *   scss_target             – SCSS variable name without $ (empty/NULL = skip SCSS)
+ *   scss_value_type         – px | hex | rem | number | string | font-family | scss-ref | theme-json-var-ref | scss-color-match | NULL
+ *   scss_default_value      – fallback value for SCSS when figma path absent | NULL
  *
  * @author Rareview <hello@rareview.com>
  */
 
 import { appendFile, mkdir, readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { exit } from 'node:process';
 
@@ -128,15 +130,19 @@ function getCsvColumns(headerRow) {
 		columns.set(header.trim(), index);
 	}
 
-	const required = ['slug', 'label', 'figma_path', 'type', 'default_value', 'scss_target', 'theme_json_target'];
+	const required = [
+		'label', 'figma_sync_slug', 'figma_path', 'theme_json_target',
+		'theme_json_value_type', 'theme_json_default_value',
+		'scss_target', 'scss_value_type', 'scss_default_value',
+	];
 	const missing = required.filter((name) => !columns.has(name));
 	if (missing.length > 0) {
-		throw new Error(`variable_mapping.csv is missing required column(s): ${missing.join(', ')}`);
+		throw new Error(`variable_mapping_figma_sync.csv is missing required column(s): ${missing.join(', ')}`);
 	}
 
-	// figma_key is optional (older CSVs)
-	if (!columns.has('figma_key')) {
-		columns.set('figma_key', -1);
+	// figma_tag is optional
+	if (!columns.has('figma_tag')) {
+		columns.set('figma_tag', -1);
 	}
 
 	return columns;
@@ -299,6 +305,14 @@ function normalizeValue(rawValue, type, context = {}) {
 		}
 		case 'font-family': {
 			return resolveFontFamilyValue(rawValue, context.themeJson, context.defaultVal);
+		}
+		case 'em': {
+			const parsed = parseNumericWithUnit(value);
+			if (!parsed || !Number.isFinite(parsed.value)) {
+				return value;
+			}
+			// Figma letter-spacing is in em; pass through as-is (no px conversion).
+			return `${formatNumberValue(parsed.value, 4)}em`;
 		}
 		case 'number':
 			return formatNumberValue(rawValue, 4);
@@ -508,6 +522,217 @@ async function findFigmaExport() {
 	return null;
 }
 
+// ─── Font check ───────────────────────────────────────────────────────────────
+
+/** Well-known system / web-safe fonts that don't need local font files. */
+const SYSTEM_FONTS = new Set([
+	'arial', 'helvetica', 'verdana', 'tahoma', 'trebuchet ms', 'impact',
+	'comic sans ms', 'georgia', 'palatino', 'garamond', 'bookman',
+	'times', 'times new roman', 'courier', 'courier new', 'lucida console',
+	'lucida sans unicode', 'sans-serif', 'serif', 'monospace',
+]);
+
+function isSystemFont(name) {
+	return SYSTEM_FONTS.has(String(name ?? '').toLowerCase());
+}
+
+/**
+ * Map a filename like "FuturaPT-Bold.woff2" or "Instrument_Serif-Italic.ttf"
+ * to a CSS font-weight value string.
+ */
+function fontWeightFromFilename(filename) {
+	const n = filename.toLowerCase();
+	if (/extra.?bold|ultra.?bold|extra.?black/.test(n)) return '800';
+	if (/black|heavy/.test(n)) return '900';
+	if (/semi.?bold|demi.?bold/.test(n)) return '600';
+	if (/medium/.test(n)) return '500';
+	if (/bold/.test(n)) return '700';
+	if (/extra.?light|ultra.?light|thin|hairline/.test(n)) return '200';
+	if (/light/.test(n)) return '300';
+	return '400'; // book, regular, roman, normal, or unknown
+}
+
+/** Returns "italic" or "normal" based on the filename. */
+function fontStyleFromFilename(filename) {
+	return /italic|oblique/i.test(filename) ? 'italic' : 'normal';
+}
+
+/**
+ * Recursively collect all font files (.woff2 / .woff / .ttf / .otf) under dir.
+ * Returns [] when the directory does not exist.
+ */
+async function findFontFiles(dir) {
+	const results = [];
+	let entries;
+	try {
+		entries = await readdir(dir, { withFileTypes: true });
+	} catch {
+		return results;
+	}
+	for (const entry of entries) {
+		const full = resolve(dir, entry.name);
+		if (entry.isDirectory()) {
+			results.push(...await findFontFiles(full));
+		} else if (/\.(woff2|woff|ttf|otf)$/i.test(entry.name)) {
+			results.push(full);
+		}
+	}
+	return results;
+}
+
+/**
+ * Filter allFiles to those that belong to fontName.
+ * Matching is done on each path segment (directory names + filename stem),
+ * using the slugified name, no-separator form, and individual words.
+ * e.g. "Futura PT" matches paths containing "futura-pt", "futurapt",
+ *      or any segment where both "futura" and "pt" are present.
+ */
+function matchFontFilesToFamily(fontName, allFiles) {
+	const slug = slugifyFont(fontName);                                   // futura-pt
+	const noSep = fontName.toLowerCase().replace(/[\s\-_]+/g, '');       // futurapt
+	const words = fontName.toLowerCase().split(/[\s\-_]+/).filter(Boolean);
+
+	return allFiles.filter((filePath) => {
+		const segments = filePath.toLowerCase().replace(/\\/g, '/').split('/');
+		return segments.some((seg) => {
+			const clean = seg.replace(/\.(woff2|woff|ttf|otf)$/i, '');
+			return (
+				clean === slug ||
+				clean === noSep ||
+				clean.replace(/[\s\-_]+/g, '') === noSep ||
+				(words.length > 1 && words.every((w) => clean.includes(w)))
+			);
+		});
+	});
+}
+
+/**
+ * Collect the two most prominent font families from the Figma export
+ * (body primary and secondary), together with every font weight used for
+ * those two families across body text and all headings.
+ * Returns Map<fontFamilyName, Set<weightString>>.
+ * System / web-safe fonts are excluded.
+ */
+function detectFigmaFontUsage(figmaExport) {
+	/** @type {Map<string, Set<string>>} */
+	const usage = new Map();
+
+	const primary = figmaExport.body?.fontFamilyPrimary ?? null;
+	const secondary = figmaExport.body?.fontFamilySecondary ?? null;
+
+	// Only track these two families; ignore any others found in headings.
+	const tracked = new Set(
+		[primary, secondary].filter((f) => f && !isSystemFont(f)),
+	);
+
+	if (tracked.size === 0) return usage;
+
+	function add(family, weight) {
+		if (!tracked.has(family)) return;
+		if (!usage.has(family)) usage.set(family, new Set());
+		usage.get(family).add(String(weight ?? 400));
+	}
+
+	// Body weight applies to the primary family.
+	const bodyWeight = figmaExport.body?.fontWeight ?? 400;
+	if (primary && tracked.has(primary)) add(primary, bodyWeight);
+	if (secondary && tracked.has(secondary)) add(secondary, bodyWeight);
+
+	// Collect weights from headings, but only for the two tracked families.
+	for (const ctx of ['desktop', 'mobile']) {
+		for (const h of (figmaExport.headings?.[ctx] ?? [])) {
+			if (h?.fontFamily) add(h.fontFamily, h.fontWeight ?? 400);
+		}
+	}
+
+	return usage;
+}
+
+/**
+ * Ensure fontFamily entry exists in theme.json and populate its fontFace array
+ * from the matched font files. Returns the number of fontFace variations added.
+ */
+function applyFontFaceToThemeJson(themeJson, fontName, files, themeDir) {
+	ensureThemeFontFamilyPreset(themeJson, fontName);
+
+	const slug = slugifyFont(fontName);
+	const entry = themeJson?.settings?.typography?.fontFamilies?.find((f) => f.slug === slug);
+	if (!entry) return 0;
+
+	const faces = files
+		.map((filePath) => {
+			const file = basename(filePath);
+			const relPath = filePath.replace(themeDir + '/', '').replace(/\\/g, '/');
+			return {
+				fontFamily: fontName,
+				fontWeight: fontWeightFromFilename(file),
+				fontStyle: fontStyleFromFilename(file),
+				src: [`file:./${relPath}`],
+			};
+		})
+		.sort((a, b) => Number(a.fontWeight) - Number(b.fontWeight) || a.fontStyle.localeCompare(b.fontStyle));
+
+	entry.fontFace = faces;
+	return faces.length;
+}
+
+/**
+ * Format a weight+style label, e.g. "400", "700 italic".
+ */
+function weightLabel(file) {
+	const w = fontWeightFromFilename(file);
+	const s = fontStyleFromFilename(file);
+	return s === 'italic' ? `${w} italic` : w;
+}
+
+/**
+ * Pre-pass: scan all font families detected in the Figma export at once.
+ * Found families have their fontFace written to theme.json immediately.
+ * All missing families are reported together in a single prompt, showing
+ * the required weight variations per family. Loops until the user has
+ * added all missing files or chooses to skip.
+ */
+/**
+ * Check for font files, wire up theme.json and create placeholder folders.
+ * Never prompts — always continues. Returns an array of missing-font records
+ * to be displayed in the end-of-run summary.
+ * @returns {Promise<Array<{name:string, slug:string, weights:string[], dir:string}>>}
+ */
+async function runFontCheck(figmaExport, themeJson, themeDir) {
+	const usage = detectFigmaFontUsage(figmaExport);
+	if (usage.size === 0) return [];
+
+	const fontsDir = resolve(themeDir, 'assets', 'fonts');
+	const allFiles = await findFontFiles(fontsDir);
+	const missing = [];
+
+	for (const [fontName, weightSet] of usage) {
+		// Always register the font family in theme.json so the CSS custom
+		// property exists even before the actual files are added.
+		ensureThemeFontFamilyPreset(themeJson, fontName);
+
+		const matched = matchFontFilesToFamily(fontName, allFiles);
+
+		if (matched.length > 0) {
+			applyFontFaceToThemeJson(themeJson, fontName, matched, themeDir);
+		} else {
+			// Create a placeholder folder so the user knows exactly where to drop files
+			const fontDir = resolve(fontsDir, slugifyFont(fontName));
+			if (!DRY_RUN) {
+				await mkdir(fontDir, { recursive: true });
+			}
+			missing.push({
+				name: fontName,
+				slug: slugifyFont(fontName),
+				weights: [...weightSet].sort((a, b) => Number(a) - Number(b)),
+				dir: fontDir.replace(themeDir + '/', ''),
+			});
+		}
+	}
+
+	return missing;
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -536,7 +761,7 @@ async function main() {
 	logLines.push('');
 
 	// CSV
-	const csvPath = resolve(ROOT, 'scripts', 'variable_mapping.csv');
+	const csvPath = resolve(ROOT, 'scripts', 'variable_mapping_figma_sync.csv');
 	const rows = parseCsv(await readFile(csvPath, 'utf-8'));
 	const [headerRow, ...dataRows] = rows;
 	const columns = getCsvColumns(headerRow ?? []);
@@ -549,87 +774,139 @@ async function main() {
 	const themeJson = JSON.parse(await readFile(themeJsonPath, 'utf-8'));
 	let scss = await readFile(scssPath, 'utf-8');
 
+	// ── Font file check ─────────────────────────────────────────────────────
+	let missingFonts = [];
+	if (figmaExportPath) {
+		missingFonts = await runFontCheck(figmaExport, themeJson, themeDir);
+	}
+
 	const changes = { themeJson: [], scss: [] };
 	let skipped = 0;
 
 	for (const row of dataRows) {
-		const slug = csvCell(row, columns, 'slug');
+		const slug = csvCell(row, columns, 'figma_sync_slug');
 		const label = csvCell(row, columns, 'label') || slug;
-		const figmaKey = csvCell(row, columns, 'figma_key');
+		const figmaKey = csvCell(row, columns, 'figma_tag');
 		const figmaPath = csvCell(row, columns, 'figma_path');
-		const type = csvCell(row, columns, 'type');
-		const defaultVal = csvCell(row, columns, 'default_value');
 		const scssTarget = csvCell(row, columns, 'scss_target');
 		const tjTarget = csvCell(row, columns, 'theme_json_target');
 
-		// Section header rows have no targets
-		if (!scssTarget && !tjTarget) continue;
-		// Rows with no type are malformed
-		if (!type) continue;
+		// NULL string means "no target/value" for that side
+		const tjTargetResolved = tjTarget === 'NULL' ? '' : tjTarget;
+		const figmaPathResolved = figmaPath === 'NULL' ? '' : figmaPath;
 
-		// figma_key (keyedBySlug) wins over figma_path when set in export
+		let tjType = csvCell(row, columns, 'theme_json_value_type');
+		let tjDefault = csvCell(row, columns, 'theme_json_default_value');
+		let scssType = csvCell(row, columns, 'scss_value_type');
+		let scssDefault = csvCell(row, columns, 'scss_default_value');
+		if (tjType === 'NULL') tjType = '';
+		if (tjDefault === 'NULL') tjDefault = '';
+		if (scssType === 'NULL') scssType = '';
+		if (scssDefault === 'NULL') scssDefault = '';
+
+		// Section header rows have no slug or targets
+		if (!slug) continue;
+		if (!scssTarget && !tjTargetResolved) continue;
+
+		// Resolution priority:
+		//   1. taggedNodes[figma_tag][figma_path]  — tag-matched node (most specific)
+		//   2. keyedBySlug[slug]                   — pre-extracted per-slug value (legacy)
+		//   3. figma_path on structured export     — broad heuristic extraction (fallback)
 		let figmaRaw = null;
-		if (figmaKey) {
+		if (figmaKey && figmaPathResolved) {
+			const taggedNode = figmaExport.taggedNodes?.[figmaKey];
+			if (taggedNode != null) {
+				figmaRaw = taggedNode[figmaPathResolved] ?? null;
+			}
+		}
+		if (figmaRaw == null && figmaKey) {
 			figmaRaw = resolveFromFigma(figmaExport, `keyedBySlug.${slug}`);
 		}
-		if (figmaRaw == null && figmaPath) {
-			figmaRaw = resolveFromFigma(figmaExport, figmaPath);
-		}
-		const rawValue = figmaRaw != null ? figmaRaw : defaultVal;
-
-		if (rawValue === '' || rawValue == null) {
-			skipped++;
-			continue;
+		if (figmaRaw == null && figmaPathResolved) {
+			figmaRaw = resolveFromFigma(figmaExport, figmaPathResolved);
 		}
 
-		/** @type {string} */
-		let value;
-		/** @type {string | null} */
-		let themeValue = null;
-		const source = figmaRaw != null ? 'figma' : 'default';
+		// ── theme.json side ────────────────────────────────────────────────────
+		if (tjTargetResolved && tjType) {
+			const rawTjValue = figmaRaw != null ? figmaRaw : tjDefault;
+			if (rawTjValue !== '' && rawTjValue != null) {
+				const source = figmaRaw != null ? 'figma' : 'default';
+				let tjValue;
+				let themeValue = null;
 
-		if (type === 'scss-color-match') {
-			const fromFigma = figmaRaw != null;
-			const hexForMatch =
-				fromFigma && String(figmaRaw).trim().length
-					? normalizeValue(String(figmaRaw), 'hex')
-					: null;
-			const closest = hexForMatch != null && hexForMatch.startsWith('#') ? findClosestPaletteSlug(hexForMatch, themeJson) : null;
-			const defScss = String(defaultVal).trim();
-			const scssResolved = closest != null ? `$color-${closest}` : defScss;
-			const themeV = closest != null ? `var(--wp--preset--color--${closest})` : themeVarFromScssColorRef(defScss) ?? scssResolved;
-			value = scssResolved;
-			themeValue = themeV;
-		} else {
-			value = normalizeValue(rawValue, type, { themeJson, defaultVal });
-		}
-
-		// ── theme.json ─────────────────────────────────────────────────────────
-		if (tjTarget) {
-			if (tjTarget.startsWith('palette:')) {
-				const palSlug = tjTarget.slice('palette:'.length);
-				const action = updatePalette(themeJson, palSlug, value, label);
-				changes.themeJson.push({ label, target: `palette:${palSlug}`, value, source });
-
-				// Auto-create SCSS color var for new palette entries
-				if (action === 'created') {
-					const result = ensureScssColorVar(scss, palSlug);
-					scss = result.scss;
-					if (result.added) {
-						const scssVarName = `color-${palSlug}`;
-						const scssVarValue = `var(--wp--preset--color--${palSlug})`;
-						changes.scss.push({ label: `Auto: ${label}`, target: `$${scssVarName}`, value: scssVarValue, source: 'auto' });
-					}
+				if (tjType === 'scss-color-match') {
+					const fromFigma = figmaRaw != null;
+					const hexForMatch =
+						fromFigma && String(figmaRaw).trim().length
+							? normalizeValue(String(figmaRaw), 'hex')
+							: null;
+					const closest = hexForMatch != null && hexForMatch.startsWith('#') ? findClosestPaletteSlug(hexForMatch, themeJson) : null;
+					const defScss = String(tjDefault).trim();
+					const scssResolved = closest != null ? `$color-${closest}` : defScss;
+					themeValue = closest != null ? `var(--wp--preset--color--${closest})` : themeVarFromScssColorRef(defScss) ?? scssResolved;
+					tjValue = themeValue;
+				} else {
+					tjValue = normalizeValue(rawTjValue, tjType, { themeJson, defaultVal: tjDefault });
 				}
-			} else {
-				const tj = type === 'scss-color-match' && themeValue != null ? themeValue : value;
-				setDeepSettings(themeJson, tjTarget, tj);
-				changes.themeJson.push({ label, target: tjTarget, value: tj, source });
+
+				if (tjTargetResolved.startsWith('typography:')) {
+					// Font family registration is handled as a side effect of normalizeValue
+					// with type 'font-family'. Just record the action.
+					changes.themeJson.push({ label, target: tjTargetResolved, value: tjValue, source });
+				} else if (tjTargetResolved.startsWith('palette:')) {
+					const palSlug = tjTargetResolved.slice('palette:'.length);
+					const action = updatePalette(themeJson, palSlug, tjValue, label);
+					changes.themeJson.push({ label, target: `palette:${palSlug}`, value: tjValue, source });
+
+					// Auto-create SCSS color var for new palette entries
+					if (action === 'created') {
+						const result = ensureScssColorVar(scss, palSlug);
+						scss = result.scss;
+						if (result.added) {
+							const scssVarName = `color-${palSlug}`;
+							const scssVarValue = `var(--wp--preset--color--${palSlug})`;
+							changes.scss.push({ label: `Auto: ${label}`, target: `$${scssVarName}`, value: scssVarValue, source: 'auto' });
+						}
+					}
+				} else {
+					setDeepSettings(themeJson, tjTargetResolved, tjValue);
+					changes.themeJson.push({ label, target: tjTargetResolved, value: tjValue, source });
+				}
 			}
 		}
 
-		// ── variables.scss ─────────────────────────────────────────────────────
-		if (scssTarget) {
+		// ── variables.scss side ────────────────────────────────────────────────
+		if (scssTarget && scssType) {
+			const rawScssValue = figmaRaw != null ? figmaRaw : scssDefault;
+			if (rawScssValue === '' || rawScssValue == null) {
+				skipped++;
+				continue;
+			}
+
+			const source = figmaRaw != null ? 'figma' : 'default';
+			let value;
+
+			if (scssType === 'scss-color-match') {
+				const fromFigma = figmaRaw != null;
+				const hexForMatch =
+					fromFigma && String(figmaRaw).trim().length
+						? normalizeValue(String(figmaRaw), 'hex')
+						: null;
+				const closest = hexForMatch != null && hexForMatch.startsWith('#') ? findClosestPaletteSlug(hexForMatch, themeJson) : null;
+				const defScss = String(scssDefault).trim();
+				value = closest != null ? `$color-${closest}` : defScss;
+			} else if (scssType === 'theme-json-var-ref') {
+				if (tjType === 'font-family' && figmaRaw != null) {
+					// Derive the CSS custom property from the actual Figma font name
+					value = `var(--wp--preset--font-family--${slugifyFont(String(figmaRaw))})`;
+				} else {
+					// For non-font refs (sizes, etc.), always use the static var() reference
+					value = scssDefault || String(rawScssValue);
+				}
+			} else {
+				value = normalizeValue(rawScssValue, scssType, { themeJson, defaultVal: scssDefault });
+			}
+
 			if (!scssHasVar(scss, scssTarget)) {
 				const warning = `  ! $${scssTarget} not found in variables.scss - skipping`;
 				logLines.push(warning);
@@ -686,23 +963,6 @@ async function main() {
 			console.log(c.dim(`\n  (${skipped} row(s) skipped — no value resolved)`));
 		}
 	}
-	if (fontsToInstall.size > 0) {
-		const names = [...fontsToInstall].sort();
-		const heading = 'Manual font files required:';
-		logLines.push('');
-		logLines.push(heading);
-		for (const name of names) {
-			logLines.push(`  - ${name}`);
-		}
-		logLines.push('Add each family files under wp-content/themes/<theme>/assets/fonts and wire @font-face entries in theme.json.');
-		console.log('');
-		console.log(c.yellow(`  ⚠ ${heading}`));
-		for (const name of names) {
-			console.log(c.yellow(`    - ${name}`));
-		}
-		console.log(c.dim('  Add each family under assets/fonts and define fontFace sources in theme.json.\n'));
-	}
-
 	// ── Write ──────────────────────────────────────────────────────────────────
 	if (VERBOSE) {
 		console.log('');
@@ -730,7 +990,22 @@ async function main() {
 		console.log('');
 		console.log(c.bold(c.green('  ✓ Figma sync complete')));
 		console.log(c.dim(`  Log: ${LOG_FILE_PATH.replace(ROOT + '/', '')}`));
-		console.log(c.dim('  Run `npm run build` to rebuild with the updated tokens.\n'));
+		console.log(c.dim('  Run `npm run build` to rebuild with the updated tokens.'));
+
+		if (missingFonts.length > 0) {
+			console.log('');
+			console.log(`  ${c.yellow('⚠')}  ${c.bold('Fonts required — add .woff2 files to complete setup:')}`);
+			for (const { name, weights, dir } of missingFonts) {
+				console.log('');
+				console.log(`     ${c.bold(name)}`);
+				console.log(c.dim(`       Weights : ${weights.join(', ')}`));
+				console.log(c.dim(`       Folder  : ${dir}/`));
+			}
+			console.log(c.dim('\n     Theme.json and variables.scss are already wired up.'));
+			console.log(c.dim('     Re-run `npm run figma-apply` after adding the files to register fontFace entries.\n'));
+		} else {
+			console.log('');
+		}
 	} else {
 		logLines.push('');
 		logLines.push('Dry run complete - no files were written.');
@@ -738,7 +1013,9 @@ async function main() {
 		console.log(c.yellow('  Dry run complete — no files were written.'));
 		console.log(c.dim(`  Log: ${LOG_FILE_PATH.replace(ROOT + '/', '')}\n`));
 	}
+
 }
+
 
 main().catch((err) => {
 	console.error(c.red(`\n  Error: ${err.message}\n`));
