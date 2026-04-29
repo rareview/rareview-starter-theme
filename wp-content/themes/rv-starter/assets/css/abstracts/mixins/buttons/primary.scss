@@ -14,10 +14,10 @@
 	font-weight: $button-primary-font-weight;
 	letter-spacing: $button-primary-letter-spacing;
 	text-transform: $button-primary-text-transform;
-	border: $default-border-width solid $button-primary-background-color;
+	border: $button-primary-border-width solid $button-primary-background-color;
 	border-radius: $button-primary-border-radius;
 	padding: $button-primary-padding-y $button-primary-padding-x;
-	height: $default-input-field-height;
+	height: $button-primary-height;
 	text-align: center;
 	display: inline-flex;
 	flex-direction: column;

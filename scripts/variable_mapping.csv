@@ -1,0 +1,136 @@
+slug,label,figma_key,figma_path,type,default_value,scss_target,theme_json_target
+VARIOUS,,,,,,,
+default-transition-duration,Default transition duration,,,string,0.2s,default-transition-duration,
+default-transition-easing,Default transition easing,,,string,ease-out,default-transition-easing,
+default-input-field-height,Default input field height,,,rem,3.2rem,default-input-field-height,
+default-border-radius,Default border radius,,borderRadius,px,999px,default-border-radius,
+default-border-width,Default border width,,borderWidth,px,2px,default-border-width,
+disabled-opacity,Disabled opacity,,,number,0.4,disabled-opacity,
+container-width,Container width,,containerWidth,px,1220px,,custom.layout.contentSize
+container-padding-sides,Container side padding,,,string,var(--wp--preset--spacing--40),container-padding-sides,
+SPACING SCALE,,,,,,,
+spacing-xs,Spacing XS,,,rem,0.25rem,,custom.spacing.20
+spacing-sm,Spacing SM,,,rem,0.5rem,,custom.spacing.30
+spacing-md,Spacing MD,,,rem,1rem,,custom.spacing.40
+spacing-lg,Spacing LG,,,rem,1.5rem,,custom.spacing.50
+spacing-xl,Spacing XL,,,rem,2rem,,custom.spacing.60
+spacing-2xl,Spacing 2XL,,,rem,3rem,,custom.spacing.70
+spacing-3xl,Spacing 3XL,,,rem,4rem,,custom.spacing.80
+COLORS – MONO,,,,,,,
+color-black,Black,,,hex,#000000,,palette:black
+color-dark,Dark,,colors.mono.0.hex,hex,#211d1e,,palette:dark
+color-dark-grey,Dark Grey,,colors.mono.1.hex,hex,#4a4a4a,,palette:dark-grey
+color-grey,Grey,,colors.mono.2.hex,hex,#7f7f7f,,palette:grey
+color-grey-light,Grey Light,,colors.mono.3.hex,hex,#fbfbfb,,palette:grey-light
+color-white,White,,,hex,#ffffff,,palette:white
+COLORS – BRAND (Figma name used when set on color style),,,,,,,
+brand-1,Brand Color 1,,colors.colored.0.hex,hex,,,palette:brand-1
+brand-2,Brand Color 2,,colors.colored.1.hex,hex,,,palette:brand-2
+brand-3,Brand Color 3,,colors.colored.2.hex,hex,,,palette:brand-3
+brand-4,Brand Color 4,,colors.colored.3.hex,hex,,,palette:brand-4
+brand-5,Brand Color 5,,colors.colored.4.hex,hex,,,palette:brand-5
+brand-6,Brand Color 6,,colors.colored.5.hex,hex,,,palette:brand-6
+brand-7,Brand Color 7,,colors.colored.6.hex,hex,,,palette:brand-7
+brand-8,Brand Color 8,,colors.colored.7.hex,hex,,,palette:brand-8
+brand-9,Brand Color 9,,colors.colored.8.hex,hex,,,palette:brand-9
+brand-10,Brand Color 10,,colors.colored.9.hex,hex,,,palette:brand-10
+COLORS – THEME (SCSS must reference $color-*, not raw hex; color-background and color-body: scss-color-match to nearest palette),,,,,,,
+color-primary,Primary color,,,scss-ref,$color-brand-1,color-primary,
+color-secondary,Secondary color,,,scss-ref,$color-brand-2,color-secondary,
+color-background,Background color,,bodyBackgroundColor,scss-color-match,$color-black,color-background,
+color-body,Body text color,,body.color,scss-color-match,$color-white,color-body,
+TYPOGRAPHY,,,,,,,
+font-family-primary,Font family (primary),,body.fontFamilyPrimary,font-family,Inter,body-font-family,
+font-family-secondary,Font family (secondary),,body.fontFamilySecondary,font-family,Georgia,font-family-secondary,
+body-font-weight,Body font weight,,body.fontWeight,number,400,body-font-weight,
+body-line-height,Body line height,,body.bodyLineHeightRatio,number,1.6,body-line-height,
+body-letter-spacing,Body letter spacing,,body.letterSpacing,string,0,body-letter-spacing,
+body-size-desktop-small,Body size desktop small,,paragraphSizes.desktop.small.fontSize,px,16,,custom.font-size.desktop.bodySmall
+body-size-desktop-medium,Body size desktop medium,,paragraphSizes.desktop.medium.fontSize,px,18,,custom.font-size.desktop.bodyMedium
+body-size-desktop-large,Body size desktop large,,paragraphSizes.desktop.large.fontSize,px,20,,custom.font-size.desktop.bodyLarge
+body-size-mobile-small,Body size mobile small,,paragraphSizes.mobile.small.fontSize,px,12,,custom.font-size.mobile.bodySmall
+body-size-mobile-medium,Body size mobile medium,,paragraphSizes.mobile.medium.fontSize,px,14,,custom.font-size.mobile.bodyMedium
+body-size-mobile-large,Body size mobile large,,paragraphSizes.mobile.large.fontSize,px,16,,custom.font-size.mobile.bodyLarge
+TYPOGRAPHY – HEADINGS (Font family),,,,,,,
+heading-1-font-family,Heading 1 font family,,headings.desktop.0.fontFamily,font-family,$body-font-family,heading-1-font-family,
+heading-2-font-family,Heading 2 font family,,headings.desktop.1.fontFamily,font-family,$body-font-family,heading-2-font-family,
+heading-3-font-family,Heading 3 font family,,headings.desktop.2.fontFamily,font-family,$body-font-family,heading-3-font-family,
+heading-4-font-family,Heading 4 font family,,headings.desktop.3.fontFamily,font-family,$body-font-family,heading-4-font-family,
+heading-5-font-family,Heading 5 font family,,headings.desktop.4.fontFamily,font-family,$body-font-family,heading-5-font-family,
+heading-6-font-family,Heading 6 font family,,headings.desktop.5.fontFamily,font-family,$body-font-family,heading-6-font-family,
+TYPOGRAPHY – HEADINGS (Font weight),,,,,,,
+heading-1-font-weight,Heading 1 font weight,,headings.desktop.0.fontWeight,number,400,heading-1-font-weight,
+heading-2-font-weight,Heading 2 font weight,,headings.desktop.1.fontWeight,number,400,heading-2-font-weight,
+heading-3-font-weight,Heading 3 font weight,,headings.desktop.2.fontWeight,number,400,heading-3-font-weight,
+heading-4-font-weight,Heading 4 font weight,,headings.desktop.3.fontWeight,number,400,heading-4-font-weight,
+heading-5-font-weight,Heading 5 font weight,,headings.desktop.4.fontWeight,number,400,heading-5-font-weight,
+heading-6-font-weight,Heading 6 font weight,,headings.desktop.5.fontWeight,number,700,heading-6-font-weight,
+TYPOGRAPHY – HEADINGS (Line height),,,,,,,
+heading-1-line-height,Heading 1 line height,,,number,1.3,heading-1-line-height,
+heading-2-line-height,Heading 2 line height,,,number,1.3,heading-2-line-height,
+heading-3-line-height,Heading 3 line height,,,number,1.3,heading-3-line-height,
+heading-4-line-height,Heading 4 line height,,,number,1.3,heading-4-line-height,
+heading-5-line-height,Heading 5 line height,,,number,1.3,heading-5-line-height,
+heading-6-line-height,Heading 6 line height,,,number,1.3,heading-6-line-height,
+TYPOGRAPHY – HEADINGS (Letter spacing),,,,,,,
+heading-1-letter-spacing,Heading 1 letter spacing,,,string,normal,heading-1-letter-spacing,
+heading-2-letter-spacing,Heading 2 letter spacing,,,string,normal,heading-2-letter-spacing,
+heading-3-letter-spacing,Heading 3 letter spacing,,,string,normal,heading-3-letter-spacing,
+heading-4-letter-spacing,Heading 4 letter spacing,,,string,normal,heading-4-letter-spacing,
+heading-5-letter-spacing,Heading 5 letter spacing,,,string,normal,heading-5-letter-spacing,
+heading-6-letter-spacing,Heading 6 letter spacing,,,string,normal,heading-6-letter-spacing,
+TYPOGRAPHY – HEADINGS (Text transform),,,,,,,
+heading-1-text-transform,Heading 1 text transform,,headings.desktop.0.textTransform,string,none,heading-1-text-transform,
+heading-2-text-transform,Heading 2 text transform,,headings.desktop.1.textTransform,string,none,heading-2-text-transform,
+heading-3-text-transform,Heading 3 text transform,,headings.desktop.2.textTransform,string,none,heading-3-text-transform,
+heading-4-text-transform,Heading 4 text transform,,headings.desktop.3.textTransform,string,none,heading-4-text-transform,
+heading-5-text-transform,Heading 5 text transform,,headings.desktop.4.textTransform,string,none,heading-5-text-transform,
+heading-6-text-transform,Heading 6 text transform,,headings.desktop.5.textTransform,string,none,heading-6-text-transform,
+TYPOGRAPHY – HEADINGS (Font size mobile),,,,,,,
+heading-1-font-size-mobile,Heading 1 font size (mobile),,headings.mobile.0.fontSize,px,,,custom.font-size.mobile.heading1
+heading-2-font-size-mobile,Heading 2 font size (mobile),,headings.mobile.1.fontSize,px,,,custom.font-size.mobile.heading2
+heading-3-font-size-mobile,Heading 3 font size (mobile),,headings.mobile.2.fontSize,px,,,custom.font-size.mobile.heading3
+heading-4-font-size-mobile,Heading 4 font size (mobile),,headings.mobile.3.fontSize,px,,,custom.font-size.mobile.heading4
+heading-5-font-size-mobile,Heading 5 font size (mobile),,headings.mobile.4.fontSize,px,,,custom.font-size.mobile.heading5
+heading-6-font-size-mobile,Heading 6 font size (mobile),,headings.mobile.5.fontSize,px,,,custom.font-size.mobile.heading6
+TYPOGRAPHY – HEADINGS (Font size desktop),,,,,,,
+heading-1-font-size-desktop,Heading 1 font size (desktop),,headings.desktop.0.fontSize,px,,,custom.font-size.desktop.heading1
+heading-2-font-size-desktop,Heading 2 font size (desktop),,headings.desktop.1.fontSize,px,,,custom.font-size.desktop.heading2
+heading-3-font-size-desktop,Heading 3 font size (desktop),,headings.desktop.2.fontSize,px,,,custom.font-size.desktop.heading3
+heading-4-font-size-desktop,Heading 4 font size (desktop),,headings.desktop.3.fontSize,px,,,custom.font-size.desktop.heading4
+heading-5-font-size-desktop,Heading 5 font size (desktop),,headings.desktop.4.fontSize,px,,,custom.font-size.desktop.heading5
+heading-6-font-size-desktop,Heading 6 font size (desktop),,headings.desktop.5.fontSize,px,,,custom.font-size.desktop.heading6
+LINKS,,,,,,,
+link-color,Link color,,,scss-ref,$color-brand-1,link-color,
+link-hover-color,Link hover color,,,string,"color-mix(in srgb, $color-brand-1 80%, white)",link-hover-color,
+link-letter-spacing,Link letter spacing,,,string,normal,link-letter-spacing,
+link-font-weight,Link font weight,,,string,inherit,link-font-weight,
+link-text-decoration,Link text decoration,,,string,underline,link-text-decoration,
+link-hover-text-decoration,Link hover text decoration,,,string,none,link-hover-text-decoration,
+BUTTONS – PRIMARY,,,,,,,
+button-primary-color,Button primary color,,buttons.0.fontColor,hex,$color-dark,button-primary-font-color,
+button-primary-background-color,Button primary background color,,buttons.0.backgroundColor,hex,$color-primary,button-primary-background-color,
+button-primary-border-radius,Button primary border radius,,,scss-ref,$default-border-radius,button-primary-border-radius,
+button-primary-padding-x,Button primary padding X,,buttons.0.paddingX,rem,1.5rem,button-primary-padding-x,
+button-primary-padding-y,Button primary padding Y,,buttons.0.paddingY,rem,0.5rem,button-primary-padding-y,
+button-primary-font-size,Button primary font size,,buttons.0.fontSize,rem,1.125rem,button-primary-font-size,
+button-primary-font-weight,Button primary font weight,,buttons.0.fontWeight,number,700,button-primary-font-weight,
+button-primary-letter-spacing,Button primary letter spacing,,,string,0.05em,button-primary-letter-spacing,
+button-primary-text-transform,Button primary text transform,,buttons.0.textTransform,string,uppercase,button-primary-text-transform,
+BUTTONS – SECONDARY,,,,,,,
+button-secondary-color,Button secondary color,,buttons.1.fontColor,hex,$color-dark,button-secondary-font-color,
+button-secondary-background-color,Button secondary background color,,buttons.1.backgroundColor,hex,$color-secondary,button-secondary-background-color,
+button-secondary-border-radius,Button secondary border radius,,,scss-ref,$default-border-radius,button-secondary-border-radius,
+button-secondary-padding-x,Button secondary padding X,,buttons.1.paddingX,rem,1.5rem,button-secondary-padding-x,
+button-secondary-padding-y,Button secondary padding Y,,buttons.1.paddingY,rem,0.5rem,button-secondary-padding-y,
+button-secondary-font-size,Button secondary font size,,buttons.1.fontSize,rem,1.125rem,button-secondary-font-size,
+button-secondary-font-weight,Button secondary font weight,,buttons.1.fontWeight,number,700,button-secondary-font-weight,
+button-secondary-letter-spacing,Button secondary letter spacing,,,string,0.05em,button-secondary-letter-spacing,
+button-secondary-text-transform,Button secondary text transform,,buttons.1.textTransform,string,uppercase,button-secondary-text-transform,
+BREAKPOINTS,,,,,,,
+breakpoint-desktop-xxl,Desktop XXL,,,px,1920px,breakpoint-desktop-xx-large,
+breakpoint-desktop-xl,Desktop XL,,,px,1600px,breakpoint-desktop-x-large,
+breakpoint-desktop-l,Desktop L,,,px,1440px,breakpoint-desktop-large,
+breakpoint-desktop,Desktop,,,px,1024px,breakpoint-desktop,
+breakpoint-tablet,Tablet,,,px,781px,breakpoint-tablet,
+breakpoint-mobile,Mobile,,,px,500px,breakpoint-mobile,

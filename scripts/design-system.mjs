@@ -15,10 +15,11 @@
  */
 
 import { createInterface } from 'node:readline/promises';
-import { stdin, stdout, argv, exit } from 'node:process';
+import process, { stdin, stdout, argv, exit } from 'node:process';
 import { readFile, writeFile } from 'node:fs/promises';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve, dirname, relative } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { spawn } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -40,20 +41,74 @@ const color = {
 };
 
 /**
- * Detect the theme directory (handles renamed themes).
+ * Theme folder slugs referenced in root package.json scripts (setup rewrites these paths).
+ * @param {unknown} pkg
+ */
+function themeSlugsFromPackageScripts(pkg) {
+	const slugs = [];
+	const seen = new Set();
+	const scripts = pkg && typeof pkg === 'object' && pkg.scripts && typeof pkg.scripts === 'object' ? pkg.scripts : {};
+	for (const val of Object.values(scripts)) {
+		if (typeof val !== 'string') continue;
+		for (const m of val.matchAll(/wp-content\/themes\/([a-z0-9-]+)/gi)) {
+			const s = m[1];
+			if (!seen.has(s)) {
+				seen.add(s);
+				slugs.push(s);
+			}
+		}
+	}
+	return slugs;
+}
+
+/**
+ * Detect the theme directory. Prefers paths from package.json (kept in sync by npm run setup),
+ * then any theme that contains docs/variable-mapping.md, then the first folder with theme.json.
  */
 async function findThemeDir() {
 	const { readdir } = await import('node:fs/promises');
 	const themesDir = resolve(ROOT, 'wp-content', 'themes');
+
+	try {
+		const pkg = JSON.parse(await readFile(resolve(ROOT, 'package.json'), 'utf-8'));
+		for (const slug of themeSlugsFromPackageScripts(pkg)) {
+			const dir = resolve(themesDir, slug);
+			try {
+				await readFile(resolve(dir, 'theme.json'), 'utf-8');
+				return dir;
+			} catch {
+				// slug from package.json but folder missing — try next
+			}
+		}
+	} catch {
+		// package.json missing or invalid
+	}
+
 	const entries = await readdir(themesDir, { withFileTypes: true });
+	const withMappingDoc = [];
+	for (const entry of entries) {
+		if (!entry.isDirectory()) continue;
+		if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
+		const dir = resolve(themesDir, entry.name);
+		try {
+			await readFile(resolve(dir, 'theme.json'), 'utf-8');
+			await readFile(resolve(dir, 'docs', 'variable-mapping.md'), 'utf-8');
+			withMappingDoc.push(dir);
+		} catch {
+			// skip
+		}
+	}
+	if (withMappingDoc.length === 1) return withMappingDoc[0];
+	if (withMappingDoc.length > 1) {
+		withMappingDoc.sort();
+		return withMappingDoc[0];
+	}
 
 	for (const entry of entries) {
 		if (!entry.isDirectory()) continue;
 		if (entry.name === 'node_modules' || entry.name.startsWith('.')) continue;
-
 		try {
-			const themeJson = resolve(themesDir, entry.name, 'theme.json');
-			await readFile(themeJson, 'utf-8');
+			await readFile(resolve(themesDir, entry.name, 'theme.json'), 'utf-8');
 			return resolve(themesDir, entry.name);
 		} catch {
 			// not a valid theme directory
@@ -700,76 +755,189 @@ function printSummary(tokens) {
 	console.log(`    Desktop XX-Large: ${color.cyan(tokens.breakpoints.desktopXXLarge)}`);
 }
 
-/**
- * Main entry point.
- */
+// ─── UI helpers ───────────────────────────────────────────────────────────────
+
+const BOX_W = 51;
+
+/** Strip ANSI escape codes so we measure visible character width only. */
+function stripAnsi(str) {
+	return str.replace(/\x1b\[[0-9;]*m/g, '');
+}
+
+function boxLine(content = '') {
+	const pad = BOX_W - 4 - stripAnsi(content).length;
+	return `│ ${content}${' '.repeat(Math.max(0, pad))} │`;
+}
+
+function printBox(lines) {
+	const top = `┌${'─'.repeat(BOX_W - 2)}┐`;
+	const bot = `└${'─'.repeat(BOX_W - 2)}┘`;
+	console.log(top);
+	for (const l of lines) console.log(boxLine(l));
+	console.log(bot);
+}
+
+function sectionHeader(title) {
+	const bar = '━'.repeat(3);
+	const fill = '━'.repeat(Math.max(0, BOX_W - 5 - title.length));
+	return `\n${bar} ${color.bold(title)} ${fill}`;
+}
+
+// ─── Figma sync runner ────────────────────────────────────────────────────────
+
+function runScript(scriptPath, args = []) {
+	return new Promise((resolve, reject) => {
+		const child = spawn(process.execPath, [scriptPath, ...args], {
+			stdio: 'inherit',
+			cwd: ROOT,
+		});
+		child.on('close', (code) => {
+			// Exit code is forwarded to the caller (child prints its own errors).
+			resolve(code ?? 1);
+		});
+		child.on('error', reject);
+	});
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+
 async function main() {
 	console.log('');
-	console.log(color.bold('  RV Starter Theme — Design System'));
-	console.log(color.dim('  ─────────────────────────────────'));
+	printBox([
+		'',
+		color.bold('  RV Starter Theme — Design System'),
+		'',
+		'  How would you like to configure your',
+		'  design tokens?',
+		'',
+	]);
+	console.log('');
+	console.log(`  ${color.bold('1.')}  Set variables in the terminal`);
+	console.log(`  ${color.bold('2.')}  Set variables manually  ${color.dim('(variable mapping guide)')}`);
+	console.log(`  ${color.bold('3.')}  Figma sync  ${color.dim('(beta)')}`);
 	console.log('');
 
 	if (DRY_RUN) {
 		console.log(color.yellow('  DRY RUN MODE — no files will be modified\n'));
 	}
 
-	const themeDir = await findThemeDir();
-	const themeJson = await readThemeJson(themeDir);
-	const scssContent = await readVariablesScss(themeDir);
+	const rl = createInterface({ input: stdin, output: stdout });
 
-	let tokens;
-
-	if (IMPORT_FILE) {
-		console.log(`  Importing from: ${color.cyan(IMPORT_FILE)}\n`);
-		try {
-			tokens = await importMode(IMPORT_FILE, themeJson, scssContent);
-		} catch (err) {
-			console.log(color.red(`\n  Error reading import file: ${err.message}\n`));
-			exit(1);
+	try {
+		let choice = '';
+		while (!['1', '2', '3'].includes(choice)) {
+			choice = (await rl.question(`  ${color.bold('❯')} Choose an option (1–3): `)).trim();
 		}
-	} else {
-		const rl = createInterface({ input: stdin, output: stdout });
-		try {
-			tokens = await interactiveMode(rl, themeJson, scssContent);
-		} finally {
+
+		console.log('');
+
+		// ── Option 2: manual guide ─────────────────────────────────────────────
+		if (choice === '2') {
+			const themeDir = await findThemeDir();
+			const docPath = resolve(themeDir, 'docs', 'variable-mapping.md');
+			const docHref = pathToFileURL(docPath).href;
+			const docLabel = relative(ROOT, docPath).split(/[/\\]/).join('/');
+
+			printBox([
+				'',
+				color.bold('  Variable mapping (manual)'),
+				'',
+				'  See the list of variables to update.',
+				'',
+			]);
+			console.log('');
+			console.log(
+				'  Please refer to the variable mapping guide for which values to update so global styles align with your design.',
+			);
+			console.log('');
+			// OSC 8 file:// link — clickable in VS Code / iTerm2 / WezTerm / Ghostty, etc.
+			console.log(`  \x1b]8;;${docHref}\x1b\\\x1b[36m${docLabel}\x1b[0m\x1b]8;;\x1b\\`);
+			console.log('');
+			return;
+		}
+
+		// ── Option 3: figma sync ───────────────────────────────────────────────
+		if (choice === '3') {
+			console.log(`  ${color.yellow('⚠')}  ${color.bold('Figma Sync')} ${color.dim('(beta)')}`);
+			console.log(color.dim('  This will ask for Figma URL, fetch design tokens, then apply them.\n'));
+			// Release stdin before spawning an interactive child process.
 			rl.close();
+			const syncExit = await runScript(resolve(__dirname, 'figma-sync.mjs'), DRY_RUN ? ['--dry-run'] : []);
+			if (syncExit !== 0) {
+				exit(syncExit);
+			}
+			const applyExit = await runScript(resolve(__dirname, 'figma-apply.mjs'), DRY_RUN ? ['--dry-run'] : []);
+			if (applyExit !== 0) {
+				exit(applyExit);
+			}
+			return;
 		}
-	}
 
-	// Print summary
-	printSummary(tokens);
+		// ── Option 1: interactive terminal ────────────────────────────────────
+		printBox([
+			'',
+			color.bold('  Design Token Setup'),
+			'',
+			"  We'll collect your design tokens in",
+			'  sections. Press Enter to use defaults,',
+			'  or type a new value.',
+			'',
+		]);
 
-	// Apply changes
-	console.log(color.bold('\n  Applying changes...\n'));
+		const themeDir = await findThemeDir();
+		const themeJson = await readThemeJson(themeDir);
+		const scssContent = await readVariablesScss(themeDir);
 
-	const updatedThemeJson = applyToThemeJson(themeJson, tokens);
-	const updatedScss = applyToVariablesScss(scssContent, tokens);
+		let tokens;
 
-	const themeJsonPath = resolve(themeDir, 'theme.json');
-	const scssPath = resolve(themeDir, 'assets', 'css', 'abstracts', 'variables', 'variables.scss');
+		if (IMPORT_FILE) {
+			console.log(`  Importing from: ${color.cyan(IMPORT_FILE)}\n`);
+			try {
+				tokens = await importMode(IMPORT_FILE, themeJson, scssContent);
+			} catch (err) {
+				console.log(color.red(`\n  Error reading import file: ${err.message}\n`));
+				exit(1);
+			}
+		} else {
+			// Patch section headers in interactiveMode by pre-printing them
+			console.log(sectionHeader('COLORS'));
+			tokens = await interactiveMode(rl, themeJson, scssContent);
+		}
 
-	if (!DRY_RUN) {
-		await writeFile(themeJsonPath, JSON.stringify(updatedThemeJson, null, '  ') + '\n', 'utf-8');
-		console.log(`    ${color.green('✓')} Updated theme.json`);
+		printSummary(tokens);
 
-		await writeFile(scssPath, updatedScss, 'utf-8');
-		console.log(`    ${color.green('✓')} Updated variables.scss`);
-	} else {
-		console.log(`    ${color.dim('Would update: theme.json')}`);
-		console.log(`    ${color.dim('Would update: variables.scss')}`);
-	}
+		console.log(color.bold('\n  Applying changes...\n'));
 
-	console.log('');
-	console.log(color.green(color.bold('  ✓ Design system updated!')));
+		const updatedThemeJson = applyToThemeJson(themeJson, tokens);
+		const updatedScss = applyToVariablesScss(scssContent, tokens);
 
-	if (!DRY_RUN) {
-		console.log(color.dim('\n  Run `npm run build` to rebuild the theme with the new tokens.\n'));
-	} else {
-		console.log(color.yellow('\n  This was a dry run. Run without --dry-run to apply changes.\n'));
+		const themeJsonPath = resolve(themeDir, 'theme.json');
+		const scssPath = resolve(themeDir, 'assets', 'css', 'abstracts', 'variables', 'variables.scss');
+
+		if (!DRY_RUN) {
+			await writeFile(themeJsonPath, JSON.stringify(updatedThemeJson, null, '  ') + '\n', 'utf-8');
+			console.log(`    ${color.green('✓')} Updated theme.json`);
+			await writeFile(scssPath, updatedScss, 'utf-8');
+			console.log(`    ${color.green('✓')} Updated variables.scss`);
+		} else {
+			console.log(`    ${color.dim('Would update: theme.json')}`);
+			console.log(`    ${color.dim('Would update: variables.scss')}`);
+		}
+
+		console.log('');
+		console.log(color.green(color.bold('  ✓ Design system updated!')));
+		if (!DRY_RUN) {
+			console.log(color.dim('\n  Run `npm run build` to rebuild the theme with the new tokens.\n'));
+		} else {
+			console.log(color.yellow('\n  This was a dry run. Run without --dry-run to apply changes.\n'));
+		}
+
+	} finally {
+		rl.close();
 	}
 }
 
 main().catch((err) => {
-	console.error(color.red(`\n  Error: ${err.message}\n`));
+	console.error(`\n${err.message}\n`);
 	exit(1);
 });

@@ -27,8 +27,9 @@
     "test": "npm run --prefix wp-content/themes/rv-starter test",
     "clean-dist": "npm run --prefix wp-content/themes/rv-starter clean-dist",
     "setup": "node scripts/setup.mjs",
-    "design-system": "npm run --prefix wp-content/themes/rv-starter design-system --",
-    "create-block": "npm run --prefix wp-content/themes/rv-starter create-block --"
+    "design-system": "node scripts/design-system.mjs",
+    "create-block": "npm run --prefix wp-content/themes/rv-starter create-block --",
+    "figma-sync": "sh -c 'node scripts/figma-sync.mjs \"$@\" && node scripts/figma-apply.mjs \"$@\"' --"
   },
   "author": {
     "name": "Rareview",
@@ -42,6 +43,7 @@
     "npm": ">=10.0.0"
   },
   "devDependencies": {
+    "dotenv": "^17.2.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "npm-run-all2": "^8.0.4"
