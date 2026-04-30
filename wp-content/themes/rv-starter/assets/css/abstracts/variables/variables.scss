@@ -141,8 +141,8 @@ $link-color: $color-brand-1;
 $link-hover-color: color-mix(in srgb, $color-brand-1 80%, white);
 
 /* Buttons - Primary style. */
-$button-primary-font-color: $color-dark;
 $button-primary-background-color: $color-primary;
+$button-primary-font-color: $color-dark;
 $button-primary-border-radius: 10rem;
 $button-primary-padding-x: 1.5rem;
 $button-primary-padding-y: 0.5rem;
@@ -154,8 +154,8 @@ $button-primary-height: 3.2rem;
 $button-primary-border-width: 2px;
 
 /* Buttons - Secondary style. */
-$button-secondary-font-color: $color-dark;
 $button-secondary-background-color: $color-secondary;
+$button-secondary-font-color: $color-dark;
 $button-secondary-border-radius: 10rem;
 $button-secondary-padding-x: 1.5rem;
 $button-secondary-padding-y: 0.5rem;
@@ -168,8 +168,8 @@ $button-secondary-border-width: 2px;
 
 /* Input fields */
 $input-field-height: 3.2rem;
-$input-field-border-radius: 999px;
-$input-field-border-width: 0.8182px;
+$input-field-border-radius: 10rem;
+$input-field-border-width: 2px;
 
 /* Responsive breakpoints. */
 $breakpoint-desktop-xx-large: 1920px;
