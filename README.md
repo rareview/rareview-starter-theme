@@ -1,6 +1,6 @@
-# RV Starter Theme
+# Rareview Starter Theme
 
-![RV Starter Theme Banner](.local/docs/rv-starter-theme-banner.jpg)
+![Rareview Starter Theme Banner](.local/docs/rv-starter-theme-banner.jpg)
 
 Modern WordPress starter theme for fast, scalable builds.
 - Based on the 10up Scaffold

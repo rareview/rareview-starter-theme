@@ -3,6 +3,13 @@
 	"extends": [
 		"@10up/eslint-config/wordpress"
 	],
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".jsx", ".json", ".scss", ".css"]
+			}
+		}
+	},
 	"rules": {
 		"no-console": "error",
 		"no-new": 0,

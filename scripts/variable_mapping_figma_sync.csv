@@ -3,8 +3,8 @@ VARIOUS,,,,,,,,,
 Disabled opacity,disabled-opacity,RV disabled,,NULL,NULL,NULL,disabled-opacity,number,0.4
 Container width,container-width,RV container width,containerWidth,custom.layout.contentSize,px,1440px,container-width,theme-json-var-ref,var(--wp--custom--layout--content-size)
 BODY,,,,,,,,,
-Body font family,body-font-family,RV body text,body.fontFamilyPrimary,typography:futura-pt,font-family,Futura PT,body-font-family,theme-json-var-ref,var(--wp--preset--font-family--futura-pt)
-Font family (secondary),font-family-secondary,RV font family secondary,body.fontFamilySecondary,typography:instrument-serif,font-family,Instrument Serif,font-family-secondary,theme-json-var-ref,var(--wp--preset--font-family--instrument-serif)
+Body font family,body-font-family,RV body text,body.fontFamilyPrimary,typography:geist-mono,font-family,Geist Mono,body-font-family,theme-json-var-ref,var(--wp--preset--font-family--geist-mono)
+Font family (secondary),font-family-secondary,RV font family secondary,body.fontFamilySecondary,typography:urbanist,font-family,Urbanist,font-family-secondary,theme-json-var-ref,var(--wp--preset--font-family--urbanist)
 Body line height,body-line-height,RV body text,body.bodyLineHeightRatio,NULL,NULL,NULL,body-line-height,number,1.3
 Body font weight,body-font-weight,RV body text,body.fontWeight,NULL,NULL,NULL,body-font-weight,number,400
 Body letter spacing,body-letter-spacing,RV body text,body.letterSpacing,NULL,NULL,NULL,body-letter-spacing,string,0

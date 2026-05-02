@@ -59,7 +59,7 @@ a {
 }
 
 textarea,
-input:not([type="submit"]),
+input:not([type="submit"], [type="reset"], [type="checkbox"]),
 select {
 	@include input-text;
 
@@ -92,6 +92,7 @@ input[type="radio"] {
 	}
 }
 
+legend,
 label {
 	@include input-label;
 

@@ -32,7 +32,7 @@
 
 	&:focus,
 	&:active {
-		border-color: $color-primary !important;
+		border-color: color-mix(in srgb, $color-primary 50%, black) !important;
 	}
 
 	/* Dark background. */

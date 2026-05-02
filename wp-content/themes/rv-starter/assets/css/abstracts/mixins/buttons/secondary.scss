@@ -58,6 +58,12 @@
 	}
 }
 
-.rv-button--secondary {
-	@include button-secondary;
+html body { // prioritize a bit, for example to override input:not in global.scss.
+	.rv-button--secondary {
+		@include button-secondary;
+	}
+
+	.rv-button--secondary--outline {
+		@include button-secondary(true);
+	}
 }
