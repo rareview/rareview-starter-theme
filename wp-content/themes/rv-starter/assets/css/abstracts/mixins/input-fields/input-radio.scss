@@ -52,9 +52,9 @@
 		box-sizing: border-box;
 		content: "";
 		height: $radio-inner;
-		left: calc(#{$radio-outer} / 2 - #{$radio-inner} / 2);
+		left: calc((#{$radio-outer} - #{$radio-inner}) / 2);
 		position: absolute;
-		top: calc(#{$radio-outer} / 2 - #{$radio-inner} / 2 + 0.5px);
+		top: calc((#{$radio-outer} - #{$radio-inner}) / 2);
 		transform-origin: center;
 		transition: opacity 0.2s ease, transform 0.2s ease;
 		width: $radio-inner;
