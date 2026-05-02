@@ -18,7 +18,7 @@ Body size desktop medium,body-size-desktop-medium,RV body size desktop medium,pa
 Body size desktop large,body-size-desktop-large,RV body size desktop large,paragraphSizes.desktop.large.fontSize,custom.font-size.desktop.bodyLarge,px,var(--wp--custom--font-size--desktop--body-large),body-font-size-desktop-large,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-large)
 HEADING 1,,,,,,,,,
 Heading 1 font family,heading-1-font-family,RV heading 1,NULL,NULL,NULL,NULL,heading-1-font-family,scss-ref,$font-family-secondary
-Heading 1 font weight,heading-1-font-weight,RV heading 1,headings.desktop.0.fontWeight,NULL,NULL,NULL,heading-1-font-weight,number,400
+Heading 1 font weight,heading-1-font-weight,RV heading 1,headings.desktop.0.fontWeight,NULL,NULL,NULL,heading-1-font-weight,number,700
 Heading 1 line height,heading-1-line-height,RV heading 1,,NULL,NULL,NULL,heading-1-line-height,number,1.3
 Heading 1 letter spacing,heading-1-letter-spacing,RV heading 1,,NULL,NULL,NULL,heading-1-letter-spacing,string,normal
 Heading 1 text transform,heading-1-text-transform,RV heading 1,headings.desktop.0.textTransform,NULL,NULL,NULL,heading-1-text-transform,string,none
@@ -26,7 +26,7 @@ Heading 1 font size (mobile),heading-1-font-size-mobile,RV heading 1,headings.mo
 Heading 1 font size (desktop),heading-1-font-size-desktop,RV heading 1,headings.desktop.0.fontSize,custom.font-size.desktop.heading1,px,var(--wp--custom--font-size--desktop--heading-1),heading-1-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-1)
 HEADING 2,,,,,,,,,
 Heading 2 font family,heading-2-font-family,RV heading 2,NULL,NULL,NULL,NULL,heading-2-font-family,scss-ref,$font-family-secondary
-Heading 2 font weight,heading-2-font-weight,RV heading 2,headings.desktop.1.fontWeight,NULL,NULL,NULL,heading-2-font-weight,number,400
+Heading 2 font weight,heading-2-font-weight,RV heading 2,headings.desktop.1.fontWeight,NULL,NULL,NULL,heading-2-font-weight,number,700
 Heading 2 line height,heading-2-line-height,RV heading 2,,NULL,NULL,NULL,heading-2-line-height,number,1.3
 Heading 2 letter spacing,heading-2-letter-spacing,RV heading 2,,NULL,NULL,NULL,heading-2-letter-spacing,string,normal
 Heading 2 text transform,heading-2-text-transform,RV heading 2,headings.desktop.1.textTransform,NULL,NULL,NULL,heading-2-text-transform,string,none
@@ -34,7 +34,7 @@ Heading 2 font size (mobile),heading-2-font-size-mobile,RV heading 2,headings.mo
 Heading 2 font size (desktop),heading-2-font-size-desktop,RV heading 2,headings.desktop.1.fontSize,custom.font-size.desktop.heading2,px,var(--wp--custom--font-size--desktop--heading-2),heading-2-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-2)
 HEADING 3,,,,,,,,,
 Heading 3 font family,heading-3-font-family,RV heading 3,NULL,NULL,NULL,NULL,heading-3-font-family,scss-ref,$font-family-secondary
-Heading 3 font weight,heading-3-font-weight,RV heading 3,headings.desktop.2.fontWeight,NULL,NULL,NULL,heading-3-font-weight,number,400
+Heading 3 font weight,heading-3-font-weight,RV heading 3,headings.desktop.2.fontWeight,NULL,NULL,NULL,heading-3-font-weight,number,700
 Heading 3 line height,heading-3-line-height,RV heading 3,,NULL,NULL,NULL,heading-3-line-height,number,1.3
 Heading 3 letter spacing,heading-3-letter-spacing,RV heading 3,,NULL,NULL,NULL,heading-3-letter-spacing,string,normal
 Heading 3 text transform,heading-3-text-transform,RV heading 3,headings.desktop.2.textTransform,NULL,NULL,NULL,heading-3-text-transform,string,none
@@ -42,7 +42,7 @@ Heading 3 font size (mobile),heading-3-font-size-mobile,RV heading 3,headings.mo
 Heading 3 font size (desktop),heading-3-font-size-desktop,RV heading 3,headings.desktop.2.fontSize,custom.font-size.desktop.heading3,px,var(--wp--custom--font-size--desktop--heading-3),heading-3-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-3)
 HEADING 4,,,,,,,,,
 Heading 4 font family,heading-4-font-family,RV heading 4,NULL,NULL,NULL,NULL,heading-4-font-family,scss-ref,$font-family-secondary
-Heading 4 font weight,heading-4-font-weight,RV heading 4,headings.desktop.3.fontWeight,NULL,NULL,NULL,heading-4-font-weight,number,400
+Heading 4 font weight,heading-4-font-weight,RV heading 4,headings.desktop.3.fontWeight,NULL,NULL,NULL,heading-4-font-weight,number,700
 Heading 4 line height,heading-4-line-height,RV heading 4,,NULL,NULL,NULL,heading-4-line-height,number,1.3
 Heading 4 letter spacing,heading-4-letter-spacing,RV heading 4,,NULL,NULL,NULL,heading-4-letter-spacing,string,normal
 Heading 4 text transform,heading-4-text-transform,RV heading 4,headings.desktop.3.textTransform,NULL,NULL,NULL,heading-4-text-transform,string,none
@@ -50,7 +50,7 @@ Heading 4 font size (mobile),heading-4-font-size-mobile,RV heading 4,headings.mo
 Heading 4 font size (desktop),heading-4-font-size-desktop,RV heading 4,headings.desktop.3.fontSize,custom.font-size.desktop.heading4,px,var(--wp--custom--font-size--desktop--heading-4),heading-4-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-4)
 HEADING 5,,,,,,,,,
 Heading 5 font family,heading-5-font-family,RV heading 5,NULL,NULL,NULL,NULL,heading-5-font-family,scss-ref,$font-family-secondary
-Heading 5 font weight,heading-5-font-weight,RV heading 5,headings.desktop.4.fontWeight,NULL,NULL,NULL,heading-5-font-weight,number,400
+Heading 5 font weight,heading-5-font-weight,RV heading 5,headings.desktop.4.fontWeight,NULL,NULL,NULL,heading-5-font-weight,number,700
 Heading 5 line height,heading-5-line-height,RV heading 5,,NULL,NULL,NULL,heading-5-line-height,number,1.3
 Heading 5 letter spacing,heading-5-letter-spacing,RV heading 5,,NULL,NULL,NULL,heading-5-letter-spacing,string,normal
 Heading 5 text transform,heading-5-text-transform,RV heading 5,headings.desktop.4.textTransform,NULL,NULL,NULL,heading-5-text-transform,string,none
@@ -70,12 +70,12 @@ Link hover color,color-link-hover,RV link,,NULL,NULL,NULL,color-link-hover,strin
 Link letter spacing,link-letter-spacing,RV link,,NULL,NULL,NULL,link-letter-spacing,string,normal
 Link font weight,link-font-weight,RV link,,NULL,NULL,NULL,link-font-weight,string,inherit
 Link text decoration,link-text-decoration,RV link,,NULL,NULL,NULL,link-text-decoration,string,underline
-Link hover text decoration,link-text-decoration-hover,RV link,,NULL,NULL,NULL,link-text-decoration-hover,string,none
+Link hover text decoration,link-text-decoration-hover,RV link,,NULL,NULL,NULL,link-text-decoration-hover,string,underline
 BUTTONS – PRIMARY,,,,,,,,,
 Button primary font color,button-primary-font-color,RV button primary,buttons.0.fontColor,NULL,NULL,NULL,button-primary-font-color,scss-color-match,$color-dark
 Button primary background color,button-primary-background-color,RV button primary,NULL,NULL,NULL,NULL,button-primary-background-color,scss-ref,$color-primary
 Button primary height,button-primary-height,RV button primary,buttons.0.height,NULL,NULL,NULL,button-primary-height,rem,3.2rem
-Button primary border radius,button-primary-border-radius,RV button primary,buttons.0.borderRadius,NULL,NULL,NULL,button-primary-border-radius,rem,10rem
+Button primary border radius,button-primary-border-radius,RV button primary,buttons.0.borderRadius,NULL,NULL,NULL,button-primary-border-radius,rem,0
 Button primary border width,button-primary-border-width,RV button primary,buttons.0.borderWidth,NULL,NULL,NULL,button-primary-border-width,px,2px
 Button primary padding X,button-primary-padding-x,RV button primary,buttons.0.paddingX,NULL,NULL,NULL,button-primary-padding-x,rem,1.5rem
 Button primary padding Y,button-primary-padding-y,RV button primary,buttons.0.paddingY,NULL,NULL,NULL,button-primary-padding-y,rem,0.5rem
@@ -87,7 +87,7 @@ BUTTONS – SECONDARY,,,,,,,,,
 Button secondary font color,button-secondary-font-color,RV button secondary,buttons.1.fontColor,NULL,NULL,NULL,button-secondary-font-color,scss-color-match,$color-dark
 Button secondary background color,button-secondary-background-color,RV button secondary,NULL,NULL,NULL,NULL,button-secondary-background-color,scss-ref,$color-secondary
 Button secondary height,button-secondary-height,RV button secondary,buttons.1.height,NULL,NULL,NULL,button-secondary-height,rem,3.2rem
-Button secondary border radius,button-secondary-border-radius,RV button secondary,buttons.1.borderRadius,NULL,NULL,NULL,button-secondary-border-radius,rem,10rem
+Button secondary border radius,button-secondary-border-radius,RV button secondary,buttons.1.borderRadius,NULL,NULL,NULL,button-secondary-border-radius,rem,0
 Button secondary border width,button-secondary-border-width,RV button secondary,buttons.1.borderWidth,NULL,NULL,NULL,button-secondary-border-width,px,2px
 Button secondary padding X,button-secondary-padding-x,RV button secondary,buttons.1.paddingX,NULL,NULL,NULL,button-secondary-padding-x,rem,1.5rem
 Button secondary padding Y,button-secondary-padding-y,RV button secondary,buttons.1.paddingY,NULL,NULL,NULL,button-secondary-padding-y,rem,0.5rem
@@ -97,7 +97,7 @@ Button secondary letter spacing,button-secondary-letter-spacing,RV button second
 Button secondary text transform,button-secondary-text-transform,RV button secondary,buttons.1.textTransform,NULL,NULL,NULL,button-secondary-text-transform,string,uppercase
 INPUT FIELDS,,,,,,,,,
 Input field height,input-field-height,RV input field,inputHeight,NULL,NULL,NULL,input-field-height,rem,3.2rem
-Input field border radius,input-field-border-radius,RV input field,inputBorderRadius,NULL,NULL,NULL,input-field-border-radius,rem,10rem
+Input field border radius,input-field-border-radius,RV input field,inputBorderRadius,NULL,NULL,NULL,input-field-border-radius,rem,0
 Input field border width,input-field-border-width,RV input field,borderWidth,NULL,NULL,NULL,input-field-border-width,px,2px
 COLORS – MONO,,,,,,,,,
 Black,color-black,RV color black,,palette:black,hex,#000000,color-black,theme-json-var-ref,var(--wp--preset--color--black)
@@ -107,8 +107,8 @@ Grey,color-grey,RV color grey,colors.mono.2.hex,palette:grey,hex,#808080,color-g
 Grey Light,color-grey-light,RV color grey light,colors.mono.3.hex,palette:grey-light,hex,#BFBFBF,color-grey-light,theme-json-var-ref,var(--wp--preset--color--grey-light)
 White,color-white,RV color white,,palette:white,hex,#ffffff,color-white,theme-json-var-ref,var(--wp--preset--color--white)
 COLORS – BRAND,,,,,,,,,
-Brand Color 1,brand-1,RV color brand 1,colors.colored.0.hex,palette:brand-1,hex,#00b0be,color-brand-1,theme-json-var-ref,var(--wp--preset--color--brand-1)
-Brand Color 2,brand-2,RV color brand 2,colors.colored.1.hex,palette:brand-2,hex,#ffcb2f,color-brand-2,theme-json-var-ref,var(--wp--preset--color--brand-2)
+Brand Color 1,brand-1,RV color brand 1,colors.colored.0.hex,palette:brand-1,hex,#00F700,color-brand-1,theme-json-var-ref,var(--wp--preset--color--brand-1)
+Brand Color 2,brand-2,RV color brand 2,colors.colored.1.hex,palette:brand-2,hex,#61DAFB,color-brand-2,theme-json-var-ref,var(--wp--preset--color--brand-2)
 Brand Color 3,brand-3,RV color brand 3,colors.colored.2.hex,palette:brand-3,hex,#00585f,color-brand-3,theme-json-var-ref,var(--wp--preset--color--brand-3)
 Brand Color 4,brand-4,RV color brand 4,colors.colored.3.hex,palette:brand-4,hex,#5794f7,color-brand-4,theme-json-var-ref,var(--wp--preset--color--brand-4)
 Brand Color 5,brand-5,RV color brand 5,colors.colored.4.hex,palette:brand-5,hex,#afbccf,color-brand-5,theme-json-var-ref,var(--wp--preset--color--brand-5)

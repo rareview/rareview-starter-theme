@@ -20,8 +20,8 @@
 
 | Label                   | Variable               | Type        | Default          |
 | ----------------------- | ---------------------- | ----------- | ---------------- |
-| Body font family        | $body-font-family      | font-family | Futura PT        |
-| Font family (secondary) | $font-family-secondary | font-family | Instrument Serif |
+| Body font family        | $body-font-family      | font-family | Geist Mono |
+| Font family (secondary) | $font-family-secondary | font-family | Urbanist   |
 | Body line height        | $body-line-height      | number      | 1.3              |
 | Body font weight        | $body-font-weight      | number      | 400              |
 | Body letter spacing     | $body-letter-spacing   | string      | 0                |
@@ -61,7 +61,7 @@
 | Label          | Variable                          | Type     | Default                                          |
 | -------------- | --------------------------------- | -------- | ------------------------------------------------ |
 | Font family    | $heading-1-font-family            | scss-ref | $font-family-secondary                           |
-| Font weight    | $heading-1-font-weight            | number   | 400                                              |
+| Font weight    | $heading-1-font-weight            | number   | 700                                              |
 | Line height    | $heading-1-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-1-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-1-text-transform         | string   | none                                             |
@@ -99,7 +99,7 @@
 | Letter spacing   | $link-letter-spacing        | string   | normal         |
 | Font weight      | $link-font-weight           | string   | inherit        |
 | Text decoration  | $link-text-decoration       | string   | underline      |
-| Hover decoration | $link-text-decoration-hover | string   | none           |
+| Hover decoration | $link-text-decoration-hover | string   | underline      |
 
 
 ---
@@ -112,7 +112,7 @@
 | Font color     | $button-primary-font-color       | scss-ref | $color-dark    |
 | Background     | $button-primary-background-color | scss-ref | $color-primary |
 | Height         | $button-primary-height           | rem      | 3.2rem         |
-| Border radius  | $button-secondary-border-radius  | rem      | 10rem          |
+| Border radius  | $button-primary-border-radius    | rem      | 0              |
 | Border width   | $button-primary-border-width     | px       | 2px            |
 | Padding X      | $button-primary-padding-x        | rem      | 1.5rem         |
 | Padding Y      | $button-primary-padding-y        | rem      | 0.5rem         |
@@ -136,7 +136,7 @@
 | Label         | Variable                   | Type | Default |
 | ------------- | -------------------------- | ---- | ------- |
 | Height        | $input-field-height        | rem  | 3.2rem  |
-| Border radius | $input-field-border-radius | rem  | 10rem   |
+| Border radius | $input-field-border-radius | rem  | 0       |
 | Border width  | $input-field-border-width  | px   | 2px     |
 
 
