@@ -244,6 +244,19 @@
               "src": ["file:./assets/fonts/urbanist/Urbanist-ExtraBold.woff2"]
             }
           ]
+        },
+        {
+          "name": "Instrument Serif",
+          "slug": "instrument-serif",
+          "fontFamily": "Instrument Serif, Georgia, serif",
+          "fontFace": [
+            {
+              "fontFamily": "Instrument Serif",
+              "fontWeight": "400",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/instrument-serif/InstrumentSerif-Regular.woff2"]
+            }
+          ]
         }
       ]
     },
