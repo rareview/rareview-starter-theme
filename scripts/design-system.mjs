@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * RV Starter Theme — Design System CLI
+ * Rareview Starter Theme — Design System CLI
  *
  * Interactive CLI to set up and sync design tokens between
  * theme.json and variables.scss.
@@ -1215,7 +1215,7 @@ async function main() {
 	console.log('');
 	printBox([
 		'',
-		color.bold('  RV Starter Theme — Design System'),
+		color.bold('  Rareview Starter Theme — Design System'),
 		'',
 		'  How would you like to configure your',
 		'  design tokens?',

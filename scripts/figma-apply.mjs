@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * RV Starter Theme — Figma Apply
+ * Rareview Starter Theme — Figma Apply
  *
  * Reads scripts/figma-sync/figma-export.json and scripts/variable_mapping_figma_sync.csv,
  * resolves each token (Figma value first, CSV default as fallback), then writes
@@ -737,7 +737,7 @@ async function runFontCheck(figmaExport, themeJson, themeDir) {
 
 async function main() {
 	console.log('');
-	console.log(c.bold('  RV Starter Theme — Figma Sync'));
+	console.log(c.bold('  Rareview Starter Theme — Figma Sync'));
 	console.log(c.dim('  ─────────────────────────────────'));
 	if (DRY_RUN) console.log(c.yellow('\n  DRY RUN — no files will be written'));
 	console.log('');

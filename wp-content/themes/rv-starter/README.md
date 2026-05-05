@@ -1,8 +1,8 @@
-# RV Starter Theme
+# Rareview Starter Theme
 
 ## Intro
 
-Welcome to the RV Starter Theme, based on the [10Up Scaffold Theme](https://github.com/10up/wp-scaffold/tree/trunk/themes/10up-theme),
+Welcome to the Rareview Starter Theme, based on the [10Up Scaffold Theme](https://github.com/10up/wp-scaffold/tree/trunk/themes/10up-theme),
 a best base for high-end WordPress builds.
 
 Compiling, minifying, and bundling JS/CSS is handled by [10up Toolkit](https://github.com/10up/10up-toolkit).

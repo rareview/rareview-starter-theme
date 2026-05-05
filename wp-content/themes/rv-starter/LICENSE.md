@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 RV Starter Theme Contributors
+Copyright (c) 2026 Rareview Starter Theme Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

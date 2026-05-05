@@ -1,4 +1,4 @@
-# RV Starter Theme – Variable Mapping User Guide
+# Rareview Starter Theme – Variable Mapping User Guide
 
 ## VARIOUS
 

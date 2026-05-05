@@ -3,13 +3,13 @@
 This repository contains multiple software components with different licenses:
 
 - WordPress core and bundled upstream components are licensed under GPL (see `license.txt`).
-- Custom RV Starter Theme code and project-specific custom code are licensed under MIT (below and in `wp-content/themes/rv-starter/LICENSE.md`).
+- Custom Rareview Starter Theme code and project-specific custom code are licensed under MIT (below and in `wp-content/themes/rv-starter/LICENSE.md`).
 
 The MIT license text below applies only to the custom RV project code, not to third-party dependencies or WordPress core.
 
 ## MIT License
 
-Copyright (c) 2026 RV Starter Theme Contributors
+Copyright (c) 2026 Rareview Starter Theme Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

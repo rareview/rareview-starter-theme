@@ -1,4 +1,4 @@
-# RV Starter Theme
+# Rareview Starter Theme
 
 ## Overview
 WordPress starter theme built on 10up Toolkit. PHP 8.2+, Node 20+.

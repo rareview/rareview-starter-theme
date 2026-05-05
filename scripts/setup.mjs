@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * RV Starter Theme — Interactive Project Setup
+ * Rareview Starter Theme — Interactive Project Setup
  *
  * Automates all manual setup steps when creating a new project
  * from the rv-starter-theme template.
@@ -276,7 +276,7 @@ function printManualSteps(slug) {
  */
 async function main() {
 	console.log('');
-	console.log(color.bold('  RV Starter Theme \u2014 Project Setup'));
+	console.log(color.bold('  Rareview Starter Theme \u2014 Project Setup'));
 	console.log(color.dim('  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500'));
 	console.log('');
 
@@ -337,7 +337,7 @@ async function main() {
 			['rv-starter.local', localUrl],
 			['rv-starter-lando', `${slug}-lando`],
 			['rv-starter', slug],
-			['RV Starter', name],
+			['Rareview Starter', name],
 			['RVStarter', namespace],
 			['RV_STARTER', constant],
 			['rv_starter', snake],

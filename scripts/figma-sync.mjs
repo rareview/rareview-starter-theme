@@ -1879,7 +1879,7 @@ async function main() {
 		for (let attempt = 1; attempt <= 3; attempt += 1) {
 			try {
 				console.log(`\nFetching Figma file: ${parsed.fileKey}`);
-				log(`RV Starter Theme - Figma Sync`);
+				log(`Rareview Starter Theme - Figma Sync`);
 				log(`Generated at: ${new Date().toISOString()}`);
 				log(`Source URL: ${sourceInfo.url}`);
 				log(`File key: ${sourceInfo.fileKey}`);

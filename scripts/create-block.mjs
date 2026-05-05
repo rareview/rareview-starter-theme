@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * RV Starter Theme — Block Scaffolding
+ * Rareview Starter Theme — Block Scaffolding
  *
  * Generates new custom blocks following the theme's exact conventions.
  *
@@ -291,7 +291,7 @@ function generateStyleScss(config) {
  */
 async function main() {
 	console.log('');
-	console.log(color.bold('  RV Starter Theme — Block Scaffolding'));
+	console.log(color.bold('  Rareview Starter Theme — Block Scaffolding'));
 	console.log(color.dim('  ────────────────────────────────────'));
 	console.log('');
 
