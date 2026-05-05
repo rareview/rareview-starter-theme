@@ -81,3 +81,10 @@ See [Local Development Setup](.local/docs/local-development-setup.md) for detail
 ## Theme Development
 
 See [Theme Development](.local/docs/theme-development.md) for details.
+
+## License
+
+This repository includes mixed-licensed components:
+
+- WordPress core/upstream components: GPL (see `license.txt`)
+- Custom RV project code (scripts, tooling, and theme code): MIT (see `LICENSE.md` and `wp-content/themes/rv-starter/LICENSE.md`)
