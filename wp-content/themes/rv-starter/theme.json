@@ -46,12 +46,12 @@
         {
           "name": "Brand Color 1",
           "slug": "brand-1",
-          "color": "#00b0be"
+          "color": "#00F700"
         },
         {
           "name": "Brand Color 2",
           "slug": "brand-2",
-          "color": "#ffcb2f"
+          "color": "#61DAFB"
         },
         {
           "name": "Brand Color 3",
@@ -202,34 +202,53 @@
       ],
       "fontFamilies": [
         {
-          "name": "Futura PT",
-          "slug": "futura-pt",
-          "fontFamily": "Futura PT, Arial, sans-serif",
+          "name": "Geist Mono",
+          "slug": "geist-mono",
+          "fontFamily": "Geist Mono, ui-monospace, monospace",
           "fontFace": [
             {
-              "fontFamily": "Futura PT",
+              "fontFamily": "Geist Mono",
               "fontWeight": "400",
               "fontStyle": "normal",
-              "src": ["file:./assets/fonts/futura-pt/FuturaPT-Book.woff2"]
+              "src": ["file:./assets/fonts/geist-mono/GeistMono-Regular.woff2"]
             },
             {
-              "fontFamily": "Futura PT",
+              "fontFamily": "Geist Mono",
+              "fontWeight": "500",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/geist-mono/GeistMono-Medium.woff2"]
+            },
+            {
+              "fontFamily": "Geist Mono",
               "fontWeight": "700",
               "fontStyle": "normal",
-              "src": ["file:./assets/fonts/futura-pt/FuturaPT-Bold.woff2"]
+              "src": ["file:./assets/fonts/geist-mono/GeistMono-Medium.woff2"]
+            }
+          ]
+        },
+        {
+          "name": "Urbanist",
+          "slug": "urbanist",
+          "fontFamily": "Urbanist, system-ui, sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Urbanist",
+              "fontWeight": "700",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/urbanist/Urbanist-Bold.woff2"]
             },
             {
-              "fontFamily": "Futura PT",
+              "fontFamily": "Urbanist",
               "fontWeight": "800",
               "fontStyle": "normal",
-              "src": ["file:./assets/fonts/futura-pt/FuturaPT-ExtraBold.woff2"]
+              "src": ["file:./assets/fonts/urbanist/Urbanist-ExtraBold.woff2"]
             }
           ]
         },
         {
           "name": "Instrument Serif",
           "slug": "instrument-serif",
-          "fontFamily": "Instrument Serif, serif",
+          "fontFamily": "Instrument Serif, Georgia, serif",
           "fontFace": [
             {
               "fontFamily": "Instrument Serif",

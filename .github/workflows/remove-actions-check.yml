@@ -8,7 +8,7 @@ on:
 jobs:
   self-destroy-check:
     runs-on: ubuntu-latest
-    if: github.repository != 'rareview/rv-starter-theme' && github.event_name == 'push'
+    if: github.repository != 'rareview/rareview-starter-theme' && github.event_name == 'push'
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3

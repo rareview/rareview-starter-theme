@@ -58,7 +58,14 @@
 	}
 }
 
-.rv-button--primary,
-.rv-button {
-	@include button-primary;
+html body { // prioritize a bit, for example to override input:not in global.scss
+	.rv-button--primary,
+	.rv-button {
+		@include button-primary;
+	}
+
+	.rv-button--primary--outline,
+	.rv-button--outline {
+		@include button-primary(true);
+	}
 }

@@ -1,7 +1,8 @@
 {
   "name": "rv-starter-theme",
   "version": "1.0.0",
-  "description": "WordPress theme for RV Starter by Rareview",
+  "license": "MIT",
+  "description": "WordPress theme for Rareview Starter by Rareview",
   "homepage": "https://github.com/rareview/rv-starter",
   "repository": {
     "type": "git",

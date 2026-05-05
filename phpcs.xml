@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<ruleset name="RV Starter PHPCS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<ruleset name="Rareview Starter PHPCS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
-    <description>RV Starter PHPCS extended.</description>
+    <description>Rareview Starter PHPCS extended.</description>
 
 	<arg value="s" />
 	<arg value="p" />

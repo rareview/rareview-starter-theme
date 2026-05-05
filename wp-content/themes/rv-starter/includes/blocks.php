@@ -168,6 +168,6 @@ function register_block_pattern_categories(): void {
 	// Register a block pattern category.
 	register_block_pattern_category(
 		'rv-starter',
-		[ 'label' => __( 'RV Starter', 'rv-starter-theme' ) ]
+		[ 'label' => __( 'Rareview Starter', 'rv-starter-theme' ) ]
 	);
 }

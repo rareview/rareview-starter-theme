@@ -1,6 +1,6 @@
-# RV Starter Theme
+# Rareview Starter Theme
 
-![RV Starter Theme Banner](.local/docs/rv-starter-theme-banner.jpg)
+![Rareview Starter Theme Banner](.local/docs/rv-starter-theme-banner.jpg)
 
 Modern WordPress starter theme for fast, scalable builds.
 - Based on the 10up Scaffold
@@ -81,3 +81,10 @@ See [Local Development Setup](.local/docs/local-development-setup.md) for detail
 ## Theme Development
 
 See [Theme Development](.local/docs/theme-development.md) for details.
+
+## License
+
+This repository includes mixed-licensed components:
+
+- WordPress core/upstream components: GPL (see `license.txt`)
+- Custom RV project code (scripts, tooling, and theme code): MIT (see `LICENSE.md` and `wp-content/themes/rv-starter/LICENSE.md`)

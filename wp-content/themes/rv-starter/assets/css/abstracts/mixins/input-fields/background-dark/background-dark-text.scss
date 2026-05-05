@@ -7,14 +7,23 @@
 		color: $input-dark-text-color;
 	}
 
+	&:focus,
+	&:active {
+		border-color: color-mix(in srgb, $color-primary 50%, white) !important;
+	}
+
 	/* States. */
 	&:disabled {
-		border-color: $input-dark-background-color;
-		color: $input-dark-background-color;
+		border-color: $input-dark-disabled-color;
+		color: $input-dark-disabled-color;
+
+		+ label {
+			color: $input-dark-disabled-color;
+		}
 
 		&:focus,
 		&:active {
-			border-color: $input-dark-background-color;
+			border-color: $input-dark-disabled-color;
 		}
 	}
 }

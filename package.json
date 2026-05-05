@@ -1,7 +1,7 @@
 {
   "name": "rv-starter",
   "version": "0.1.0",
-  "description": "RV Starter WordPress Site by Rareview hosted on WP Engine",
+  "description": "Rareview Starter WordPress Site by Rareview hosted on WP Engine",
   "homepage": "https://www.rv-starter.com/",
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
     "npm": ">=10.0.0"
   },
   "devDependencies": {
+    "@inquirer/prompts": "^8.4.2",
     "dotenv": "^17.2.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",

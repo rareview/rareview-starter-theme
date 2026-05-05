@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
           registry-url: https://registry.npmjs.org/
 
-      - name: Install NPM dependencies for the RV Starter theme
+      - name: Install NPM dependencies for the Rareview Starter theme
         run: npm --prefix wp-content/themes/rv-starter install
 
       - name: Lint the JS files

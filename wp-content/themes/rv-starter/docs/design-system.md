@@ -13,7 +13,7 @@ WordPress generates CSS custom properties from `theme.json`. SCSS variables refe
 
 ```scss
 // variables.scss references theme.json via CSS custom properties
-$body-font-family: var(--wp--custom--typography--font-family);
+$body-font-family: var(--wp--preset--font-family--geist-mono);
 $color-black: var(--wp--preset--color--black);
 $heading-1-font-size-desktop: var(--wp--custom--font-size--desktop--heading-1);
 ```

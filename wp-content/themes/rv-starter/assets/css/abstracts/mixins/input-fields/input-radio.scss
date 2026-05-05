@@ -1,6 +1,11 @@
 @mixin input-radio($background: "light") {
+	$radio-outer: 1.5625rem; // 25px — match checkbox
+	$radio-inner: $radio-outer * (0.9 / 1.4375); // inner dot slightly smaller than ring
+	$radio-label-padding-left: 2.125rem; // room for 25px circle + gap
+	$radio-label-line-height: 1.5rem;
+
 	cursor: pointer;
-	border: 1px solid $input-light-border-color;
+	border: $input-field-border-width solid $input-light-border-color;
 
 	&:checked,
 	&:not(:checked) {
@@ -17,32 +22,42 @@
 	&:not(:checked) + label {
 		cursor: pointer;
 		display: inline-block;
-		line-height: 24px;
-		padding-left: 38px;
+		line-height: $radio-label-line-height;
+		padding-left: $radio-label-padding-left;
 		position: relative;
 	}
 
 	&:checked + label::before,
 	&:not(:checked) + label::before {
 		background: transparent;
-		border: 1px solid $input-light-border-color;
+		border: $input-field-border-width solid $input-light-border-color;
+		border-radius: 100%;
+		box-sizing: border-box;
 		content: "";
-		height: 23px;
+		height: $radio-outer;
 		left: 0;
 		position: absolute;
 		top: 0;
-		width: 23px;
+		transition: border-color 0.2s ease;
+		width: $radio-outer;
+	}
+
+	&:checked + label::before {
+		border-color: $color-primary;
 	}
 
 	&:checked + label::after,
 	&:not(:checked) + label::after {
+		border-radius: 100%;
+		box-sizing: border-box;
 		content: "";
-		height: 15px;
-		left: 5px;
+		height: $radio-inner;
+		left: calc((#{$radio-outer} - #{$radio-inner}) / 2);
 		position: absolute;
-		top: 5px;
-		transition: all 0.2s ease;
-		width: 15px;
+		top: calc((#{$radio-outer} - #{$radio-inner}) / 2);
+		transform-origin: center;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+		width: $radio-inner;
 	}
 
 	&:not(:checked) + label::after {
@@ -55,13 +70,6 @@
 		background-color: $color-primary;
 		opacity: 1;
 		transform: scale(1);
-	}
-
-	&:checked + label::before,
-	&:not(:checked) + label::before,
-	&:checked + label::after,
-	&:not(:checked) + label::after {
-		border-radius: 100%;
 	}
 
 	&.rv-focused + label::before {

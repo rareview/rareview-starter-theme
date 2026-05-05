@@ -46,7 +46,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
-			$theme_name = 'RV Starter';
+			$theme_name = 'Rareview Starter';
 			echo '<div class="notice notice-error"><p>';
 			printf(
 				/* translators: %s: theme name */
