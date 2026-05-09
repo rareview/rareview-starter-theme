@@ -348,6 +348,22 @@ function setDeepSettings(themeJson, pathStr, value) {
 }
 
 /**
+ * Deep-get a value inside themeJson.settings using dot notation.
+ * Returns undefined when any segment is missing.
+ */
+function getDeepSettings(themeJson, pathStr) {
+	const parts = pathStr.split('.');
+	let cur = themeJson.settings;
+	for (const key of parts) {
+		if (cur == null || typeof cur !== 'object' || !(key in cur)) {
+			return undefined;
+		}
+		cur = cur[key];
+	}
+	return cur;
+}
+
+/**
  * Update the color field of a palette entry by slug.
  * Creates a new entry if the slug does not yet exist.
  * Returns "updated" or "created".
@@ -828,7 +844,32 @@ async function main() {
 
 		// ── theme.json side ────────────────────────────────────────────────────
 		if (tjTargetResolved && tjType) {
-			const rawTjValue = figmaRaw != null ? figmaRaw : tjDefault;
+			let rawTjValue = figmaRaw != null ? figmaRaw : tjDefault;
+
+			// Guard against writing circular/self-referencing theme vars into theme.json,
+			// e.g. custom.font-size.mobile.bodySmall = var(--wp--custom--font-size--mobile--body-small).
+			// When Figma did not resolve a value and CSV default is a var() reference,
+			// keep the current concrete theme.json value if available.
+			if (
+				figmaRaw == null &&
+				typeof rawTjValue === 'string' &&
+				rawTjValue.trim().startsWith('var(')
+			) {
+				const existingThemeValue = getDeepSettings(themeJson, tjTargetResolved);
+				if (existingThemeValue != null && String(existingThemeValue).trim() !== '') {
+					rawTjValue = existingThemeValue;
+				} else {
+					const warning =
+						`  ! ${tjTargetResolved} fallback is var() with no concrete existing value - skipping theme.json update`;
+					logLines.push(warning);
+					if (VERBOSE) {
+						console.log(c.yellow(warning));
+					}
+					skipped++;
+					continue;
+				}
+			}
+
 			if (rawTjValue !== '' && rawTjValue != null) {
 				const source = figmaRaw != null ? 'figma' : 'default';
 				let tjValue;
