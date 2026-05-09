@@ -1,0 +1,136 @@
+/**
+ * Input Fields Examples block — layout only (controls use theme / browser defaults).
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+.wp-block-rv-starter-input-fields-examples {
+	.rv-input-fields-examples__notice {
+		margin: 0 0 0.75rem;
+		font-size: var(--wp--preset--font-size--small, 0.875rem);
+		opacity: 0.85;
+	}
+
+	.rv-input-fields-examples__table {
+		width: 100%;
+		border-collapse: collapse;
+		table-layout: fixed;
+	}
+
+	.rv-input-fields-examples__fieldset {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		min-width: 0;
+	}
+
+	.rv-input-fields-examples__fieldset legend {
+		padding: 0;
+	}
+
+	.rv-input-fields-examples__cell--half {
+		width: 49%;
+		vertical-align: top;
+	}
+
+	.rv-input-fields-examples__cell--gutter {
+		width: 2%;
+	}
+
+	/*
+	 * Stack first / last name at 1300px and below.
+	 * Blockify tbody / other rows so the name row can use display: table-cell
+	 * and span the full content width (escapes table-layout: fixed columns).
+	 */
+	@media (width <= 1299px) {
+		.rv-input-fields-examples__table tbody {
+			display: block;
+			width: 100%;
+		}
+
+		.rv-input-fields-examples__table tr:not(.rv-input-fields-examples__row--name-split) {
+			display: block;
+			width: 100%;
+		}
+
+		.rv-input-fields-examples__table tr:not(.rv-input-fields-examples__row--name-split) > td {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		.rv-input-fields-examples__row--name-split {
+			float: left;
+			width: 100%;
+			vertical-align: top;
+			box-sizing: border-box;
+		}
+
+		.rv-input-fields-examples__row--name-split > .rv-input-fields-examples__cell--half {
+			box-sizing: border-box;
+			display: block;
+			min-width: 0;
+			width: 100% !important;
+		}
+
+		.rv-input-fields-examples__row--name-split > .rv-input-fields-examples__cell--half:first-child {
+			margin-bottom: 0.75rem;
+		}
+
+		.rv-input-fields-examples__row--name-split > .rv-input-fields-examples__cell--gutter {
+			display: none;
+		}
+	}
+
+	.rv-input-fields-examples__cell[colspan] {
+		width: 100%;
+		vertical-align: top;
+	}
+
+	.rv-input-fields-examples__control {
+		width: 100%;
+		box-sizing: border-box;
+		margin-top: 0.25rem;
+		padding: 8px 10px;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: 1.4;
+		vertical-align: middle;
+	}
+
+	.rv-input-fields-examples__control:disabled {
+		cursor: not-allowed;
+		opacity: 0.65;
+	}
+
+	textarea.rv-input-fields-examples__control {
+		min-height: 12rem;
+		resize: vertical;
+		vertical-align: top;
+		display: block;
+		margin-block: 0;
+	}
+
+	label {
+		display: inline-block;
+		margin-top: 0.125rem;
+	}
+
+	.rv-input-fields-examples__choice {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: 0.125rem;
+		cursor: pointer;
+	}
+
+	.rv-input-fields-examples__choice input[type='checkbox'] {
+		margin: 0;
+	}
+
+	input[type="submit"],
+	input[type="reset"] {
+		margin-right: 0.5rem;
+	}
+}
