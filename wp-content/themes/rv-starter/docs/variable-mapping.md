@@ -138,12 +138,12 @@
 
 | Label            | Variable                    | Type     | Default        |
 | ---------------- | --------------------------- | -------- | -------------- |
-| Link color       | $color-link                 | scss-ref | $color-primary |
-| Link hover color | $color-link-hover           | string   | color-mix(...) |
+| Link color       | $link-color                 | scss-ref | $color-primary |
+| Link hover color | $link-hover-color           | string   | color-mix(...) |
 | Letter spacing   | $link-letter-spacing        | string   | normal         |
 | Font weight      | $link-font-weight           | string   | inherit        |
 | Text decoration  | $link-text-decoration       | string   | underline      |
-| Hover decoration | $link-text-decoration-hover | string   | underline      |
+| Hover decoration | $link-hover-text-decoration | string   | underline      |
 
 
 ---

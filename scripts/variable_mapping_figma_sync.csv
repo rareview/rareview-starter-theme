@@ -65,12 +65,12 @@ Heading 6 text transform,heading-6-text-transform,RV heading 6,headings.desktop.
 Heading 6 font size (mobile),heading-6-font-size-mobile,RV heading 6,headings.mobile.5.fontSize,custom.font-size.mobile.heading6,px,16px,heading-6-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-6)
 Heading 6 font size (desktop),heading-6-font-size-desktop,RV heading 6,headings.desktop.5.fontSize,custom.font-size.desktop.heading6,px,24px,heading-6-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-6)
 LINKS,,,,,,,,,
-Link color,color-link,RV link,NULL,NULL,NULL,NULL,color-link,scss-ref,$color-primary
-Link hover color,color-link-hover,RV link,,NULL,NULL,NULL,color-link-hover,string,"color-mix(in srgb, $color-primary 80%, white)"
+Link color,color-link,RV link,NULL,NULL,NULL,NULL,link-color,scss-ref,$color-primary
+Link hover color,color-link-hover,RV link,,NULL,NULL,NULL,link-hover-color,string,"color-mix(in srgb, $color-primary 80%, white)"
 Link letter spacing,link-letter-spacing,RV link,,NULL,NULL,NULL,link-letter-spacing,string,normal
 Link font weight,link-font-weight,RV link,,NULL,NULL,NULL,link-font-weight,string,inherit
 Link text decoration,link-text-decoration,RV link,,NULL,NULL,NULL,link-text-decoration,string,underline
-Link hover text decoration,link-text-decoration-hover,RV link,,NULL,NULL,NULL,link-text-decoration-hover,string,underline
+Link hover text decoration,link-text-decoration-hover,RV link,,NULL,NULL,NULL,link-hover-text-decoration,string,underline
 BUTTONS – PRIMARY,,,,,,,,,
 Button primary font color,button-primary-font-color,RV button primary,buttons.0.fontColor,NULL,NULL,NULL,button-primary-font-color,scss-color-match,$color-dark
 Button primary background color,button-primary-background-color,RV button primary,NULL,NULL,NULL,NULL,button-primary-background-color,scss-ref,$color-primary
