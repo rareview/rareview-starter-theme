@@ -249,6 +249,14 @@ function formatNumberValue(input, decimals = 4) {
 		.replace(/\.?0+$/, '');
 }
 
+/** Zero lengths without units (stylelint `length-zero-no-unit`). */
+function formatZeroAwareLength(num, unit) {
+	if (num === 0) {
+		return '0';
+	}
+	return `${formatNumberValue(num, 4)}${unit}`;
+}
+
 function parseNumericWithUnit(input) {
 	const raw = String(input ?? '').trim();
 	const m = raw.match(/^(-?\d*\.?\d+)\s*([a-zA-Z%]*)$/);
@@ -286,7 +294,7 @@ function normalizeValue(rawValue, type, context = {}) {
 				return value;
 			}
 			// Enforce px output for numeric data.
-			return `${formatNumberValue(parsed.value, 4)}px`;
+			return formatZeroAwareLength(parsed.value, 'px');
 		}
 		case 'hex': {
 			let hex = value.replace(/^#/, '');
@@ -304,7 +312,7 @@ function normalizeValue(rawValue, type, context = {}) {
 			}
 			// Figma numeric dimensions are px; convert px->rem when needed.
 			const remVal = parsed.unit === 'rem' ? parsed.value : parsed.value / 16;
-			return `${formatNumberValue(remVal, 4)}rem`;
+			return formatZeroAwareLength(remVal, 'rem');
 		}
 		case 'font-family': {
 			return resolveFontFamilyValue(rawValue, context.themeJson, context.defaultVal);
@@ -315,7 +323,7 @@ function normalizeValue(rawValue, type, context = {}) {
 				return value;
 			}
 			// Figma letter-spacing is in em; pass through as-is (no px conversion).
-			return `${formatNumberValue(parsed.value, 4)}em`;
+			return formatZeroAwareLength(parsed.value, 'em');
 		}
 		case 'number':
 			return formatNumberValue(rawValue, 4);
