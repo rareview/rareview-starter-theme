@@ -23,7 +23,7 @@ import { spawn } from 'node:child_process';
 import { select } from '@inquirer/prompts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..');
+const ROOT = resolve(__dirname, '..', '..');
 
 // CLI flags
 const args = argv.slice(2);
@@ -1272,11 +1272,11 @@ async function main() {
 			console.log(color.dim('  This will ask for Figma URL, fetch design tokens, then apply them.\n'));
 			// Release stdin before spawning an interactive child process.
 			rl.close();
-			const syncExit = await runScript(resolve(__dirname, 'figma-sync.mjs'), DRY_RUN ? ['--dry-run'] : []);
+			const syncExit = await runScript(resolve(__dirname, '..', 'figma-sync', 'figma-sync.mjs'), DRY_RUN ? ['--dry-run'] : []);
 			if (syncExit !== 0) {
 				exit(syncExit);
 			}
-			const applyExit = await runScript(resolve(__dirname, 'figma-apply.mjs'), DRY_RUN ? ['--dry-run'] : []);
+			const applyExit = await runScript(resolve(__dirname, '..', 'figma-sync', 'figma-apply.mjs'), DRY_RUN ? ['--dry-run'] : []);
 			if (applyExit !== 0) {
 				exit(applyExit);
 			}

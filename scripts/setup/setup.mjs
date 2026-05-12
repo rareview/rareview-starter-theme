@@ -20,7 +20,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..');
+const ROOT = resolve(__dirname, '..', '..');
 const THEME_DIR = join(ROOT, 'wp-content', 'themes', 'rv-starter');
 
 // CLI flags
