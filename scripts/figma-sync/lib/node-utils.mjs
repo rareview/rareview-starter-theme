@@ -9,6 +9,7 @@ export const NON_PRODUCTION_PAGE_SUBSTRINGS = [
 	'archive',
 	'ideas',
 	'inspiration',
+	'inspo',
 	'exploration',
 	'concept',
 	'draft',
