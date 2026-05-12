@@ -1,6 +1,8 @@
+@use 'sass:math'; // stylelint-disable-line at-rule-no-unknown
+
 @mixin input-radio($background: "light") {
 	$radio-outer: 1.5625rem; // 25px — match checkbox
-	$radio-inner: $radio-outer * (0.9 / 1.4375); // inner dot slightly smaller than ring
+	$radio-inner: $radio-outer * math.div(0.9, 1.4375); // inner dot slightly smaller than ring
 	$radio-label-padding-left: 2.125rem; // room for 25px circle + gap
 	$radio-label-line-height: 1.5rem;
 
