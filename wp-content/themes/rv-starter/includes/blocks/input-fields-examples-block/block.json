@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "title": "Input Fields Examples",
+  "description": "Static sample inputs for documentation and previews only — does not submit or persist data.",
+  "textdomain": "rv-starter-theme",
+  "name": "rv-starter/input-fields-examples",
+  "icon": "forms",
+  "category": "widgets",
+  "keywords": ["input", "form", "fields", "example", "demo"],
+  "attributes": {},
+  "example": {},
+  "supports": {
+    "align": true,
+    "anchor": true,
+    "customClassName": true,
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style.scss"
+}

@@ -9,68 +9,68 @@ Body line height,body-line-height,RV body text,body.bodyLineHeightRatio,NULL,NUL
 Body font weight,body-font-weight,RV body text,body.fontWeight,NULL,NULL,NULL,body-font-weight,number,400
 Body letter spacing,body-letter-spacing,RV body text,body.letterSpacing,NULL,NULL,NULL,body-letter-spacing,string,0
 BODY – MOBILE SIZES,,,,,,,,,
-Body size mobile small,body-size-mobile-small,RV body size mobile small,paragraphSizes.mobile.small.fontSize,custom.font-size.mobile.bodySmall,px,var(--wp--custom--font-size--mobile--body-small),body-font-size-mobile-small,theme-json-var-ref,var(--wp--custom--font-size--mobile--body-small)
-Body size mobile medium,body-size-mobile-medium,RV body size mobile medium,paragraphSizes.mobile.medium.fontSize,custom.font-size.mobile.bodyMedium,px,var(--wp--custom--font-size--mobile--body-medium),body-font-size-mobile-medium,theme-json-var-ref,var(--wp--custom--font-size--mobile--body-medium)
-Body size mobile large,body-size-mobile-large,RV body size mobile large,paragraphSizes.mobile.large.fontSize,custom.font-size.mobile.bodyLarge,px,var(--wp--custom--font-size--mobile--body-large),body-font-size-mobile-large,theme-json-var-ref,var(--wp--custom--font-size--mobile--body-large)
+Body size mobile small,body-size-mobile-small,RV body size mobile small,paragraphSizes.mobile.small.fontSize,custom.font-size.mobile.bodySmall,px,12px,body-font-size-mobile-small,theme-json-var-ref,var(--wp--custom--font-size--mobile--body-small)
+Body size mobile medium,body-size-mobile-medium,RV body size mobile medium,paragraphSizes.mobile.medium.fontSize,custom.font-size.mobile.bodyMedium,px,14px,body-font-size-mobile-medium,theme-json-var-ref,var(--wp--custom--font-size--mobile--body-medium)
+Body size mobile large,body-size-mobile-large,RV body size mobile large,paragraphSizes.mobile.large.fontSize,custom.font-size.mobile.bodyLarge,px,16px,body-font-size-mobile-large,theme-json-var-ref,var(--wp--custom--font-size--mobile--body-large)
 BODY – DESKTOP SIZES,,,,,,,,,
-Body size desktop small,body-size-desktop-small,RV body size desktop small,paragraphSizes.desktop.small.fontSize,custom.font-size.desktop.bodySmall,px,var(--wp--custom--font-size--desktop--body-small),body-font-size-desktop-small,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-small)
-Body size desktop medium,body-size-desktop-medium,RV body size desktop medium,paragraphSizes.desktop.medium.fontSize,custom.font-size.desktop.bodyMedium,px,var(--wp--custom--font-size--desktop--body-medium),body-font-size-desktop-medium,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-medium)
-Body size desktop large,body-size-desktop-large,RV body size desktop large,paragraphSizes.desktop.large.fontSize,custom.font-size.desktop.bodyLarge,px,var(--wp--custom--font-size--desktop--body-large),body-font-size-desktop-large,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-large)
+Body size desktop small,body-size-desktop-small,RV body size desktop small,paragraphSizes.desktop.small.fontSize,custom.font-size.desktop.bodySmall,px,16px,body-font-size-desktop-small,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-small)
+Body size desktop medium,body-size-desktop-medium,RV body size desktop medium,paragraphSizes.desktop.medium.fontSize,custom.font-size.desktop.bodyMedium,px,18px,body-font-size-desktop-medium,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-medium)
+Body size desktop large,body-size-desktop-large,RV body size desktop large,paragraphSizes.desktop.large.fontSize,custom.font-size.desktop.bodyLarge,px,20px,body-font-size-desktop-large,theme-json-var-ref,var(--wp--custom--font-size--desktop--body-large)
 HEADING 1,,,,,,,,,
 Heading 1 font family,heading-1-font-family,RV heading 1,NULL,NULL,NULL,NULL,heading-1-font-family,scss-ref,$font-family-secondary
 Heading 1 font weight,heading-1-font-weight,RV heading 1,headings.desktop.0.fontWeight,NULL,NULL,NULL,heading-1-font-weight,number,700
 Heading 1 line height,heading-1-line-height,RV heading 1,,NULL,NULL,NULL,heading-1-line-height,number,1.3
 Heading 1 letter spacing,heading-1-letter-spacing,RV heading 1,,NULL,NULL,NULL,heading-1-letter-spacing,string,normal
 Heading 1 text transform,heading-1-text-transform,RV heading 1,headings.desktop.0.textTransform,NULL,NULL,NULL,heading-1-text-transform,string,none
-Heading 1 font size (mobile),heading-1-font-size-mobile,RV heading 1,headings.mobile.0.fontSize,custom.font-size.mobile.heading1,px,var(--wp--custom--font-size--mobile--heading-1),heading-1-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-1)
-Heading 1 font size (desktop),heading-1-font-size-desktop,RV heading 1,headings.desktop.0.fontSize,custom.font-size.desktop.heading1,px,var(--wp--custom--font-size--desktop--heading-1),heading-1-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-1)
+Heading 1 font size (mobile),heading-1-font-size-mobile,RV heading 1,headings.mobile.0.fontSize,custom.font-size.mobile.heading1,px,52px,heading-1-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-1)
+Heading 1 font size (desktop),heading-1-font-size-desktop,RV heading 1,headings.desktop.0.fontSize,custom.font-size.desktop.heading1,px,96px,heading-1-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-1)
 HEADING 2,,,,,,,,,
 Heading 2 font family,heading-2-font-family,RV heading 2,NULL,NULL,NULL,NULL,heading-2-font-family,scss-ref,$font-family-secondary
 Heading 2 font weight,heading-2-font-weight,RV heading 2,headings.desktop.1.fontWeight,NULL,NULL,NULL,heading-2-font-weight,number,700
 Heading 2 line height,heading-2-line-height,RV heading 2,,NULL,NULL,NULL,heading-2-line-height,number,1.3
 Heading 2 letter spacing,heading-2-letter-spacing,RV heading 2,,NULL,NULL,NULL,heading-2-letter-spacing,string,normal
 Heading 2 text transform,heading-2-text-transform,RV heading 2,headings.desktop.1.textTransform,NULL,NULL,NULL,heading-2-text-transform,string,none
-Heading 2 font size (mobile),heading-2-font-size-mobile,RV heading 2,headings.mobile.1.fontSize,custom.font-size.mobile.heading2,px,var(--wp--custom--font-size--mobile--heading-2),heading-2-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-2)
-Heading 2 font size (desktop),heading-2-font-size-desktop,RV heading 2,headings.desktop.1.fontSize,custom.font-size.desktop.heading2,px,var(--wp--custom--font-size--desktop--heading-2),heading-2-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-2)
+Heading 2 font size (mobile),heading-2-font-size-mobile,RV heading 2,headings.mobile.1.fontSize,custom.font-size.mobile.heading2,px,48px,heading-2-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-2)
+Heading 2 font size (desktop),heading-2-font-size-desktop,RV heading 2,headings.desktop.1.fontSize,custom.font-size.desktop.heading2,px,82px,heading-2-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-2)
 HEADING 3,,,,,,,,,
 Heading 3 font family,heading-3-font-family,RV heading 3,NULL,NULL,NULL,NULL,heading-3-font-family,scss-ref,$font-family-secondary
 Heading 3 font weight,heading-3-font-weight,RV heading 3,headings.desktop.2.fontWeight,NULL,NULL,NULL,heading-3-font-weight,number,700
 Heading 3 line height,heading-3-line-height,RV heading 3,,NULL,NULL,NULL,heading-3-line-height,number,1.3
 Heading 3 letter spacing,heading-3-letter-spacing,RV heading 3,,NULL,NULL,NULL,heading-3-letter-spacing,string,normal
 Heading 3 text transform,heading-3-text-transform,RV heading 3,headings.desktop.2.textTransform,NULL,NULL,NULL,heading-3-text-transform,string,none
-Heading 3 font size (mobile),heading-3-font-size-mobile,RV heading 3,headings.mobile.2.fontSize,custom.font-size.mobile.heading3,px,var(--wp--custom--font-size--mobile--heading-3),heading-3-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-3)
-Heading 3 font size (desktop),heading-3-font-size-desktop,RV heading 3,headings.desktop.2.fontSize,custom.font-size.desktop.heading3,px,var(--wp--custom--font-size--desktop--heading-3),heading-3-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-3)
+Heading 3 font size (mobile),heading-3-font-size-mobile,RV heading 3,headings.mobile.2.fontSize,custom.font-size.mobile.heading3,px,44px,heading-3-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-3)
+Heading 3 font size (desktop),heading-3-font-size-desktop,RV heading 3,headings.desktop.2.fontSize,custom.font-size.desktop.heading3,px,60px,heading-3-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-3)
 HEADING 4,,,,,,,,,
 Heading 4 font family,heading-4-font-family,RV heading 4,NULL,NULL,NULL,NULL,heading-4-font-family,scss-ref,$font-family-secondary
 Heading 4 font weight,heading-4-font-weight,RV heading 4,headings.desktop.3.fontWeight,NULL,NULL,NULL,heading-4-font-weight,number,700
 Heading 4 line height,heading-4-line-height,RV heading 4,,NULL,NULL,NULL,heading-4-line-height,number,1.3
 Heading 4 letter spacing,heading-4-letter-spacing,RV heading 4,,NULL,NULL,NULL,heading-4-letter-spacing,string,normal
 Heading 4 text transform,heading-4-text-transform,RV heading 4,headings.desktop.3.textTransform,NULL,NULL,NULL,heading-4-text-transform,string,none
-Heading 4 font size (mobile),heading-4-font-size-mobile,RV heading 4,headings.mobile.3.fontSize,custom.font-size.mobile.heading4,px,var(--wp--custom--font-size--mobile--heading-4),heading-4-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-4)
-Heading 4 font size (desktop),heading-4-font-size-desktop,RV heading 4,headings.desktop.3.fontSize,custom.font-size.desktop.heading4,px,var(--wp--custom--font-size--desktop--heading-4),heading-4-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-4)
+Heading 4 font size (mobile),heading-4-font-size-mobile,RV heading 4,headings.mobile.3.fontSize,custom.font-size.mobile.heading4,px,38px,heading-4-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-4)
+Heading 4 font size (desktop),heading-4-font-size-desktop,RV heading 4,headings.desktop.3.fontSize,custom.font-size.desktop.heading4,px,50px,heading-4-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-4)
 HEADING 5,,,,,,,,,
 Heading 5 font family,heading-5-font-family,RV heading 5,NULL,NULL,NULL,NULL,heading-5-font-family,scss-ref,$font-family-secondary
 Heading 5 font weight,heading-5-font-weight,RV heading 5,headings.desktop.4.fontWeight,NULL,NULL,NULL,heading-5-font-weight,number,700
 Heading 5 line height,heading-5-line-height,RV heading 5,,NULL,NULL,NULL,heading-5-line-height,number,1.3
 Heading 5 letter spacing,heading-5-letter-spacing,RV heading 5,,NULL,NULL,NULL,heading-5-letter-spacing,string,normal
 Heading 5 text transform,heading-5-text-transform,RV heading 5,headings.desktop.4.textTransform,NULL,NULL,NULL,heading-5-text-transform,string,none
-Heading 5 font size (mobile),heading-5-font-size-mobile,RV heading 5,headings.mobile.4.fontSize,custom.font-size.mobile.heading5,px,var(--wp--custom--font-size--mobile--heading-5),heading-5-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-5)
-Heading 5 font size (desktop),heading-5-font-size-desktop,RV heading 5,headings.desktop.4.fontSize,custom.font-size.desktop.heading5,px,var(--wp--custom--font-size--desktop--heading-5),heading-5-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-5)
+Heading 5 font size (mobile),heading-5-font-size-mobile,RV heading 5,headings.mobile.4.fontSize,custom.font-size.mobile.heading5,px,24px,heading-5-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-5)
+Heading 5 font size (desktop),heading-5-font-size-desktop,RV heading 5,headings.desktop.4.fontSize,custom.font-size.desktop.heading5,px,40px,heading-5-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-5)
 HEADING 6,,,,,,,,,
 Heading 6 font family,heading-6-font-family,RV heading 6,NULL,NULL,NULL,NULL,heading-6-font-family,scss-ref,$body-font-family
 Heading 6 font weight,heading-6-font-weight,RV heading 6,headings.desktop.5.fontWeight,NULL,NULL,NULL,heading-6-font-weight,number,700
 Heading 6 line height,heading-6-line-height,RV heading 6,,NULL,NULL,NULL,heading-6-line-height,number,1.3
 Heading 6 letter spacing,heading-6-letter-spacing,RV heading 6,,NULL,NULL,NULL,heading-6-letter-spacing,string,normal
 Heading 6 text transform,heading-6-text-transform,RV heading 6,headings.desktop.5.textTransform,NULL,NULL,NULL,heading-6-text-transform,string,none
-Heading 6 font size (mobile),heading-6-font-size-mobile,RV heading 6,headings.mobile.5.fontSize,custom.font-size.mobile.heading6,px,var(--wp--custom--font-size--mobile--heading-6),heading-6-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-6)
-Heading 6 font size (desktop),heading-6-font-size-desktop,RV heading 6,headings.desktop.5.fontSize,custom.font-size.desktop.heading6,px,var(--wp--custom--font-size--desktop--heading-6),heading-6-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-6)
+Heading 6 font size (mobile),heading-6-font-size-mobile,RV heading 6,headings.mobile.5.fontSize,custom.font-size.mobile.heading6,px,16px,heading-6-font-size-mobile,theme-json-var-ref,var(--wp--custom--font-size--mobile--heading-6)
+Heading 6 font size (desktop),heading-6-font-size-desktop,RV heading 6,headings.desktop.5.fontSize,custom.font-size.desktop.heading6,px,24px,heading-6-font-size-desktop,theme-json-var-ref,var(--wp--custom--font-size--desktop--heading-6)
 LINKS,,,,,,,,,
-Link color,color-link,RV link,NULL,NULL,NULL,NULL,color-link,scss-ref,$color-primary
-Link hover color,color-link-hover,RV link,,NULL,NULL,NULL,color-link-hover,string,"color-mix(in srgb, $color-primary 80%, white)"
+Link color,color-link,RV link,NULL,NULL,NULL,NULL,link-color,scss-ref,$color-primary
+Link hover color,color-link-hover,RV link,,NULL,NULL,NULL,link-hover-color,string,"color-mix(in srgb, $color-primary 80%, white)"
 Link letter spacing,link-letter-spacing,RV link,,NULL,NULL,NULL,link-letter-spacing,string,normal
 Link font weight,link-font-weight,RV link,,NULL,NULL,NULL,link-font-weight,string,inherit
 Link text decoration,link-text-decoration,RV link,,NULL,NULL,NULL,link-text-decoration,string,underline
-Link hover text decoration,link-text-decoration-hover,RV link,,NULL,NULL,NULL,link-text-decoration-hover,string,underline
+Link hover text decoration,link-text-decoration-hover,RV link,,NULL,NULL,NULL,link-hover-text-decoration,string,underline
 BUTTONS – PRIMARY,,,,,,,,,
 Button primary font color,button-primary-font-color,RV button primary,buttons.0.fontColor,NULL,NULL,NULL,button-primary-font-color,scss-color-match,$color-dark
 Button primary background color,button-primary-background-color,RV button primary,NULL,NULL,NULL,NULL,button-primary-background-color,scss-ref,$color-primary
@@ -120,5 +120,5 @@ Brand Color 10,brand-10,RV color brand 10,colors.colored.9.hex,palette:brand-10,
 COLORS – THEME,,,,,,,,,
 Primary color,color-primary,RV color primary,buttons.0.backgroundColor,NULL,NULL,NULL,color-primary,scss-color-match,$color-brand-1
 Secondary color,color-secondary,RV color secundary,buttons.1.backgroundColor,NULL,NULL,NULL,color-secondary,scss-color-match,$color-brand-2
-Background color,color-background,RV background color,bodyBackgroundColor,NULL,NULL,NULL,color-background,scss-color-match,$color-black
+Background color,color-background,RV background color,body.backgroundColor,NULL,NULL,NULL,color-background,scss-color-match,$color-black
 Body text color,color-body,RV body text,body.color,NULL,NULL,NULL,color-body,scss-color-match,$color-white

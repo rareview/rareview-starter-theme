@@ -41,6 +41,13 @@ wp-content/cache/supercache/*
 !/wp-content/plugins/wordpress-seo
 #!/wp-content/plugins/plugin-to-keep
 
+# Figma-sync feature
+/scripts/figma-sync/generated/*
+!/scripts/figma-sync/generated/.gitkeep
+/scripts/figma-sync/fetched/*
+!/scripts/figma-sync/fetched/.gitkeep
+/scripts/figma-sync/.env
+
 # wpengine specific
 .smushit-status
 .gitattributes

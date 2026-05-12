@@ -9,7 +9,7 @@
 | Default transition easing    | $default-transition-easing    | string  | ease-out                       |
 | Disabled opacity             | $disabled-opacity             | number  | 0.4                            |
 | Container width              | custom.layout.contentSize     | px      | 1440px                         |
-| Container side padding       | $container-padding-sides      | string  | var(--wp--preset--spacing--40) |
+| Container side padding       | $container-padding-sides      | theme-json-ref (string) | var(--wp--preset--spacing--40) |
 | Endless fluid responsiveness | $endless-fluid-responsiveness | boolean | true                           |
 
 
@@ -34,9 +34,9 @@
 
 | Label                   | Variable                           | Type | Default                                           |
 | ----------------------- | ---------------------------------- | ---- | ------------------------------------------------- |
-| Body size mobile small  | custom.font-size.mobile.bodySmall  | px   | var(--wp--custom--font-size--mobile--body-small)  |
-| Body size mobile medium | custom.font-size.mobile.bodyMedium | px   | var(--wp--custom--font-size--mobile--body-medium) |
-| Body size mobile large  | custom.font-size.mobile.bodyLarge  | px   | var(--wp--custom--font-size--mobile--body-large)  |
+| Body size mobile small  | custom.font-size.mobile.bodySmall  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--body-small)  |
+| Body size mobile medium | custom.font-size.mobile.bodyMedium | theme-json-ref (px) | var(--wp--custom--font-size--mobile--body-medium) |
+| Body size mobile large  | custom.font-size.mobile.bodyLarge  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--body-large)  |
 
 
 ---
@@ -46,9 +46,9 @@
 
 | Label                    | Variable                            | Type | Default                                            |
 | ------------------------ | ----------------------------------- | ---- | -------------------------------------------------- |
-| Body size desktop small  | custom.font-size.desktop.bodySmall  | px   | var(--wp--custom--font-size--desktop--body-small)  |
-| Body size desktop medium | custom.font-size.desktop.bodyMedium | px   | var(--wp--custom--font-size--desktop--body-medium) |
-| Body size desktop large  | custom.font-size.desktop.bodyLarge  | px   | var(--wp--custom--font-size--desktop--body-large)  |
+| Body size desktop small  | custom.font-size.desktop.bodySmall  | theme-json-ref (px) | var(--wp--custom--font-size--desktop--body-small)  |
+| Body size desktop medium | custom.font-size.desktop.bodyMedium | theme-json-ref (px) | var(--wp--custom--font-size--desktop--body-medium) |
+| Body size desktop large  | custom.font-size.desktop.bodyLarge  | theme-json-ref (px) | var(--wp--custom--font-size--desktop--body-large)  |
 
 
 ---
@@ -65,13 +65,57 @@
 | Line height    | $heading-1-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-1-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-1-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading1  | px       | var(--wp--custom--font-size--mobile--heading-1)  |
-| Size (desktop) | custom.font-size.desktop.heading1 | px       | var(--wp--custom--font-size--desktop--heading-1) |
+| Size (mobile)  | custom.font-size.mobile.heading1  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-1)  |
+| Size (desktop) | custom.font-size.desktop.heading1 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-1) |
 
 
-### Heading 2–5
+### Heading 2
 
-(Same structure as H1, using corresponding variables like `$heading-2-*`, `$heading-3-*`, etc.)
+| Label          | Variable                          | Type     | Default                                          |
+| -------------- | --------------------------------- | -------- | ------------------------------------------------ |
+| Font family    | $heading-2-font-family            | scss-ref | $font-family-secondary                           |
+| Font weight    | $heading-2-font-weight            | number   | 700                                              |
+| Line height    | $heading-2-line-height            | number   | 1.3                                              |
+| Letter spacing | $heading-2-letter-spacing         | string   | normal                                           |
+| Text transform | $heading-2-text-transform         | string   | none                                             |
+| Size (mobile)  | custom.font-size.mobile.heading2  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-2)  |
+| Size (desktop) | custom.font-size.desktop.heading2 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-2) |
+
+### Heading 3
+
+| Label          | Variable                          | Type     | Default                                          |
+| -------------- | --------------------------------- | -------- | ------------------------------------------------ |
+| Font family    | $heading-3-font-family            | scss-ref | $font-family-secondary                           |
+| Font weight    | $heading-3-font-weight            | number   | 700                                              |
+| Line height    | $heading-3-line-height            | number   | 1.3                                              |
+| Letter spacing | $heading-3-letter-spacing         | string   | normal                                           |
+| Text transform | $heading-3-text-transform         | string   | none                                             |
+| Size (mobile)  | custom.font-size.mobile.heading3  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-3)  |
+| Size (desktop) | custom.font-size.desktop.heading3 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-3) |
+
+### Heading 4
+
+| Label          | Variable                          | Type     | Default                                          |
+| -------------- | --------------------------------- | -------- | ------------------------------------------------ |
+| Font family    | $heading-4-font-family            | scss-ref | $font-family-secondary                           |
+| Font weight    | $heading-4-font-weight            | number   | 700                                              |
+| Line height    | $heading-4-line-height            | number   | 1.3                                              |
+| Letter spacing | $heading-4-letter-spacing         | string   | normal                                           |
+| Text transform | $heading-4-text-transform         | string   | none                                             |
+| Size (mobile)  | custom.font-size.mobile.heading4  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-4)  |
+| Size (desktop) | custom.font-size.desktop.heading4 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-4) |
+
+### Heading 5
+
+| Label          | Variable                          | Type     | Default                                          |
+| -------------- | --------------------------------- | -------- | ------------------------------------------------ |
+| Font family    | $heading-5-font-family            | scss-ref | $font-family-secondary                           |
+| Font weight    | $heading-5-font-weight            | number   | 700                                              |
+| Line height    | $heading-5-line-height            | number   | 1.3                                              |
+| Letter spacing | $heading-5-letter-spacing         | string   | normal                                           |
+| Text transform | $heading-5-text-transform         | string   | none                                             |
+| Size (mobile)  | custom.font-size.mobile.heading5  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-5)  |
+| Size (desktop) | custom.font-size.desktop.heading5 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-5) |
 
 ### Heading 6
 
@@ -83,8 +127,8 @@
 | Line height    | $heading-6-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-6-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-6-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading6  | px       | var(--wp--custom--font-size--mobile--heading-6)  |
-| Size (desktop) | custom.font-size.desktop.heading6 | px       | var(--wp--custom--font-size--desktop--heading-6) |
+| Size (mobile)  | custom.font-size.mobile.heading6  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-6)  |
+| Size (desktop) | custom.font-size.desktop.heading6 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-6) |
 
 
 ---
@@ -94,12 +138,12 @@
 
 | Label            | Variable                    | Type     | Default        |
 | ---------------- | --------------------------- | -------- | -------------- |
-| Link color       | $color-link                 | scss-ref | $color-primary |
-| Link hover color | $color-link-hover           | string   | color-mix(...) |
+| Link color       | $link-color                 | scss-ref | $color-primary |
+| Link hover color | $link-hover-color           | string   | color-mix(...) |
 | Letter spacing   | $link-letter-spacing        | string   | normal         |
 | Font weight      | $link-font-weight           | string   | inherit        |
 | Text decoration  | $link-text-decoration       | string   | underline      |
-| Hover decoration | $link-text-decoration-hover | string   | underline      |
+| Hover decoration | $link-hover-text-decoration | string   | underline      |
 
 
 ---
@@ -126,7 +170,19 @@
 
 ## BUTTONS – SECONDARY
 
-(same structure as primary with `$button-secondary-*` variables)
+| Label          | Variable                           | Type     | Default          |
+| -------------- | ---------------------------------- | -------- | ---------------- |
+| Font color     | $button-secondary-font-color       | scss-ref | $color-dark      |
+| Background     | $button-secondary-background-color | scss-ref | $color-secondary |
+| Height         | $button-secondary-height           | rem      | 3.2rem           |
+| Border radius  | $button-secondary-border-radius    | rem      | 0                |
+| Border width   | $button-secondary-border-width     | px       | 2px              |
+| Padding X      | $button-secondary-padding-x        | rem      | 1.5rem           |
+| Padding Y      | $button-secondary-padding-y        | rem      | 0.5rem           |
+| Font size      | $button-secondary-font-size        | rem      | 1.125rem         |
+| Font weight    | $button-secondary-font-weight      | number   | 700              |
+| Letter spacing | $button-secondary-letter-spacing   | em       | 0.05em           |
+| Text transform | $button-secondary-text-transform   | string   | uppercase        |
 
 ---
 
@@ -159,7 +215,18 @@
 
 ## COLORS – BRAND
 
-(Brand 1–10 mapped to `palette:brand-*` with given hex values)
+| Label          | Variable        | Type | Default |
+| -------------- | --------------- | ---- | ------- |
+| Brand Color 1  | palette:brand-1 | hex  | #00F700 |
+| Brand Color 2  | palette:brand-2 | hex  | #61DAFB |
+| Brand Color 3  | palette:brand-3 | hex  | #00585f |
+| Brand Color 4  | palette:brand-4 | hex  | #5794f7 |
+| Brand Color 5  | palette:brand-5 | hex  | #afbccf |
+| Brand Color 6  | palette:brand-6 | hex  | #2f3464 |
+| Brand Color 7  | palette:brand-7 | hex  | #4ba9ce |
+| Brand Color 8  | palette:brand-8 | hex  | #99dfe5 |
+| Brand Color 9  | palette:brand-9 | hex  | #67ce67 |
+| Brand Color 10 | palette:brand-10 | hex | #d9edff |
 
 ---
 

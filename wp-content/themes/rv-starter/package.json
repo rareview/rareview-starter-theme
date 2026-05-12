@@ -31,8 +31,8 @@
     "lint:php": "composer run lint --working-dir=../../..",
     "test": "10up-toolkit test-unit-jest",
     "clean-dist": "rm -rf ./dist",
-    "design-system": "node ../../../scripts/design-system.mjs",
-    "create-block": "node ../../../scripts/create-block.mjs"
+    "design-system": "node ../../../scripts/design-system/design-system.mjs",
+    "create-block": "node ../../../scripts/create-block/create-block.mjs"
   },
   "testing": {
     "urls": {

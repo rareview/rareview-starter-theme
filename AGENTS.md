@@ -16,6 +16,8 @@ WordPress starter theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 - `npm run setup` - interactive project setup (rename, rebrand)
 - `npm run create-block -- --name="name"` - scaffold new block
 - `npm run design-system` - update design tokens interactively
+- `npm run figma-sync` - Figma fetch/export + apply (see `scripts/figma-sync/README.md`)
+- `npm run figma-apply` - apply `generated/figma-export.json` + CSV only (`scripts/figma-sync/figma-apply.mjs`)
 - `lando start` / `lando poweroff` - local environment
 
 ## Coding Standards
@@ -49,3 +51,6 @@ WordPress starter theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 
 ## Theme Directory
 `wp-content/themes/rv-starter/`
+
+## Repo CLI scripts
+Entrypoints live beside their feature folder: `scripts/setup/setup.mjs`, `scripts/design-system/design-system.mjs`, `scripts/create-block/create-block.mjs`, `scripts/figma-sync/figma-sync.mjs` (see root `package.json` and `wp-content/themes/rv-starter/package.json` where applicable).
