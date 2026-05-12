@@ -379,6 +379,9 @@ export function extractBody(nodes, styleRegistry) {
 const BACKGROUND_NAME_RE = /\b(background|bg|body|page|site|canvas|base|main)\b/i;
 const BACKGROUND_SKIP_RE = /\b(button|card|badge|chip|icon|input|field|nav|header|footer|cta|modal|tooltip|popover|menu|logo|image|img|avatar|divider|line|text|heading|title)\b/i;
 
+/** Exclude full-file pasteboard mats; real artboards stay under this width. */
+const BACKGROUND_MAX_WIDTH = 2000;
+
 export function extractBodyBackgroundColor(nodes, colors) {
 	const candidates = new Map();
 
@@ -399,6 +402,10 @@ export function extractBodyBackgroundColor(nodes, colors) {
 
 		const width = Math.round(box.width);
 		const height = Math.round(box.height);
+		if (width >= BACKGROUND_MAX_WIDTH) {
+			continue;
+		}
+
 		const area = width * height;
 		const isExplicit = BACKGROUND_NAME_RE.test(name);
 		const isLargeSurface = width >= 900 && height >= 400;

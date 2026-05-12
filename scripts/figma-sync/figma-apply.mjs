@@ -3,7 +3,7 @@
 /**
  * Rareview Starter Theme — Figma Apply
  *
- * Reads scripts/figma-sync/figma-export.json and scripts/variable_mapping_figma_sync.csv,
+ * Reads generated/figma-export.json and variable_mapping_figma_sync.csv in this directory,
  * resolves each token (Figma value first, CSV default as fallback), then writes
  * the resolved values to theme.json and variables.scss.
  *
@@ -21,6 +21,8 @@
  *   theme_json_default_value – fallback value for theme.json when figma path absent | NULL
  *   scss_target             – SCSS variable name without $ (empty/NULL = skip SCSS)
  *   scss_value_type         – px | hex | rem | number | string | font-family | scss-ref | theme-json-var-ref | scss-color-match | NULL
+ *                             scss-color-match (variables.scss only): exact palette hex match → $color-<slug>;
+ *                             otherwise literal hex from Figma. theme-json-var-ref is unchanged (Gutenberg-safe).
  *   scss_default_value      – fallback value for SCSS when figma path absent | NULL
  *
  * @author Rareview <hello@rareview.com>
@@ -33,11 +35,12 @@ import { fileURLToPath } from 'node:url';
 import { exit } from 'node:process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, '..');
+const ROOT = resolve(__dirname, '..', '..');
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const VERBOSE = args.includes('--verbose');
-const LOG_FILE_PATH = resolve(ROOT, 'scripts', 'figma-sync', 'figma-sync.log');
+const GENERATED_DIR = resolve(__dirname, 'generated');
+const LOG_FILE_PATH = resolve(GENERATED_DIR, 'figma-sync.log');
 const logLines = [];
 const fontsToInstall = new Set();
 
@@ -266,7 +269,7 @@ function parseNumericWithUnit(input) {
  *   string     – pass through as-is
  *   scss-ref   – pass through as-is (a SCSS variable reference like $color-dark)
  *   font-family – convert font name to CSS var reference for SCSS
- *   scss-color-match – handled in main: map Figma hex to nearest theme palette, write $color-<slug> (not used here for SCSS; see main loop)
+ *   scss-color-match – theme.json side still maps to nearest palette var(); SCSS side uses exact palette match or hex (see main loop).
  */
 function normalizeValue(rawValue, type, context = {}) {
 	const value = String(rawValue);
@@ -380,7 +383,7 @@ function updatePalette(themeJson, slug, hex, label) {
 	return 'created';
 }
 
-// ─── scss-color-match: nearest palette ─────────────────────────────────────
+// ─── Palette helpers (exact vs nearest) ────────────────────────────────────
 
 function scssColorToSlugVar(scssRef) {
 	const m = /^\$color-([a-z0-9-]+)\s*$/i.exec(String(scssRef).trim());
@@ -433,6 +436,58 @@ function findClosestPaletteSlug(figmaHex, themeJson) {
 		}
 	}
 	return best ?? null;
+}
+
+/**
+ * Exact palette match only (after hex normalization). Used for variables.scss
+ * scss-color-match so we never assign a misleading $color-* from a distant swatch.
+ */
+function findExactPaletteSlug(figmaHex, themeJson) {
+	const key = normalizeValue(String(figmaHex), 'hex');
+	if (!key || !key.startsWith('#')) {
+		return null;
+	}
+	const list = themeJson?.settings?.color?.palette;
+	if (!Array.isArray(list)) {
+		return null;
+	}
+	for (const e of list) {
+		if (!e?.color || !e.slug) {
+			continue;
+		}
+		const candidate = normalizeValue(String(e.color), 'hex');
+		if (candidate.toLowerCase() === key.toLowerCase()) {
+			return e.slug;
+		}
+	}
+	return null;
+}
+
+/**
+ * Resolve SCSS value for scss-color-match: exact $color-<slug> or literal hex from Figma.
+ * When Figma did not supply a color, keep CSV scss_default_value (often $color-*).
+ */
+function resolveScssColorMatchForVariablesScss(figmaRaw, scssDefault, themeJson, logLines, verbose, label, scssTarget) {
+	const fromFigma = figmaRaw != null;
+	const hexForMatch =
+		fromFigma && String(figmaRaw).trim().length
+			? normalizeValue(String(figmaRaw), 'hex')
+			: null;
+	const defScss = String(scssDefault).trim();
+
+	if (hexForMatch != null && hexForMatch.startsWith('#')) {
+		const exact = findExactPaletteSlug(hexForMatch, themeJson);
+		if (exact != null) {
+			return `$color-${exact}`;
+		}
+		const msg = `  scss-color-match → hex (no exact palette match): $${scssTarget} ← ${hexForMatch}  (${label})`;
+		logLines.push(msg);
+		if (verbose) {
+			console.log(c.yellow(msg));
+		}
+		return hexForMatch;
+	}
+	return defScss;
 }
 
 // ─── SCSS helpers ─────────────────────────────────────────────────────────────
@@ -531,8 +586,8 @@ async function findThemeDir() {
 }
 
 async function findFigmaExport() {
-	const primary = resolve(ROOT, 'scripts', 'figma-sync', 'figma-export.json');
-	const fallback = resolve(ROOT, 'scripts', 'figma-sync', 'figma-ai-export.json');
+	const primary = resolve(GENERATED_DIR, 'figma-export.json');
+	const fallback = resolve(GENERATED_DIR, 'figma-ai-export.json');
 	if (existsSync(primary)) return primary;
 	if (existsSync(fallback)) return fallback;
 	return null;
@@ -768,7 +823,7 @@ async function main() {
 		}
 		figmaExport = JSON.parse(await readFile(figmaExportPath, 'utf-8'));
 	} else {
-		console.log(c.yellow('  ⚠  figma-export.json not found — using CSV defaults only.'));
+		console.log(c.yellow('  ⚠  generated/figma-export.json not found — using CSV defaults only.'));
 		console.log(c.dim('     Run `npm run figma-sync` first to fetch from Figma.\n'));
 	}
 
@@ -777,7 +832,7 @@ async function main() {
 	logLines.push('');
 
 	// CSV
-	const csvPath = resolve(ROOT, 'scripts', 'variable_mapping_figma_sync.csv');
+	const csvPath = resolve(__dirname, 'variable_mapping_figma_sync.csv');
 	const rows = parseCsv(await readFile(csvPath, 'utf-8'));
 	const [headerRow, ...dataRows] = rows;
 	const columns = getCsvColumns(headerRow ?? []);
@@ -928,14 +983,15 @@ async function main() {
 			let value;
 
 			if (scssType === 'scss-color-match') {
-				const fromFigma = figmaRaw != null;
-				const hexForMatch =
-					fromFigma && String(figmaRaw).trim().length
-						? normalizeValue(String(figmaRaw), 'hex')
-						: null;
-				const closest = hexForMatch != null && hexForMatch.startsWith('#') ? findClosestPaletteSlug(hexForMatch, themeJson) : null;
-				const defScss = String(scssDefault).trim();
-				value = closest != null ? `$color-${closest}` : defScss;
+				value = resolveScssColorMatchForVariablesScss(
+					figmaRaw,
+					scssDefault,
+					themeJson,
+					logLines,
+					VERBOSE,
+					label,
+					scssTarget,
+				);
 			} else if (scssType === 'theme-json-var-ref') {
 				if (tjType === 'font-family' && figmaRaw != null) {
 					// Derive the CSS custom property from the actual Figma font name

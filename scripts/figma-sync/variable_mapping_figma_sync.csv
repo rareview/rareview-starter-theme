@@ -120,5 +120,5 @@ Brand Color 10,brand-10,RV color brand 10,colors.colored.9.hex,palette:brand-10,
 COLORS – THEME,,,,,,,,,
 Primary color,color-primary,RV color primary,buttons.0.backgroundColor,NULL,NULL,NULL,color-primary,scss-color-match,$color-brand-1
 Secondary color,color-secondary,RV color secundary,buttons.1.backgroundColor,NULL,NULL,NULL,color-secondary,scss-color-match,$color-brand-2
-Background color,color-background,RV background color,bodyBackgroundColor,NULL,NULL,NULL,color-background,scss-color-match,$color-black
+Background color,color-background,RV background color,body.backgroundColor,NULL,NULL,NULL,color-background,scss-color-match,$color-black
 Body text color,color-body,RV body text,body.color,NULL,NULL,NULL,color-body,scss-color-match,$color-white

@@ -10,7 +10,7 @@ import { firstSolidHex } from './lib/color-utils.mjs';
  */
 export function parseVariableMappingCsvForKeyed(csvPath) {
 	const raw = readFileSync(
-		csvPath ?? path.resolve(process.cwd(), 'scripts/variable_mapping_figma_sync.csv'),
+		csvPath ?? path.resolve(process.cwd(), 'scripts', 'figma-sync', 'variable_mapping_figma_sync.csv'),
 		'utf-8',
 	);
 	const lines = raw.split('\n');

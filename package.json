@@ -26,10 +26,11 @@
     "lint:php": "npm run --prefix wp-content/themes/rv-starter lint:php",
     "test": "npm run --prefix wp-content/themes/rv-starter test",
     "clean-dist": "npm run --prefix wp-content/themes/rv-starter clean-dist",
-    "setup": "node scripts/setup.mjs",
-    "design-system": "node scripts/design-system.mjs",
+    "setup": "node scripts/setup/setup.mjs",
+    "design-system": "node scripts/design-system/design-system.mjs",
     "create-block": "npm run --prefix wp-content/themes/rv-starter create-block --",
-    "figma-sync": "sh -c 'node scripts/figma-sync.mjs \"$@\" && node scripts/figma-apply.mjs \"$@\"' --"
+    "figma-sync": "sh -c 'node scripts/figma-sync/figma-sync.mjs \"$@\" && node scripts/figma-sync/figma-apply.mjs \"$@\"' --",
+    "figma-apply": "node scripts/figma-sync/figma-apply.mjs"
   },
   "author": {
     "name": "Rareview",
