@@ -33,10 +33,10 @@ Then split:
 - `mono`:
   - must be monochrome,
   - luminance bounded (exclude near-black/near-white extremes),
-  - take top usage candidates and sort by luminance.
+  - take the four highest-usage mono swatches (order follows global usage ranking).
 - `colored`:
   - non-mono colors,
-  - top usage slice sorted by hue.
+  - top ten by usage (same global usage ranking as `all`).
 
 If curated swatches exist, attach them without replacing existing `colored/mono` outputs.
 
@@ -44,7 +44,7 @@ If curated swatches exist, attach them without replacing existing `colored/mono`
 
 - Swatch pass: rule-based acceptance + dedupe (not weighted score).
 - Global pass: usage count frequency.
-- Mono final ordering by luminance; colored ordering by hue.
+- `mono` and `colored` array order follows `usageCount` (most-used first).
 
 ## Tunable Parameters
 
@@ -55,7 +55,7 @@ If curated swatches exist, attach them without replacing existing `colored/mono`
 
 ## Recreate Prompt (for agent/human)
 
-Extract colors using a dual approach: first attempt high-confidence swatch extraction inside palette-scoped frames, then always run a document-wide frequency pass over solid fills. For swatches, accept small color-carrying shapes with semantic/hex/squarish signals and assign optional semantic roles from names. For global colors, count by hex, derive mono vs colored buckets, rank mono by luminance and colored by hue, and preserve compatibility by returning `colored` and `mono` while optionally adding `swatches`.
+Extract colors using a dual approach: first attempt high-confidence swatch extraction inside palette-scoped frames, then always run a document-wide frequency pass over solid fills. For swatches, accept small color-carrying shapes with semantic/hex/squarish signals and assign optional semantic roles from names. For global colors, count by hex, derive mono vs colored buckets, order both lists by usage frequency, and preserve compatibility by returning `colored` and `mono` while optionally adding `swatches`.
 
 ## Downstream: `figma-apply` + `theme.json` palette
 

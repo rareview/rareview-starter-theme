@@ -1,4 +1,4 @@
-import { hexHue, hexLuminance, isMonoColor, rgbToHex, firstSolidHex } from '../lib/color-utils.mjs';
+import { hexLuminance, isMonoColor, rgbToHex, firstSolidHex } from '../lib/color-utils.mjs';
 
 // ─── Swatch detection constants ───────────────────────────────────────────────
 
@@ -121,15 +121,14 @@ export function extractColors(nodes, styleRegistry, scopedNodes = null) {
 		const L = hexLuminance(c.hex);
 		return L > 0.02 && L < 0.98;
 	});
-	const byUsage = monoCandidates.sort((a, b) => b.usageCount - a.usageCount).slice(0, 4);
-	const mono = byUsage.sort((a, b) => hexLuminance(a.hex) - hexLuminance(b.hex));
+	// `all` is already sorted by usageCount desc; keep that order for top picks.
+	const mono = monoCandidates.slice(0, 4);
 
-	const coloredByTone = all
+	const colored = all
 		.filter((c) => !isMonoColor(c.hex))
-		.slice(0, 10)
-		.sort((a, b) => hexHue(b.hex) - hexHue(a.hex));
+		.slice(0, 10);
 
-	const result = { colored: coloredByTone, mono };
+	const result = { colored, mono };
 
 	// Attach swatches when found — enriches the output with semantic roles without
 	// replacing the existing colored/mono structure that variable-mapping depends on.
