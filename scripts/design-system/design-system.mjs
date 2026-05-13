@@ -1222,8 +1222,8 @@ async function main() {
 		'',
 	]);
 	console.log('');
-	console.log(`  ${color.bold('1.')}  Set variables in the terminal`);
-	console.log(`  ${color.bold('2.')}  Set variables manually  ${color.dim('(variable mapping guide)')}`);
+	console.log(`  ${color.bold('1.')}  Set variables manually  ${color.dim('(variable mapping guide)')}`);
+	console.log(`  ${color.bold('2.')}  Set variables in the terminal`);
 	console.log(`  ${color.bold('3.')}  Figma sync  ${color.dim('(beta)')}`);
 	console.log('');
 
@@ -1241,8 +1241,8 @@ async function main() {
 
 		console.log('');
 
-		// ── Option 2: manual guide ─────────────────────────────────────────────
-		if (choice === '2') {
+		// ── Option 1: manual guide ─────────────────────────────────────────────
+		if (choice === '1') {
 			const themeDir = await findThemeDir();
 			const docPath = resolve(themeDir, 'docs', 'variable-mapping.md');
 			const docHref = pathToFileURL(docPath).href;
@@ -1283,7 +1283,7 @@ async function main() {
 			return;
 		}
 
-		// ── Option 1: interactive terminal ────────────────────────────────────
+		// ── Option 2: interactive terminal ────────────────────────────────────
 		printBox([
 			'',
 			color.bold('  Design Token Setup'),
