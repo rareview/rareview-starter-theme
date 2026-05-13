@@ -801,6 +801,22 @@ function weightLabel(file) {
  * @param {string} figmaFontName
  * @param {string[]} allFontFiles
  */
+/**
+ * Remove any fontFamilies entries whose slug is not in wantedSlugs.
+ * Called after the full CSV loop so both Figma-registered and CSV-mapped
+ * presets are already in place before anything is removed.
+ *
+ * @param {object} themeJson
+ * @param {Set<string>} wantedSlugs
+ */
+function pruneUnusedFontPresets(themeJson, wantedSlugs) {
+	const families = themeJson?.settings?.typography?.fontFamilies;
+	if (!Array.isArray(families) || wantedSlugs.size === 0) {
+		return;
+	}
+	themeJson.settings.typography.fontFamilies = families.filter((f) => wantedSlugs.has(f.slug));
+}
+
 function syncTypographyPresetFromFigmaFont(themeJson, themeDir, presetSlug, figmaFontName, allFontFiles) {
 	const families = themeJson?.settings?.typography?.fontFamilies;
 	if (!Array.isArray(families) || !presetSlug || !figmaFontName) {
@@ -915,6 +931,16 @@ async function main() {
 	const changes = { themeJson: [], scss: [] };
 	let skipped = 0;
 
+	// Slugs of every font family Figma detected — used after the loop to prune stale presets.
+	const figmaFontSlugs = new Set(
+		[...collectAllFigmaFontUsage(figmaExport).keys()].map(slugifyFont),
+	);
+	// CSV typography:<slug> rows add their preset slug here so those entries are kept.
+	const csvTypographySlugs = new Set();
+	// Figma font slugs already covered by a CSV typography remap (e.g. Montserrat covered
+	// by typography:geist-mono). These are excluded from figmaFontSlugs to avoid duplicates.
+	const csvTypographyHandledFontSlugs = new Set();
+
 	for (const row of dataRows) {
 		const slug = csvCell(row, columns, 'figma_sync_slug');
 		const label = csvCell(row, columns, 'label') || slug;
@@ -1006,17 +1032,22 @@ async function main() {
 					tjValue = normalizeValue(rawTjValue, tjType, { themeJson, defaultVal: tjDefault });
 				}
 
-				if (tjTargetResolved.startsWith('typography:')) {
-					const presetSlug = tjTargetResolved.slice('typography:'.length);
-					if (tjType === 'font-family' && figmaRaw != null && String(figmaRaw).trim()) {
-						syncTypographyPresetFromFigmaFont(
-							themeJson,
-							themeDir,
-							presetSlug,
-							String(figmaRaw).trim(),
-							allFontFilesCache,
-						);
-					}
+			if (tjTargetResolved.startsWith('typography:')) {
+				const presetSlug = tjTargetResolved.slice('typography:'.length);
+				csvTypographySlugs.add(presetSlug);
+				if (tjType === 'font-family' && figmaRaw != null && String(figmaRaw).trim()) {
+					const figmaFontName = String(figmaRaw).trim();
+					syncTypographyPresetFromFigmaFont(
+						themeJson,
+						themeDir,
+						presetSlug,
+						figmaFontName,
+						allFontFilesCache,
+					);
+					// Mark this font's own slug as handled so the direct Figma registration
+					// is dropped from wantedSlugs, preventing a duplicate preset entry.
+					csvTypographyHandledFontSlugs.add(slugifyFont(figmaFontName));
+				}
 					// Font family registration is handled as a side effect of normalizeValue
 					// with type 'font-family'. Just record the action.
 					changes.themeJson.push({ label, target: tjTargetResolved, value: tjValue, source });
@@ -1087,6 +1118,15 @@ async function main() {
 			scss = replaceScssVar(scss, scssTarget, value);
 			changes.scss.push({ label, target: `$${scssTarget}`, value, source });
 		}
+	}
+
+	// ── Prune stale font presets ───────────────────────────────────────────────
+	if (figmaFontSlugs.size > 0) {
+		const directFigmaSlugs = [...figmaFontSlugs].filter(
+			(s) => !csvTypographyHandledFontSlugs.has(s),
+		);
+		const wantedSlugs = new Set([...directFigmaSlugs, ...csvTypographySlugs]);
+		pruneUnusedFontPresets(themeJson, wantedSlugs);
 	}
 
 	// ── Summary ────────────────────────────────────────────────────────────────

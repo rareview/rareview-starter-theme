@@ -209,7 +209,25 @@
         {
           "name": "Montserrat",
           "slug": "geist-mono",
-          "fontFamily": "Montserrat, sans-serif"
+          "fontFamily": "Montserrat, sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Montserrat",
+              "fontWeight": "400",
+              "fontStyle": "normal",
+              "src": [
+                "file:./assets/fonts/montserrat/Montserrat-Regular.woff2"
+              ]
+            },
+            {
+              "fontFamily": "Montserrat",
+              "fontWeight": "500",
+              "fontStyle": "normal",
+              "src": [
+                "file:./assets/fonts/montserrat/Montserrat-Medium.woff2"
+              ]
+            }
+          ]
         },
         {
           "name": "Instrument Sans",
@@ -233,54 +251,6 @@
               ]
             }
           ]
-        },
-        {
-          "name": "Instrument Serif",
-          "slug": "instrument-serif",
-          "fontFamily": "Instrument Serif, Georgia, serif",
-          "fontFace": [
-            {
-              "fontFamily": "Instrument Serif",
-              "fontWeight": "400",
-              "fontStyle": "normal",
-              "src": [
-                "file:./assets/fonts/instrument-serif/InstrumentSerif-Regular.woff2"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Montserrat",
-          "slug": "montserrat",
-          "fontFamily": "Montserrat, sans-serif"
-        },
-        {
-          "name": "Instrument Sans",
-          "slug": "instrument-sans",
-          "fontFamily": "Instrument Sans, sans-serif",
-          "fontFace": [
-            {
-              "fontFamily": "Instrument Sans",
-              "fontWeight": "400",
-              "fontStyle": "normal",
-              "src": [
-                "file:./assets/fonts/instrument-sans/InstrumentSans-Regular.woff2"
-              ]
-            },
-            {
-              "fontFamily": "Instrument Sans",
-              "fontWeight": "600",
-              "fontStyle": "normal",
-              "src": [
-                "file:./assets/fonts/instrument-sans/InstrumentSans-SemiBold.woff2"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "Inter",
-          "slug": "inter",
-          "fontFamily": "Inter, sans-serif"
         }
       ]
     },
