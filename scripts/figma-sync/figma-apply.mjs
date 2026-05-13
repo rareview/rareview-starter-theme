@@ -219,6 +219,9 @@ function ensureThemeFontFamilyPreset(themeJson, rawFontName) {
 			fontFamily: `${fontName}, ${inferGenericFamily(fontName)}`,
 		});
 		fontsToInstall.add(fontName);
+	} else {
+		existing.name = fontName;
+		existing.fontFamily = `${fontName}, ${inferGenericFamily(fontName)}`;
 	}
 	return `var(--wp--preset--font-family--${slug})`;
 }
@@ -686,42 +689,61 @@ function matchFontFilesToFamily(fontName, allFiles) {
 }
 
 /**
- * Collect the two most prominent font families from the Figma export
- * (body primary and secondary), together with every font weight used for
- * those two families across body text and all headings.
+ * Every non-system font family in the Figma export with each numeric weight
+ * seen on body, headings, buttons, and paragraph-size defaults.
  * Returns Map<fontFamilyName, Set<weightString>>.
- * System / web-safe fonts are excluded.
+ *
+ * @param {object} figmaExport
+ * @returns {Map<string, Set<string>>}
  */
-function detectFigmaFontUsage(figmaExport) {
+function collectAllFigmaFontUsage(figmaExport) {
 	/** @type {Map<string, Set<string>>} */
 	const usage = new Map();
 
-	const primary = figmaExport.body?.fontFamilyPrimary ?? null;
-	const secondary = figmaExport.body?.fontFamilySecondary ?? null;
-
-	// Only track these two families; ignore any others found in headings.
-	const tracked = new Set(
-		[primary, secondary].filter((f) => f && !isSystemFont(f)),
-	);
-
-	if (tracked.size === 0) return usage;
-
 	function add(family, weight) {
-		if (!tracked.has(family)) return;
-		if (!usage.has(family)) usage.set(family, new Set());
-		usage.get(family).add(String(weight ?? 400));
+		if (!family || isSystemFont(family)) {
+			return;
+		}
+		const fam = String(family).trim();
+		if (!fam) {
+			return;
+		}
+		if (!usage.has(fam)) {
+			usage.set(fam, new Set());
+		}
+		usage.get(fam).add(String(weight ?? 400));
 	}
 
-	// Body weight applies to the primary family.
-	const bodyWeight = figmaExport.body?.fontWeight ?? 400;
-	if (primary && tracked.has(primary)) add(primary, bodyWeight);
-	if (secondary && tracked.has(secondary)) add(secondary, bodyWeight);
+	const body = figmaExport.body ?? null;
+	const bodyWeight = body?.fontWeight ?? 400;
+	if (body?.fontFamilyPrimary) {
+		add(body.fontFamilyPrimary, bodyWeight);
+	}
+	if (body?.fontFamilySecondary) {
+		add(body.fontFamilySecondary, bodyWeight);
+	}
 
-	// Collect weights from headings, but only for the two tracked families.
 	for (const ctx of ['desktop', 'mobile']) {
 		for (const h of (figmaExport.headings?.[ctx] ?? [])) {
-			if (h?.fontFamily) add(h.fontFamily, h.fontWeight ?? 400);
+			if (h?.fontFamily) {
+				add(h.fontFamily, h.fontWeight ?? 400);
+			}
 		}
+	}
+
+	for (const btn of figmaExport.buttons ?? []) {
+		if (btn?.fontFamily) {
+			add(btn.fontFamily, btn.fontWeight ?? 400);
+		}
+	}
+
+	const ps = body?.paragraphSizes;
+	if (ps?.fontFamily) {
+		const w =
+			ps.desktop?.medium?.fontWeight
+			?? ps.mobile?.medium?.fontWeight
+			?? bodyWeight;
+		add(ps.fontFamily, w);
 	}
 
 	return usage;
@@ -730,11 +752,16 @@ function detectFigmaFontUsage(figmaExport) {
 /**
  * Ensure fontFamily entry exists in theme.json and populate its fontFace array
  * from the matched font files. Returns the number of fontFace variations added.
+ *
+ * @param {string | null} targetSlug When set, write fontFace onto this preset slug
+ *        (e.g. CSV typography:geist-mono) using files matched for fontName.
  */
-function applyFontFaceToThemeJson(themeJson, fontName, files, themeDir) {
-	ensureThemeFontFamilyPreset(themeJson, fontName);
+function applyFontFaceToThemeJson(themeJson, fontName, files, themeDir, targetSlug = null) {
+	if (!targetSlug) {
+		ensureThemeFontFamilyPreset(themeJson, fontName);
+	}
 
-	const slug = slugifyFont(fontName);
+	const slug = targetSlug ?? slugifyFont(fontName);
 	const entry = themeJson?.settings?.typography?.fontFamilies?.find((f) => f.slug === slug);
 	if (!entry) return 0;
 
@@ -765,24 +792,48 @@ function weightLabel(file) {
 }
 
 /**
- * Pre-pass: scan all font families detected in the Figma export at once.
- * Found families have their fontFace written to theme.json immediately.
- * All missing families are reported together in a single prompt, showing
- * the required weight variations per family. Loops until the user has
- * added all missing files or chooses to skip.
+ * Align a theme.json font preset (CSV typography:<slug>) with the Figma font name
+ * and wire fontFace from theme assets when files exist.
+ *
+ * @param {object} themeJson
+ * @param {string} themeDir
+ * @param {string} presetSlug
+ * @param {string} figmaFontName
+ * @param {string[]} allFontFiles
  */
+function syncTypographyPresetFromFigmaFont(themeJson, themeDir, presetSlug, figmaFontName, allFontFiles) {
+	const families = themeJson?.settings?.typography?.fontFamilies;
+	if (!Array.isArray(families) || !presetSlug || !figmaFontName) {
+		return;
+	}
+	const entry = families.find((f) => f.slug === presetSlug);
+	if (!entry) {
+		return;
+	}
+	entry.name = figmaFontName;
+	entry.fontFamily = `${figmaFontName}, ${inferGenericFamily(figmaFontName)}`;
+	const matched = matchFontFilesToFamily(figmaFontName, allFontFiles);
+	if (matched.length > 0) {
+		applyFontFaceToThemeJson(themeJson, figmaFontName, matched, themeDir, presetSlug);
+	} else if (slugifyFont(figmaFontName) !== presetSlug) {
+		delete entry.fontFace;
+	}
+}
+
 /**
  * Check for font files, wire up theme.json and create placeholder folders.
  * Never prompts — always continues. Returns an array of missing-font records
  * to be displayed in the end-of-run summary.
+ *
+ * @param {string[]} [allFontFiles] Optional pre-scanned font file paths (avoids second disk walk).
  * @returns {Promise<Array<{name:string, slug:string, weights:string[], dir:string}>>}
  */
-async function runFontCheck(figmaExport, themeJson, themeDir) {
-	const usage = detectFigmaFontUsage(figmaExport);
+async function runFontCheck(figmaExport, themeJson, themeDir, allFontFiles) {
+	const usage = collectAllFigmaFontUsage(figmaExport);
 	if (usage.size === 0) return [];
 
 	const fontsDir = resolve(themeDir, 'assets', 'fonts');
-	const allFiles = await findFontFiles(fontsDir);
+	const allFiles = allFontFiles != null ? allFontFiles : await findFontFiles(fontsDir);
 	const missing = [];
 
 	for (const [fontName, weightSet] of usage) {
@@ -853,10 +904,12 @@ async function main() {
 	const themeJson = JSON.parse(await readFile(themeJsonPath, 'utf-8'));
 	let scss = await readFile(scssPath, 'utf-8');
 
+	const allFontFilesCache = await findFontFiles(resolve(themeDir, 'assets', 'fonts'));
+
 	// ── Font file check ─────────────────────────────────────────────────────
 	let missingFonts = [];
 	if (figmaExportPath) {
-		missingFonts = await runFontCheck(figmaExport, themeJson, themeDir);
+		missingFonts = await runFontCheck(figmaExport, themeJson, themeDir, allFontFilesCache);
 	}
 
 	const changes = { themeJson: [], scss: [] };
@@ -954,6 +1007,16 @@ async function main() {
 				}
 
 				if (tjTargetResolved.startsWith('typography:')) {
+					const presetSlug = tjTargetResolved.slice('typography:'.length);
+					if (tjType === 'font-family' && figmaRaw != null && String(figmaRaw).trim()) {
+						syncTypographyPresetFromFigmaFont(
+							themeJson,
+							themeDir,
+							presetSlug,
+							String(figmaRaw).trim(),
+							allFontFilesCache,
+						);
+					}
 					// Font family registration is handled as a side effect of normalizeValue
 					// with type 'font-family'. Just record the action.
 					changes.themeJson.push({ label, target: tjTargetResolved, value: tjValue, source });

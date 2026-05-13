@@ -127,26 +127,17 @@ export function extractParagraphSizes(nodes, _styleRegistry, body) {
 		});
 	}
 
-	const fontCounts = new Map();
-	for (const candidates of slots.values()) {
-		for (const { fontFamily } of candidates) {
-			if (fontFamily) {
-				fontCounts.set(fontFamily, (fontCounts.get(fontFamily) ?? 0) + 1);
-			}
-		}
-	}
-	const dominantFromSlots = [...fontCounts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
-	const dominantFont = dominantFromSlots ?? (body?.fontFamilyPrimary ?? null);
+	const bodyPrimary = body?.fontFamilyPrimary ?? null;
 
 	const desktop = { small: null, medium: null, large: null };
 	const mobile = { small: null, medium: null, large: null };
 
 	for (const [key, candidates] of slots.entries()) {
 		const [context, size] = key.split(':');
-		const withDominant = dominantFromSlots
-			? candidates.filter((c) => c.fontFamily === dominantFromSlots)
-			: candidates;
-		const best = (withDominant.length > 0 ? withDominant : candidates)[0];
+		const withPreferred = bodyPrimary
+			? candidates.filter((c) => c.fontFamily === bodyPrimary)
+			: [];
+		const best = (withPreferred.length > 0 ? withPreferred : candidates)[0];
 		if (!best) {
 			continue;
 		}
@@ -217,8 +208,8 @@ export function extractParagraphSizes(nodes, _styleRegistry, body) {
 	}
 
 	const result = {};
-	if (dominantFont) {
-		result.fontFamily = dominantFont;
+	if (bodyPrimary) {
+		result.fontFamily = bodyPrimary;
 	}
 	const desktopOut = {};
 	if (desktop.small) {
