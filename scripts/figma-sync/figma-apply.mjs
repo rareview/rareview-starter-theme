@@ -550,7 +550,11 @@ function ensureScssColorVar(scss, paletteSlug) {
 // ─── File discovery ───────────────────────────────────────────────────────────
 
 async function findThemeDir() {
-	const themesDir = resolve(ROOT, 'wp-content', 'themes');
+	// Support both standard WP (wp-content/themes/) and WP VIP (themes/) layouts.
+	const wpContentThemesDir = resolve(ROOT, 'wp-content', 'themes');
+	const vipThemesDir = resolve(ROOT, 'themes');
+	const themesDir = existsSync(wpContentThemesDir) ? wpContentThemesDir : vipThemesDir;
+
 	const entries = await readdir(themesDir, { withFileTypes: true });
 	const themes = entries
 		.filter((entry) => entry.isDirectory() && entry.name !== 'node_modules' && !entry.name.startsWith('.'))
@@ -575,7 +579,7 @@ async function findThemeDir() {
 	if (hasRvStarter && !hasRvStarter.hasThemeJson && hasRvStarter.hasVariablesScss) {
 		console.error(
 			c.red(
-				'\n  Error: `wp-content/themes/rv-starter/theme.json` is missing.\n' +
+				`\n  Error: \`${themesDir.replace(ROOT + '/', '')}/rv-starter/theme.json\` is missing.\n` +
 					'  figma-apply needs both:\n' +
 					'  - theme.json\n' +
 					'  - assets/css/abstracts/variables/variables.scss\n',
