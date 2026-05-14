@@ -16,77 +16,77 @@
         {
           "name": "Black",
           "slug": "black",
-          "color": "#000"
+          "color": "#000000"
         },
         {
           "name": "Dark",
           "slug": "dark",
-          "color": "#3a434a"
+          "color": "#1F1F1F"
         },
         {
           "name": "Dark Grey",
           "slug": "dark-grey",
-          "color": "#979797"
+          "color": "#404040"
         },
         {
           "name": "Grey",
           "slug": "grey",
-          "color": "#dcdcdc"
+          "color": "#808080"
         },
         {
           "name": "Grey Light",
           "slug": "grey-light",
-          "color": "#f5f5f5"
+          "color": "#BFBFBF"
         },
         {
           "name": "White",
           "slug": "white",
-          "color": "#fff"
+          "color": "#ffffff"
         },
         {
           "name": "Brand Color 1",
           "slug": "brand-1",
-          "color": "#282463"
+          "color": "#00F700"
         },
         {
           "name": "Brand Color 2",
           "slug": "brand-2",
-          "color": "#2596be"
+          "color": "#61DAFB"
         },
         {
           "name": "Brand Color 3",
           "slug": "brand-3",
-          "color": "#ffcb2f"
+          "color": "#00585f"
         },
         {
           "name": "Brand Color 4",
           "slug": "brand-4",
-          "color": "#475667"
+          "color": "#5794f7"
         },
         {
           "name": "Brand Color 5",
           "slug": "brand-5",
-          "color": "#748ea4"
+          "color": "#afbccf"
         },
         {
           "name": "Brand Color 6",
           "slug": "brand-6",
-          "color": "#85d5f1"
+          "color": "#2f3464"
         },
         {
           "name": "Brand Color 7",
           "slug": "brand-7",
-          "color": "#fdf1cf"
+          "color": "#4ba9ce"
         },
         {
           "name": "Brand Color 8",
           "slug": "brand-8",
-          "color": "#c6e7f3"
+          "color": "#99dfe5"
         },
         {
           "name": "Brand Color 9",
           "slug": "brand-9",
-          "color": "#e9eef2"
+          "color": "#67ce67"
         },
         {
           "name": "Brand Color 10",
@@ -110,10 +110,10 @@
       },
       "font-size": {
         "mobile": {
-          "heading1": "40px",
-          "heading2": "34px",
-          "heading3": "26px",
-          "heading4": "22px",
+          "heading1": "52px",
+          "heading2": "48px",
+          "heading3": "44px",
+          "heading4": "38px",
           "heading5": "24px",
           "heading6": "16px",
           "bodySmall": "12px",
@@ -121,11 +121,11 @@
           "bodyLarge": "16px"
         },
         "desktop": {
-          "heading1": "64px",
-          "heading2": "40px",
-          "heading3": "30px",
-          "heading4": "24px",
-          "heading5": "20px",
+          "heading1": "96px",
+          "heading2": "82px",
+          "heading3": "60px",
+          "heading4": "50px",
+          "heading5": "40px",
           "heading6": "24px",
           "bodySmall": "16px",
           "bodyMedium": "18px",
@@ -140,12 +140,7 @@
       "blockGap": true,
       "margin": true,
       "padding": true,
-      "units": [
-        "rem",
-        "%",
-        "vw",
-        "vh"
-      ],
+      "units": ["rem", "%", "vw", "vh"],
       "spacingSizes": [
         {
           "size": "var(--wp--custom--spacing--20)",
@@ -207,47 +202,60 @@
       ],
       "fontFamilies": [
         {
-          "name": "Montserrat",
+          "name": "Geist Mono",
           "slug": "geist-mono",
-          "fontFamily": "Montserrat, sans-serif",
+          "fontFamily": "Geist Mono, ui-monospace, monospace",
           "fontFace": [
             {
-              "fontFamily": "Montserrat",
+              "fontFamily": "Geist Mono",
               "fontWeight": "400",
               "fontStyle": "normal",
-              "src": [
-                "file:./assets/fonts/montserrat/Montserrat-Regular.woff2"
-              ]
+              "src": ["file:./assets/fonts/geist-mono/GeistMono-Regular.woff2"]
             },
             {
-              "fontFamily": "Montserrat",
+              "fontFamily": "Geist Mono",
               "fontWeight": "500",
               "fontStyle": "normal",
-              "src": [
-                "file:./assets/fonts/montserrat/Montserrat-Medium.woff2"
-              ]
+              "src": ["file:./assets/fonts/geist-mono/GeistMono-Medium.woff2"]
+            },
+            {
+              "fontFamily": "Geist Mono",
+              "fontWeight": "700",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/geist-mono/GeistMono-Medium.woff2"]
             }
           ]
         },
         {
-          "name": "Instrument Sans",
+          "name": "Urbanist",
           "slug": "urbanist",
-          "fontFamily": "Instrument Sans, sans-serif",
+          "fontFamily": "Urbanist, system-ui, sans-serif",
           "fontFace": [
             {
-              "fontFamily": "Instrument Sans",
+              "fontFamily": "Urbanist",
+              "fontWeight": "700",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/urbanist/Urbanist-Bold.woff2"]
+            },
+            {
+              "fontFamily": "Urbanist",
+              "fontWeight": "800",
+              "fontStyle": "normal",
+              "src": ["file:./assets/fonts/urbanist/Urbanist-ExtraBold.woff2"]
+            }
+          ]
+        },
+        {
+          "name": "Instrument Serif",
+          "slug": "instrument-serif",
+          "fontFamily": "Instrument Serif, Georgia, serif",
+          "fontFace": [
+            {
+              "fontFamily": "Instrument Serif",
               "fontWeight": "400",
               "fontStyle": "normal",
               "src": [
-                "file:./assets/fonts/instrument-sans/InstrumentSans-Regular.woff2"
-              ]
-            },
-            {
-              "fontFamily": "Instrument Sans",
-              "fontWeight": "600",
-              "fontStyle": "normal",
-              "src": [
-                "file:./assets/fonts/instrument-sans/InstrumentSans-SemiBold.woff2"
+                "file:./assets/fonts/instrument-serif/InstrumentSerif-Regular.woff2"
               ]
             }
           ]
