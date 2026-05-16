@@ -17,6 +17,7 @@
 import { createInterface } from 'node:readline/promises';
 import process, { stdin, stdout, argv, exit } from 'node:process';
 import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { resolve, dirname, relative } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawn } from 'node:child_process';
@@ -51,7 +52,7 @@ function themeSlugsFromPackageScripts(pkg) {
 	const scripts = pkg && typeof pkg === 'object' && pkg.scripts && typeof pkg.scripts === 'object' ? pkg.scripts : {};
 	for (const val of Object.values(scripts)) {
 		if (typeof val !== 'string') continue;
-		for (const m of val.matchAll(/wp-content\/themes\/([a-z0-9-]+)/gi)) {
+		for (const m of val.matchAll(/(?:wp-content\/)?themes\/([a-z0-9-]+)/gi)) {
 			const s = m[1];
 			if (!seen.has(s)) {
 				seen.add(s);
@@ -68,7 +69,11 @@ function themeSlugsFromPackageScripts(pkg) {
  */
 async function findThemeDir() {
 	const { readdir } = await import('node:fs/promises');
-	const themesDir = resolve(ROOT, 'wp-content', 'themes');
+
+	// Support both standard WP (wp-content/themes/) and WP VIP (themes/) layouts.
+	const stdThemesDir = resolve(ROOT, 'wp-content', 'themes');
+	const vipThemesDir = resolve(ROOT, 'themes');
+	const themesDir = existsSync(stdThemesDir) ? stdThemesDir : vipThemesDir;
 
 	try {
 		const pkg = JSON.parse(await readFile(resolve(ROOT, 'package.json'), 'utf-8'));
@@ -116,7 +121,7 @@ async function findThemeDir() {
 		}
 	}
 
-	console.log(color.red('\nError: No theme with theme.json found in wp-content/themes/'));
+	console.log(color.red(`\nError: No theme with theme.json found in ${relative(ROOT, themesDir)}/`));
 	exit(1);
 }
 

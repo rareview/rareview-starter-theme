@@ -6,6 +6,9 @@
  * Automates all manual setup steps when creating a new project
  * from the rv-starter-theme template.
  *
+ * Works with both standard WP / Lando and WP VIP project layouts.
+ * Auto-detects the environment by checking which themes directory exists.
+ *
  * Usage:
  *   npm run setup
  *   npm run setup -- --dry-run
@@ -15,13 +18,21 @@
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout, argv, exit } from 'node:process';
 import { readdir, readFile, writeFile, rename, stat } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, extname, resolve, dirname } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
-const THEME_DIR = join(ROOT, 'wp-content', 'themes', 'rv-starter');
+
+// Environment detection: VIP uses themes/ at root; standard WP / Lando uses wp-content/themes/.
+const VIP_THEMES_DIR = resolve(ROOT, 'themes');
+const STD_THEMES_DIR = resolve(ROOT, 'wp-content', 'themes');
+const IS_VIP = existsSync(VIP_THEMES_DIR) && !existsSync(STD_THEMES_DIR);
+const THEMES_BASE = IS_VIP ? VIP_THEMES_DIR : STD_THEMES_DIR;
+const THEME_REL = IS_VIP ? 'themes' : 'wp-content/themes';
+const THEME_DIR = join(THEMES_BASE, 'rv-starter');
 
 // CLI flags
 const args = argv.slice(2);
@@ -194,6 +205,10 @@ async function cleanupReadme(readmePath) {
  * Generate AGENTS.md with project-specific values.
  */
 function generateAgentsMd(config) {
+	const envCmd = IS_VIP
+		? '- `npm run env:start` / `npm run env:stop` - local environment'
+		: '- `lando start` / `lando poweroff` - local environment';
+
 	return `# ${config.name}
 
 ## Overview
@@ -210,7 +225,7 @@ WordPress theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 - \`npm run lint\` / \`npm run format\` - lint and format all (JS, CSS, PHP)
 - \`npm run create-block -- --name="name"\` - scaffold new block
 - \`npm run design-system\` - update design tokens interactively
-- \`lando start\` / \`lando poweroff\` - local environment
+${envCmd}
 
 ## Coding Standards
 - Indentation: tabs (not spaces)
@@ -243,7 +258,7 @@ WordPress theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 - Template tags: pure functions only (no side effects, no hooks)
 
 ## Theme Directory
-\`wp-content/themes/${config.slug}/\`
+\`${THEME_REL}/${config.slug}/\`
 `;
 }
 
@@ -265,10 +280,15 @@ function runCommand(command, commandArgs, options = {}) {
 function printManualSteps(slug) {
 	console.log(color.bold('\n  Next steps:\n'));
 	console.log(`    1. ${color.cyan('npm install')}`);
-	console.log(`    2. ${color.cyan(`npm --prefix wp-content/themes/${slug} install`)}`);
+	console.log(`    2. ${color.cyan(`npm --prefix ${THEME_REL}/${slug} install`)}`);
 	console.log(`    3. ${color.cyan('npm run build')}`);
-	console.log(`    4. ${color.cyan('lando start')}`);
-	console.log(`    5. Visit ${color.cyan(`http://${slug}.local`)}`);
+	if (IS_VIP) {
+		console.log(`    4. ${color.cyan('npm run env:init')}`);
+		console.log(`    5. ${color.cyan('npm run env:start')}`);
+	} else {
+		console.log(`    4. ${color.cyan('lando start')}`);
+		console.log(`    5. Visit ${color.cyan(`http://${slug}.local`)}`);
+	}
 }
 
 /**
@@ -279,6 +299,12 @@ async function main() {
 	console.log(color.bold('  Rareview Starter Theme \u2014 Project Setup'));
 	console.log(color.dim('  \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500'));
 	console.log('');
+
+	if (IS_VIP) {
+		console.log(color.dim('  Environment: WP VIP\n'));
+	} else {
+		console.log(color.dim('  Environment: Standard WP / Lando\n'));
+	}
 
 	if (DRY_RUN) {
 		console.log(color.yellow('  DRY RUN MODE \u2014 no files will be modified\n'));
@@ -363,13 +389,34 @@ async function main() {
 		console.log(`\n    ${color.bold(`${totalReplacements} replacements`)} across ${color.bold(`${totalFiles} files`)}`);
 
 		// Step 4: Rename theme directory
-		const newThemeDir = join(ROOT, 'wp-content', 'themes', slug);
+		const newThemeDir = join(THEMES_BASE, slug);
 		if (slug !== 'rv-starter') {
 			console.log(color.bold('\n  Renaming theme directory...\n'));
 			if (!DRY_RUN) {
 				await rename(THEME_DIR, newThemeDir);
 			}
-			console.log(`    ${color.green('\u2713')} wp-content/themes/rv-starter/ \u2192 wp-content/themes/${slug}/`);
+			console.log(`    ${color.green('\u2713')} ${THEME_REL}/rv-starter/ \u2192 ${THEME_REL}/${slug}/`);
+		}
+
+		// Step 4.5 (VIP only): Rename config/.vip.{rv-starter}.*.yml files
+		if (IS_VIP) {
+			const configDir = resolve(ROOT, 'config');
+			try {
+				const configEntries = await readdir(configDir);
+				const vipConfigs = configEntries.filter((f) => /^\.vip\.\{rv-starter\}\./.test(f));
+				if (vipConfigs.length > 0) {
+					console.log(color.bold('\n  Renaming VIP config files...\n'));
+					for (const file of vipConfigs) {
+						const newFile = file.replace('{rv-starter}', `{${slug}}`);
+						if (!DRY_RUN) {
+							await rename(join(configDir, file), join(configDir, newFile));
+						}
+						console.log(`    ${color.green('\u2713')} config/${file} \u2192 config/${newFile}`);
+					}
+				}
+			} catch {
+				// config/ may not exist in all VIP projects
+			}
 		}
 
 		// Step 5: Rename .pot file
@@ -431,9 +478,13 @@ async function main() {
 			exit(0);
 		}
 
-		// Step 10: Optional npm install + lando start
+		// Step 10: Optional install + environment start
 		if (!AUTO_YES) {
-			const runInstall = await rl.question('  Run npm install and lando start now? (y/N) ');
+			const prompt = IS_VIP
+				? '  Run npm install and npm run env:init now? (y/N) '
+				: '  Run npm install and lando start now? (y/N) ';
+
+			const runInstall = await rl.question(prompt);
 
 			if (runInstall.toLowerCase() === 'y') {
 				console.log(color.bold('\n  Installing dependencies...\n'));
@@ -443,8 +494,8 @@ async function main() {
 					console.log(color.yellow('    Failed. You may need to run npm install manually.'));
 				}
 
-				console.log(color.dim(`\n    Running: npm --prefix wp-content/themes/${slug} install`));
-				if (!runCommand('npm', ['--prefix', `wp-content/themes/${slug}`, 'install'])) {
+				console.log(color.dim(`\n    Running: npm --prefix ${THEME_REL}/${slug} install`));
+				if (!runCommand('npm', ['--prefix', `${THEME_REL}/${slug}`, 'install'])) {
 					console.log(color.yellow('    Failed. You may need to install theme dependencies manually.'));
 				}
 
@@ -453,9 +504,16 @@ async function main() {
 					console.log(color.yellow('    Failed. You may need to run the build manually.'));
 				}
 
-				console.log(color.dim('\n    Running: lando start'));
-				if (!runCommand('lando', ['start'])) {
-					console.log(color.yellow('    Failed. You may need to run lando start manually.'));
+				if (IS_VIP) {
+					console.log(color.dim('\n    Running: npm run env:init'));
+					if (!runCommand('npm', ['run', 'env:init'])) {
+						console.log(color.yellow('    Failed. You may need to run npm run env:init manually.'));
+					}
+				} else {
+					console.log(color.dim('\n    Running: lando start'));
+					if (!runCommand('lando', ['start'])) {
+						console.log(color.yellow('    Failed. You may need to run lando start manually.'));
+					}
 				}
 			} else {
 				printManualSteps(slug);
