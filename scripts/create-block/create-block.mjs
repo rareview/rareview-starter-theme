@@ -15,6 +15,7 @@
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout, argv, exit } from 'node:process';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,7 +42,12 @@ const color = {
  */
 async function findThemeConfig() {
 	const { readdir } = await import('node:fs/promises');
-	const themesDir = resolve(ROOT, 'wp-content', 'themes');
+
+	// Support both standard WP (wp-content/themes/) and WP VIP (themes/) layouts.
+	const stdThemesDir = resolve(ROOT, 'wp-content', 'themes');
+	const vipThemesDir = resolve(ROOT, 'themes');
+	const themesDir = existsSync(stdThemesDir) ? stdThemesDir : vipThemesDir;
+
 	const entries = await readdir(themesDir, { withFileTypes: true });
 
 	for (const entry of entries) {
@@ -74,7 +80,7 @@ async function findThemeConfig() {
 		}
 	}
 
-	console.log(color.red('\nError: No theme found in wp-content/themes/'));
+	console.log(color.red(`\nError: No theme found in ${themesDir.replace(ROOT + '/', '')}/`));
 	exit(1);
 }
 
