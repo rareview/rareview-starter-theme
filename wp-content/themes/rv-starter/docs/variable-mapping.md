@@ -9,7 +9,7 @@
 | Default transition easing    | $default-transition-easing    | string  | ease-out                       |
 | Disabled opacity             | $disabled-opacity             | number  | 0.4                            |
 | Container width              | custom.layout.contentSize     | px      | 1440px                         |
-| Container side padding       | $container-padding-sides      | theme-json-ref (string) | var(--wp--preset--spacing--40) |
+| Container side padding       | $container-padding-sides      | string | var(--wp--preset--spacing--40) |
 | Endless fluid responsiveness | $endless-fluid-responsiveness | boolean | true                           |
 
 
@@ -20,8 +20,8 @@
 
 | Label                   | Variable               | Type        | Default          |
 | ----------------------- | ---------------------- | ----------- | ---------------- |
-| Body font family        | $body-font-family      | font-family | Geist Mono |
-| Font family (secondary) | $font-family-secondary | font-family | Urbanist   |
+| Body font family        | settings.typography.fontFamilies | font-family | Geist Mono |
+| Font family (secondary) | settings.typography.fontFamilies | font-family | Urbanist   |
 | Body line height        | $body-line-height      | number      | 1.3              |
 | Body font weight        | $body-font-weight      | number      | 400              |
 | Body letter spacing     | $body-letter-spacing   | string      | 0                |
@@ -34,9 +34,9 @@
 
 | Label                   | Variable                           | Type | Default                                           |
 | ----------------------- | ---------------------------------- | ---- | ------------------------------------------------- |
-| Body size mobile small  | custom.font-size.mobile.bodySmall  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--body-small)  |
-| Body size mobile medium | custom.font-size.mobile.bodyMedium | theme-json-ref (px) | var(--wp--custom--font-size--mobile--body-medium) |
-| Body size mobile large  | custom.font-size.mobile.bodyLarge  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--body-large)  |
+| Body size mobile small  | custom.font-size.mobile.bodySmall  | px | 12px |
+| Body size mobile medium | custom.font-size.mobile.bodyMedium | px | 14px |
+| Body size mobile large  | custom.font-size.mobile.bodyLarge  | px | 16px |
 
 
 ---
@@ -46,9 +46,9 @@
 
 | Label                    | Variable                            | Type | Default                                            |
 | ------------------------ | ----------------------------------- | ---- | -------------------------------------------------- |
-| Body size desktop small  | custom.font-size.desktop.bodySmall  | theme-json-ref (px) | var(--wp--custom--font-size--desktop--body-small)  |
-| Body size desktop medium | custom.font-size.desktop.bodyMedium | theme-json-ref (px) | var(--wp--custom--font-size--desktop--body-medium) |
-| Body size desktop large  | custom.font-size.desktop.bodyLarge  | theme-json-ref (px) | var(--wp--custom--font-size--desktop--body-large)  |
+| Body size desktop small  | custom.font-size.desktop.bodySmall  | px | 16px |
+| Body size desktop medium | custom.font-size.desktop.bodyMedium | px | 18px |
+| Body size desktop large  | custom.font-size.desktop.bodyLarge  | px | 20px |
 
 
 ---
@@ -65,8 +65,8 @@
 | Line height    | $heading-1-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-1-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-1-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading1  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-1)  |
-| Size (desktop) | custom.font-size.desktop.heading1 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-1) |
+| Size (mobile)  | custom.font-size.mobile.heading1  | px | 52px |
+| Size (desktop) | custom.font-size.desktop.heading1 | px | 96px |
 
 
 ### Heading 2
@@ -78,8 +78,8 @@
 | Line height    | $heading-2-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-2-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-2-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading2  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-2)  |
-| Size (desktop) | custom.font-size.desktop.heading2 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-2) |
+| Size (mobile)  | custom.font-size.mobile.heading2  | px | 48px |
+| Size (desktop) | custom.font-size.desktop.heading2 | px | 82px |
 
 ### Heading 3
 
@@ -90,8 +90,8 @@
 | Line height    | $heading-3-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-3-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-3-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading3  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-3)  |
-| Size (desktop) | custom.font-size.desktop.heading3 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-3) |
+| Size (mobile)  | custom.font-size.mobile.heading3  | px | 44px |
+| Size (desktop) | custom.font-size.desktop.heading3 | px | 60px |
 
 ### Heading 4
 
@@ -102,8 +102,8 @@
 | Line height    | $heading-4-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-4-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-4-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading4  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-4)  |
-| Size (desktop) | custom.font-size.desktop.heading4 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-4) |
+| Size (mobile)  | custom.font-size.mobile.heading4  | px | 38px |
+| Size (desktop) | custom.font-size.desktop.heading4 | px | 50px |
 
 ### Heading 5
 
@@ -114,8 +114,8 @@
 | Line height    | $heading-5-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-5-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-5-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading5  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-5)  |
-| Size (desktop) | custom.font-size.desktop.heading5 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-5) |
+| Size (mobile)  | custom.font-size.mobile.heading5  | px | 24px |
+| Size (desktop) | custom.font-size.desktop.heading5 | px | 40px |
 
 ### Heading 6
 
@@ -127,8 +127,8 @@
 | Line height    | $heading-6-line-height            | number   | 1.3                                              |
 | Letter spacing | $heading-6-letter-spacing         | string   | normal                                           |
 | Text transform | $heading-6-text-transform         | string   | none                                             |
-| Size (mobile)  | custom.font-size.mobile.heading6  | theme-json-ref (px) | var(--wp--custom--font-size--mobile--heading-6)  |
-| Size (desktop) | custom.font-size.desktop.heading6 | theme-json-ref (px) | var(--wp--custom--font-size--desktop--heading-6) |
+| Size (mobile)  | custom.font-size.mobile.heading6  | px | 16px |
+| Size (desktop) | custom.font-size.desktop.heading6 | px | 24px |
 
 
 ---
@@ -139,7 +139,7 @@
 | Label            | Variable                    | Type     | Default        |
 | ---------------- | --------------------------- | -------- | -------------- |
 | Link color       | $link-color                 | scss-ref | $color-primary |
-| Link hover color | $link-hover-color           | string   | color-mix(...) |
+| Link hover color | $link-hover-color           | string   | color-mix(in srgb, $color-primary 80%, white) |
 | Letter spacing   | $link-letter-spacing        | string   | normal         |
 | Font weight      | $link-font-weight           | string   | inherit        |
 | Text decoration  | $link-text-decoration       | string   | underline      |
