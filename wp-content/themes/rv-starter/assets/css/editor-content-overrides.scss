@@ -8,15 +8,20 @@
  * Enqueued via `enqueue_block_assets` (see `includes/blocks.php`), which is
  * the recommended hook for Editor content assets as of WordPress 6.3.
  *
+ * NOTE: Do not import headings or fluidness here. Those styles are already
+ * loaded in the editor via add_editor_style( 'dist/css/frontend.css' ), which
+ * auto-scopes them to .editor-styles-wrapper. Importing them here would emit
+ * unscoped h1–h6 / body / html rules that leak into the admin chrome, because
+ * enqueue_block_assets loads this stylesheet in the admin page as well as the
+ * editor iframe (WordPress 6.3+ backward-compat behaviour).
+ *
  * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/#editor-content-scripts-and-styles
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/#backward-compatibility-and-known-issues
  *
  * @author Rareview <hello@rareview.com>
  */
 @import "abstracts/variables/variables";
 @import "abstracts/mixins/container";
-@import "abstracts/mixins/headings";
-
-@import "global/fluidness";
 
 .editor-visual-editor__post-title-wrapper,
 .editor-styles-wrapper .block-editor-block-list__layout.is-root-container > :where(:not(.alignleft)),

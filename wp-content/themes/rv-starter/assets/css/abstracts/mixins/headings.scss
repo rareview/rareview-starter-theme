@@ -2,11 +2,6 @@
  * Headings global style.
 */
 @mixin heading($h: 1) {
-	margin-block-start: 0.5em !important; // override block editor styles, if gap in theme.json is "true"
-	margin-block-end: 0.5em !important; // override block editor styles, if gap in theme.json is "true"
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-
 	@if $h == 1 {
 		font-family: $heading-1-font-family;
 		font-weight: $heading-1-font-weight;
@@ -112,7 +107,6 @@
 
 @for $h from 1 through 6 {
 	h#{$h},
-	.editor-styles-wrapper h#{$h},
 	.has-style-h#{$h} {
 		@include heading($h);
 	}
