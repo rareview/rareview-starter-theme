@@ -13,3 +13,37 @@
  *
  * @author Rareview <hello@rareview.com>
  */
+
+// START - Restore core editor chrome typography when theme content styles load in the admin.
+$editor-ui-font-family: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+
+body.block-editor-page {
+	font-family: $editor-ui-font-family;
+	font-size: 13px;
+}
+
+body.block-editor-page :is(
+	.interface-interface-skeleton__sidebar,
+	.interface-interface-skeleton__actions,
+	.edit-post-sidebar,
+	.editor-sidebar,
+	.components-popover,
+	.components-modal__frame
+) {
+	font-family: $editor-ui-font-family;
+
+	:is(h1, h2, h3, h4, h5, h6) {
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+		letter-spacing: normal;
+		text-transform: none;
+	}
+
+	:is(.has-small-font-size, .has-medium-font-size, .has-large-font-size) {
+		font-size: inherit !important;
+	}
+}
+
+// END - Restore core editor chrome typography when theme content styles load in the admin.
