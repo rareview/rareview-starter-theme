@@ -278,12 +278,54 @@
   "styles": {
     "color": {},
     "elements": {
-      "h1": {},
-      "h2": {},
-      "h3": {},
-      "h4": {},
-      "h5": {},
-      "h6": {},
+      "h1": {
+        "spacing": {
+          "margin": {
+            "top": "0.5em",
+            "bottom": "0.5em"
+          }
+        }
+      },
+      "h2": {
+        "spacing": {
+          "margin": {
+            "top": "0.5em",
+            "bottom": "0.5em"
+          }
+        }
+      },
+      "h3": {
+        "spacing": {
+          "margin": {
+            "top": "0.5em",
+            "bottom": "0.5em"
+          }
+        }
+      },
+      "h4": {
+        "spacing": {
+          "margin": {
+            "top": "0.5em",
+            "bottom": "0.5em"
+          }
+        }
+      },
+      "h5": {
+        "spacing": {
+          "margin": {
+            "top": "0.5em",
+            "bottom": "0.5em"
+          }
+        }
+      },
+      "h6": {
+        "spacing": {
+          "margin": {
+            "top": "0.5em",
+            "bottom": "0.5em"
+          }
+        }
+      },
       "link": {}
     },
     "typography": {},
