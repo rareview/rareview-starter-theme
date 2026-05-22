@@ -33,7 +33,7 @@
   },
   "require": {
     "php": ">=8.2",
-    "wpackagist-theme/twentytwentyfive": "1.4"
+    "wpackagist-theme/twentytwentyfive": "1.5"
   },
   "require-dev": {
     "10up/phpcs-composer": "^3.0.1",
