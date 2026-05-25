@@ -44,10 +44,6 @@
 		width: $radio-outer;
 	}
 
-	&:checked + label::before {
-		border-color: $color-primary;
-	}
-
 	&:checked + label::after,
 	&:not(:checked) + label::after {
 		border-radius: 100%;
