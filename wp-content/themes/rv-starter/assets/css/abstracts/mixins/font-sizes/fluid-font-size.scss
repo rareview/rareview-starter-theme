@@ -1,0 +1,35 @@
+/**
+ * Shared fluid body font-size steps (mobile → tablet clamp → desktop rem).
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@mixin fluid-body-font-size(
+	$mobile,
+	$tablet,
+	$desktop,
+	$desktop-rem,
+	$important: true
+) {
+	@if $important {
+		font-size: $mobile !important;
+
+		@media only screen and (min-width: $breakpoint-mobile) {
+			font-size: clamp($mobile, $tablet, $desktop) !important;
+		}
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $desktop-rem !important;
+		}
+	} @else {
+		font-size: $mobile;
+
+		@media only screen and (min-width: $breakpoint-mobile) {
+			font-size: clamp($mobile, $tablet, $desktop);
+		}
+
+		@media only screen and (min-width: $breakpoint-desktop-xx-large) {
+			font-size: $desktop-rem;
+		}
+	}
+}

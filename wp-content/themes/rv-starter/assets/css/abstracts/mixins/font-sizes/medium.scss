@@ -1,0 +1,15 @@
+/**
+ * Fluid responsive medium (default body) text size.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@mixin font-size-medium($important: true) {
+	@include fluid-body-font-size(
+		$body-font-size-mobile-medium,
+		$body-font-size-tablet-medium,
+		$body-font-size-desktop-medium,
+		$body-font-size-desktop-medium-rem,
+		$important
+	);
+}
