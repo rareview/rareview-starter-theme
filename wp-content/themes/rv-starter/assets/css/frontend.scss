@@ -24,6 +24,10 @@
 @import "abstracts/mixins/links";
 @import "abstracts/mixins/page-vertical-spacing";
 @import "abstracts/mixins/quotes";
+@import "abstracts/mixins/font-sizes/fluid-font-size";
+@import "abstracts/mixins/font-sizes/small";
+@import "abstracts/mixins/font-sizes/medium";
+@import "abstracts/mixins/font-sizes/large";
 
 @import "blocks/button";
 @import "blocks/quote";

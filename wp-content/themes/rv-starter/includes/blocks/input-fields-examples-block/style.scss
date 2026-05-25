@@ -1,11 +1,17 @@
 /**
  * Input Fields Examples block — layout only (controls use theme / browser defaults).
  *
- * @author Rareview® <hello@rareview.com>
+ * @author Rareview <hello@rareview.com>
  */
 
-.wp-block-the-market-place-input-fields-examples {
+@import "../../../assets/css/abstracts/variables/variables";
+@import "../../../assets/css/abstracts/mixins/font-sizes/fluid-font-size";
+@import "../../../assets/css/abstracts/mixins/font-sizes/small";
+@import "../../../assets/css/abstracts/mixins/font-sizes/medium";
+
+.wp-block-rv-starter-input-fields-examples {
 	.rv-input-fields-examples__notice {
+		@include font-size-small;
 		margin: 0 0 0.75rem;
 	}
 
@@ -86,6 +92,7 @@
 	}
 
 	.rv-input-fields-examples__control {
+		@include font-size-medium;
 		width: 100%;
 		box-sizing: border-box;
 		margin-top: 0.25rem;

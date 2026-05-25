@@ -25,39 +25,15 @@ html {
 body,
 .editor-styles-wrapper,
 .has-medium-font-size {
-	font-size: $body-font-size-mobile-medium !important;
-
-	@media only screen and (min-width: $breakpoint-mobile) {
-		font-size: clamp($body-font-size-mobile-medium, $body-font-size-tablet-medium, $body-font-size-desktop-medium) !important;
-	}
-
-	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-		font-size: $body-font-size-desktop-medium-rem !important;
-	}
+	@include font-size-medium;
 }
 
 // Small body size.
 .has-small-font-size {
-	font-size: $body-font-size-mobile-small !important;
-
-	@media only screen and (min-width: $breakpoint-mobile) {
-		font-size: clamp($body-font-size-mobile-small, $body-font-size-tablet-small, $body-font-size-desktop-small) !important;
-	}
-
-	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-		font-size: $body-font-size-desktop-small-rem !important;
-	}
+	@include font-size-small;
 }
 
 // Large body size.
 .has-large-font-size {
-	font-size: $body-font-size-mobile-large !important;
-
-	@media only screen and (min-width: $breakpoint-mobile) {
-		font-size: clamp($body-font-size-mobile-large, $body-font-size-tablet-large, $body-font-size-desktop-large) !important;
-	}
-
-	@media only screen and (min-width: $breakpoint-desktop-xx-large) {
-		font-size: $body-font-size-desktop-large-rem !important;
-	}
+	@include font-size-large;
 }

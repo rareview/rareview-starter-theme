@@ -1,0 +1,15 @@
+/**
+ * Fluid responsive large body text size.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@mixin font-size-large($important: true) {
+	@include fluid-body-font-size(
+		$body-font-size-mobile-large,
+		$body-font-size-tablet-large,
+		$body-font-size-desktop-large,
+		$body-font-size-desktop-large-rem,
+		$important
+	);
+}

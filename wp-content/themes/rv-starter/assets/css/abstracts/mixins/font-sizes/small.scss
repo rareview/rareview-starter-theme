@@ -1,0 +1,15 @@
+/**
+ * Fluid responsive small body text size.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@mixin font-size-small($important: true) {
+	@include fluid-body-font-size(
+		$body-font-size-mobile-small,
+		$body-font-size-tablet-small,
+		$body-font-size-desktop-small,
+		$body-font-size-desktop-small-rem,
+		$important
+	);
+}
