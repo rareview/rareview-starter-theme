@@ -12,6 +12,11 @@
 		max-width: calc(#{$max-width} + (2 * #{$container-padding-sides}));
 		padding-right: $container-padding-sides;
 		padding-left: $container-padding-sides;
+
+		&:is(ul, ol) {
+			padding-left: 0;
+			padding-inline-start: calc(#{$container-padding-sides} + 1.5em) !important;
+		}
 	}
 }
 
