@@ -1,0 +1,25 @@
+/**
+ * Image block adjustments.
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+@import "../abstracts/mixins/cover-image";
+
+/* Option to make image fills the whole container block. */
+.wp-block-group,
+.wp-block-column,
+.wp-block-cover,
+.wp-block-media-text,
+.wp-block-stack,
+.wp-block-grid {
+	.wp-block-image.is-fill {
+		overflow: hidden;
+		position: relative;
+		height: 100%;
+
+		img {
+			@include cover-image;
+		}
+	}
+}
