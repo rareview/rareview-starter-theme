@@ -3,3 +3,5 @@
  */
 
 import './heading';
+import './image';
+import './columns';
