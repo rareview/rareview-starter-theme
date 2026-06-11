@@ -29,6 +29,7 @@ WordPress starter theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 - PHP: 10up-Default PHPCS rules, PHP 8.2+ with type hints
 - JS: @10up/eslint-config/wordpress, no jQuery on frontend
 - SCSS: stylelint-config-standard-scss; media queries use `@media (max-width: …)` / `@media (min-width: …)` with `$breakpoint-*` variables from `variables.scss` (not range syntax or hardcoded px)
+- SCSS responsiveness: place all media queries at the end of the file under a `/* Responsiveness. */` comment (see `assets/css/components/footer.scss`)
 
 ## File Conventions
 - Blocks: `includes/blocks/{name}/` (block.json, markup.php, edit.js, style.scss)
