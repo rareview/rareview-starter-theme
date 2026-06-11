@@ -24,9 +24,11 @@ WordPress starter theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 - Indentation: tabs (not spaces)
 - Quotes: single quotes (JS and PHP)
 - CSS class naming: `rv-{component}__{element}` (BEM-adjacent)
+- SCSS selectors: write full BEM class names (e.g. `.rv-header__icon`); never use parent-selector shortcuts like `&__icon` — they are harder to search
+- SCSS nesting: keep nesting minimal; BEM classes are self-contained and do not need deep nesting
 - PHP: 10up-Default PHPCS rules, PHP 8.2+ with type hints
 - JS: @10up/eslint-config/wordpress, no jQuery on frontend
-- SCSS: stylelint-config-standard-scss
+- SCSS: stylelint-config-standard-scss; media queries use `@media (max-width: …)` / `@media (min-width: …)` with `$breakpoint-*` variables from `variables.scss` (not range syntax or hardcoded px)
 
 ## File Conventions
 - Blocks: `includes/blocks/{name}/` (block.json, markup.php, edit.js, style.scss)
