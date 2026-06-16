@@ -3,8 +3,8 @@
  *
  * @author Rareview <hello@rareview.com>
  */
-@mixin link( $color: $link-color) {
-	&:not(.rv-prevent-link-style, .rv-button, .wp-block-button__link) { // Try to use "rv-prevent-link-style" instead of adding new CSS classes here, to avoid making this rule hard to override.
+@mixin link($color: $link-color) {
+	&:where(:not(.rv-prevent-link-style, .rv-button, .wp-block-button__link)) { // Try to use "rv-prevent-link-style" instead of adding new CSS classes here, to avoid making this rule hard to override.
 		color: $color;
 		transition: color $default-transition;
 		text-decoration: $link-text-decoration;
@@ -15,5 +15,9 @@
 			color: $link-hover-color;
 			text-decoration: $link-hover-text-decoration;
 		}
+	}
+
+	&.rv-prevent-link-style {
+		text-decoration: none;
 	}
 }

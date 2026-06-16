@@ -14,6 +14,12 @@ body main > *:not(.alignfull, .alignleft, .alignright) {
 
 .alignfull {
 	@include container( $max-width: 100% );
+
+	/* Nested alignfull elements adjustments. */
+	.alignfull {
+		width: 100%;
+		max-width: 100%;
+	}
 }
 
 body main > * {

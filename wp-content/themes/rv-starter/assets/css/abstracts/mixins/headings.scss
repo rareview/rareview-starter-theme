@@ -103,6 +103,18 @@
 			font-size: $heading-6-font-size-desktop-rem;
 		}
 	}
+
+	a {
+		color: inherit;
+		font-weight: inherit;
+		letter-spacing: inherit;
+		text-decoration: none;
+
+		&:hover {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
 }
 
 @for $h from 1 through 6 {
