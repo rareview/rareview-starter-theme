@@ -49,7 +49,7 @@
   "devDependencies": {
     "10up-toolkit": "^6.5.1",
     "autoprefixer": "^10.4.27",
-    "eslint": "^8.57.1"
+    "eslint": "^10.0.0"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
