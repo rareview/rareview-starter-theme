@@ -4,6 +4,7 @@
  * @author Rareview <hello@rareview.com>
  */
 
+@import "../abstracts/variables/variables";
 @import "../abstracts/mixins/cover-image";
 
 /* Option to make image fills the whole container block. */
@@ -20,6 +21,47 @@
 
 		img {
 			@include cover-image;
+		}
+	}
+}
+
+/* Responsiveness. */
+
+/* Prevent fill images from disappearing when columns stack on mobile. */
+.wp-block-columns {
+	@media (width <= $breakpoint-tablet) {
+		.wp-block-image.is-fill {
+			height: auto;
+
+			img {
+				bottom: auto;
+				height: auto;
+				left: auto;
+				margin: 0;
+				position: static;
+				right: auto;
+				top: auto;
+				width: 100%;
+			}
+		}
+	}
+
+	&.has-early-stack {
+		@media (width <= 991px) {
+			.wp-block-image.is-fill {
+				height: auto;
+
+				img {
+					bottom: auto;
+					height: auto;
+					left: auto;
+					margin: 0;
+					position: static;
+					right: auto;
+					top: auto;
+					width: 100%;
+				}
+			}
 		}
 	}
 }
