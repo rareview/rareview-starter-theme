@@ -135,7 +135,7 @@ $input-dark-background-color: transparent;
 /* Links. */
 $link-text-decoration: underline;
 $link-hover-text-decoration: underline;
-$link-font-weight: 500;
+$link-font-weight: inherit;
 $link-letter-spacing: normal;
 $link-color: $color-brand-1;
 $link-hover-color: color-mix(in srgb, $color-brand-1 80%, white);
