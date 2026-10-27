@@ -10,21 +10,19 @@ const remRootSizes = (root) => {
 	// The difference between design-provided desktop and mobile font-size for 'body-medium' is subtracted from 16px to get the mobile root size.
 	const rootSizeMobile = () => {
 		const desktop = parseFloat(
-			getComputedStyle(document.documentElement).getPropertyValue(
+			getComputedStyle(root).getPropertyValue(
 				'--wp--custom--font-size--desktop--body-medium',
 			),
 		);
 
 		const mobile = parseFloat(
-			getComputedStyle(document.documentElement).getPropertyValue(
-				'--wp--custom--font-size--mobile--body-medium',
-			),
+			getComputedStyle(root).getPropertyValue('--wp--custom--font-size--mobile--body-medium'),
 		);
 
 		const diff = desktop - mobile;
 		const rootSize = 16 - diff;
 
-		document.documentElement.style.setProperty('--rv--size-mobile--root', `${rootSize}px`);
+		root.style.setProperty('--rv--size-mobile--root', `${rootSize}px`);
 	};
 	rootSizeMobile();
 };

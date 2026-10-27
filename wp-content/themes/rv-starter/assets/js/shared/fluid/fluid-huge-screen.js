@@ -25,7 +25,7 @@ const fluidHugeScreen = (root) => {
 			const px = parseFloat(value);
 			const rem = px / rootFontSize;
 			const newVar = cssVar.replace('--wp--custom--', '--rv--rem--');
-			document.documentElement.style.setProperty(newVar, `${rem}rem`);
+			root.style.setProperty(newVar, `${rem}rem`);
 		}
 	});
 };

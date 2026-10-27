@@ -11,10 +11,13 @@ const fluidTablet = (root) => {
 		const slug = mobileVar.split('--').pop();
 		const varName = `--rv--fluid-size-tablet--${slug}`;
 
+		// For the block editor, "root" is passed (which is inside the iframe), and in the frontend root defaults to <html>.
+		const frameWindow = root.ownerDocument.defaultView || window;
+
 		const updateFluidSizeTablet = () => {
 			// Get the viewport width, but only between the minWidth and maxWidth.
 			// Otherwise, fix it to minWidth or maxWidth.
-			const vw = Math.max(minWidth, Math.min(window.innerWidth, maxWidth));
+			const vw = Math.max(minWidth, Math.min(frameWindow.innerWidth, maxWidth));
 
 			// Calculates a value that gradually scales from mobileSize → desktopSize depending on the viewport width (vw).
 			// 1. (vw - minWidth) - How far are we from the minimum width?
@@ -28,7 +31,7 @@ const fluidTablet = (root) => {
 
 		// Update tablet sizes on load and on resize.
 		updateFluidSizeTablet();
-		window.addEventListener('resize', updateFluidSizeTablet);
+		frameWindow.addEventListener('resize', updateFluidSizeTablet);
 	};
 
 	fluidSizeCalculate(

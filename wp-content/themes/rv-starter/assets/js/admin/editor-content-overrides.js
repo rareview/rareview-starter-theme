@@ -12,6 +12,6 @@
  * @see https://developer.wordpress.org/block-editor/how-to-guides/enqueueing-assets-in-the-editor/#backward-compatibility-and-known-issues
  */
 import '../../css/editor-content-overrides.scss';
-import fluidInit from '../shared/fluid';
+import fluidBlockEditor from '../shared/fluid/fluid-block-editor';
 
-fluidInit();
+fluidBlockEditor();

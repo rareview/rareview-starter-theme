@@ -278,13 +278,15 @@ function analytics_tags(): void {
 	}
 
 	// Load GA directly only when GTM is not configured, because otherwise GA is already set within GTM.
-	wp_enqueue_script( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion -- External CDN URL; null avoids cache-busting query args.
+	wp_enqueue_script(
 		'google-gtag',
 		'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $ga_id ),
 		[],
 		null,
 		false
 	);
+	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	wp_script_add_data( 'google-gtag', 'script_execution', 'async' );
 
@@ -376,14 +378,21 @@ function embed_ct_css(): void {
  * @return void
  */
 function assets_cleanup(): void {
-	if ( ! is_admin() && ! has_block( 'gravityforms/form' ) ) {
-		wp_dequeue_script( 'jquery' );
-		wp_deregister_script( 'jquery' );
-		wp_dequeue_style( 'custom-gravity-style' );
-		wp_deregister_style( 'gform_basic' );
-		wp_deregister_style( 'gform_theme' );
-		wp_deregister_style( 'gform_theme_ie11' );
-		wp_deregister_script( 'gforms_json' );
+	if ( ! is_admin() ) {
+		$needs_jquery = has_block( 'gravityforms/form' ) || defined( 'QM_VERSION' );
+
+		if ( ! $needs_jquery ) {
+			wp_dequeue_script( 'jquery' );
+			wp_deregister_script( 'jquery' );
+		}
+
+		if ( ! has_block( 'gravityforms/form' ) ) {
+			wp_dequeue_style( 'custom-gravity-style' );
+			wp_deregister_style( 'gform_basic' );
+			wp_deregister_style( 'gform_theme' );
+			wp_deregister_style( 'gform_theme_ie11' );
+			wp_deregister_script( 'gforms_json' );
+		}
 	}
 
 	if ( file_exists( RV_STARTER_THEME_BLOCK_DIST_DIR ) ) {
