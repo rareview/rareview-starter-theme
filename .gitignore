@@ -111,6 +111,10 @@ phpunit.xml
 dist
 .env
 
+# Local database dumps
+/.local/db-dumps/*
+!/.local/db-dumps/.gitkeep
+
 # Log files
 *.log
 
