@@ -260,6 +260,7 @@ Your job: look at the design and add the visible details that variables cannot e
 - the real hover look of buttons and links when the design shows a hover state (colors from the design instead of the starter's brightness filter);
 - underline style of links (text-underline-offset, text-decoration-thickness);
 - focus look of inputs (border color, outline), placeholder color;
+- if the real text field is only a bottom line (not a full box), set border: 0 and border-bottom in the text and select mixins; leave checkboxes and radios as a full box (this is not a layout change);
 - transitions, letter case or other small finishing touches that are clearly in the design.
 
 Rules:

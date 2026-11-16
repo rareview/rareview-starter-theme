@@ -242,6 +242,67 @@ function figma( array $slugs ): string {
 }
 
 /**
+ * Confidence rank from a figma-sources note ("high: …" → 3).
+ *
+ * @param string $note Source note.
+ */
+function figma_note_rank( string $note ): int {
+	if ( 0 === stripos( $note, 'high' ) ) {
+		return 3;
+	}
+	if ( 0 === stripos( $note, 'medium' ) ) {
+		return 2;
+	}
+	if ( 0 === stripos( $note, 'low' ) ) {
+		return 1;
+	}
+	return 0;
+}
+
+/**
+ * Figma class for a heading sample: when several levels share one Figma node,
+ * only the strongest (usually high-confidence) owner gets the link.
+ *
+ * @param int $level Heading level 1–6.
+ */
+function heading_figma( int $level ): string {
+	$slug    = "heading-{$level}-font-size-desktop";
+	$sources = get_figma_sources()['sources'] ?? [];
+	$node_id = (string) ( $sources[ $slug ]['nodeId'] ?? '' );
+	if ( '' === $node_id ) {
+		return figma( [ $slug ] );
+	}
+
+	$owners = [];
+	for ( $n = 1; $n <= 6; $n++ ) {
+		$other = "heading-{$n}-font-size-desktop";
+		if ( (string) ( $sources[ $other ]['nodeId'] ?? '' ) === $node_id ) {
+			$owners[] = [
+				'level' => $n,
+				'slug'  => $other,
+				'rank'  => figma_note_rank( (string) ( $sources[ $other ]['note'] ?? '' ) ),
+			];
+		}
+	}
+
+	if ( count( $owners ) < 2 ) {
+		return figma( [ $slug ] );
+	}
+
+	usort(
+		$owners,
+		static function ( array $a, array $b ): int {
+			if ( $a['rank'] !== $b['rank'] ) {
+				return $b['rank'] <=> $a['rank'];
+			}
+			return $a['level'] <=> $b['level'];
+		}
+	);
+
+	return (int) $owners[0]['level'] === $level ? figma( [ $slug ] ) : '';
+}
+
+/**
  * Paragraph block.
  *
  * @param string $html       Inner HTML (already escaped).
@@ -411,7 +472,7 @@ function build_content(): string {
 	$inner = '';
 	for ( $level = 1; $level <= 6; $level++ ) {
 		/* translators: %d: heading level */
-		$inner .= heading( $level, sprintf( __( 'Heading %d', 'rv-starter-theme' ), $level ), figma( [ "heading-{$level}-font-size-desktop" ] ) );
+		$inner .= heading( $level, sprintf( __( 'Heading %d', 'rv-starter-theme' ), $level ), heading_figma( $level ) );
 	}
 	$out .= section( __( 'Headings', 'rv-starter-theme' ), $inner, __( 'Native h1–h6 elements (heading mixin).', 'rv-starter-theme' ) );
 
@@ -448,10 +509,10 @@ function build_content(): string {
 					'label' => __( 'Secondary outline', 'rv-starter-theme' ),
 					'style' => 'secondary-outline',
 				],
-			],
-			[ 'button-primary-background-color', 'button-secondary-background-color' ]
+			]
 		),
-		__( 'core/button with the block styles: Default, Default Outline, Secondary, Secondary Outline.', 'rv-starter-theme' )
+		__( 'core/button with the block styles: Default, Default Outline, Secondary, Secondary Outline.', 'rv-starter-theme' ),
+		[ 'button-primary-background-color', 'button-secondary-background-color' ]
 	);
 
 	// Buttons: utility classes.

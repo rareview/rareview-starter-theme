@@ -415,6 +415,14 @@ function buildColorNames(raw, values) {
 /** Layer names that mean "a state of a button", not a button style of its own. */
 const STATE_NAME = /\b(hover(ed)?|press(ed)?|active|focus(ed)?|disabled|selected|visited|loading)\b/i;
 
+/** Layer / style names that name a heading level (H1–H6, Heading 2, Title 3…). */
+const HEADING_LEVEL_NAME = /\b(?:heading|headline|title|display|h)\s*([1-6])\b/i;
+
+/** Layer names that are a bad source for a mono palette color. */
+const BAD_MONO_NODE = /\b(mesh|gradient|noise|image|photo|blur|bitmap|illustration)\b/i;
+
+const MONO_COLOR_SLUGS = ['color-black', 'color-dark', 'color-dark-grey', 'color-grey', 'color-grey-light', 'color-white'];
+
 /**
  * @param {object} state
  * @param {Array<{ slug: string }>} targets
@@ -429,6 +437,43 @@ function listIssues(state, targets, namesOf) {
 			issues.push(
 				`The ${role} button values come from "${stateName}", which is a state (hover, pressed, disabled…) of a button, not a button style. ` +
 					`Use the normal state. If the design has no second button style, give the secondary button the same values as the primary button (low).`,
+			);
+		}
+	}
+	for (let n = 1; n <= 6; n += 1) {
+		for (const vp of ['desktop', 'mobile']) {
+			const slug = `heading-${n}-font-size-${vp}`;
+			const node = state.raw[slug]?.node;
+			if (!node) {
+				continue;
+			}
+			for (const name of namesOf(String(node))) {
+				const match = name.match(HEADING_LEVEL_NAME);
+				if (!match) {
+					continue;
+				}
+				const labeled = Number(match[1]);
+				if (labeled !== n) {
+					issues.push(
+						`${slug} points at "${name}" (Heading ${labeled}). Keep that size on heading ${labeled}. ` +
+							`A labeled type-guide level keeps its own size and its own node; fill missing levels with in-between sizes and point "node" at the nearest real level, marked low.`,
+					);
+					break;
+				}
+			}
+		}
+	}
+	for (const slug of MONO_COLOR_SLUGS) {
+		const node = state.raw[slug]?.node;
+		if (!node) {
+			continue;
+		}
+		const bad = namesOf(String(node)).find((n) => BAD_MONO_NODE.test(n));
+		if (bad) {
+			issues.push(
+				`${slug} points at "${bad}", which is a mesh, image, gradient or similar — not a palette source. ` +
+					`Use a color chip, Figma variable, named color style, or a real often-used gray (text, surface, border). ` +
+					`If that step between black and white is missing, calculate an even mix from this design's black and white, mark it low, and leave "node" empty or on black/white.`,
 			);
 		}
 	}
@@ -557,7 +602,7 @@ export async function runAiSync(opts) {
 		}
 	};
 
-	step(`AI (${settings.provider}, ${settings.model}) is reading the design...`);
+	step('AI is reading the design...');
 	const result = await withSpinner(() =>
 		runAiWithTools({
 			settings,
