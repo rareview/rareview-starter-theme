@@ -32,7 +32,7 @@ export async function findLatestFetchedForFileKey(cwd, fileKey) {
 	const rawRe = new RegExp(`^raw-${escapeRe(fileKey)}-.+\\.json$`);
 	const candidates = [];
 
-	let entries;
+	let entries = [];
 	try {
 		entries = await fs.readdir(dir);
 	} catch {
@@ -44,6 +44,17 @@ export async function findLatestFetchedForFileKey(cwd, fileKey) {
 			continue;
 		}
 		candidates.push(path.join(dir, name));
+	}
+
+	// Older syncs saved full files per file key: fetched/{fileKey}/raw-*.json
+	try {
+		for (const name of await fs.readdir(path.join(dir, fileKey))) {
+			if (/^raw-.*\.json$/.test(name) && !name.endsWith('.meta.json')) {
+				candidates.push(path.join(dir, fileKey, name));
+			}
+		}
+	} catch {
+		// no per-file folder
 	}
 
 	if (!candidates.length) {

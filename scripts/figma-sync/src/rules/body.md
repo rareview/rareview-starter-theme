@@ -1,7 +1,5 @@
 # Body Extractor Logic
 
-Source: `scripts/figma-sync/elements/body.mjs`
-
 ## What this element is trying to find
 
 - dominant body typography (`fontFamilyPrimary`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`, text color),
@@ -73,10 +71,10 @@ Implement body extraction with three outputs: dominant body typography, paragrap
 
 ## Downstream: `figma-apply` — body text color
 
-CSV maps **`body.color`** to **`$color-body`** with **`scss_value_type` = `scss-color-match`**. The same **exact palette match or literal hex** rules as other `scss-color-match` SCSS rows apply (see **`README.md`** in this folder). Align **`theme.json`** palette swatches with the real body text hex if you want `$color-body` instead of a raw hex in `variables.scss`.
+CSV maps **`body.color`** to **`$color-body`** with **`scss_value_type` = `scss-color-match`**. The same **exact palette match or literal hex** rules as other `scss-color-match` SCSS rows apply (see [`AI.md`](../../AI.md)). Align **`theme.json`** palette swatches with the real body text hex if you want `$color-body` instead of a raw hex in `variables.scss`.
 
 ## Downstream: `figma-apply` — background color (`$color-background`)
 
-The export JSON places page background at **`body.backgroundColor`** (nested under `body`). In **`variable_mapping_figma_sync.csv`**, the **`figma_path`** for background must be **`body.backgroundColor`**.
+The export JSON places page background at **`body.backgroundColor`** (nested under `body`). In **`variable_mapping.csv`**, the **`figma_path`** for background must be **`body.backgroundColor`**.
 
-`figma-apply.mjs` resolves `figma_path` with simple dot notation on `generated/figma-export.json` only. A legacy path like **`bodyBackgroundColor`** (top-level) does **not** exist on the export object, so apply never sees the Figma hex and **`$color-background`** stays on the CSV default (e.g. `$color-black`). `variable-mapping.mjs` accepts both spellings for keyed extraction, but apply does not — keep the CSV aligned with the export shape.
+`figma-apply.mjs` resolves `figma_path` with simple dot notation on `generated/figma-export.json` only. A legacy path like **`bodyBackgroundColor`** (top-level) does **not** exist on the export object, so apply never sees the Figma hex and **`$color-background`** stays on the CSV default (e.g. `$color-black`). Keep the CSV aligned with the export shape.

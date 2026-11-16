@@ -152,6 +152,9 @@ $button-primary-letter-spacing: 0.05em;
 $button-primary-text-transform: uppercase;
 $button-primary-height: 3.2rem;
 $button-primary-border-width: 2px;
+$button-primary-border-color: $button-primary-background-color;
+$button-primary-outline-color: $button-primary-background-color;
+$button-outline-border-width: 2px;
 
 /* Buttons - Secondary style. */
 $button-secondary-background-color: $color-secondary;
@@ -165,6 +168,8 @@ $button-secondary-letter-spacing: 0.05em;
 $button-secondary-text-transform: uppercase;
 $button-secondary-height: 3.2rem;
 $button-secondary-border-width: 2px;
+$button-secondary-border-color: $button-secondary-background-color;
+$button-secondary-outline-color: $button-secondary-background-color;
 
 /* Input fields */
 $input-field-height: 3.2rem;

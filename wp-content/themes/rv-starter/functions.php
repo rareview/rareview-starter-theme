@@ -30,10 +30,14 @@ require_once RV_STARTER_THEME_INC . 'template-tags.php';
 require_once RV_STARTER_THEME_INC . 'utility.php';
 require_once RV_STARTER_THEME_INC . 'blocks.php';
 require_once RV_STARTER_THEME_INC . 'helpers.php';
+require_once RV_STARTER_THEME_INC . 'dark-light.php';
+require_once RV_STARTER_THEME_INC . 'preview.php';
 
 // Run the setup functions.
 RVStarterTheme\Core\setup();
 RVStarterTheme\Blocks\setup();
+RVStarterTheme\DarkLight\setup();
+RVStarterTheme\Preview\setup();
 
 // Require Composer autoloader if it exists (see README.md for setup).
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {

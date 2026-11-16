@@ -1,7 +1,5 @@
 # Link Extractor Logic
 
-Source: `scripts/figma-sync/elements/link.mjs`
-
 ## What this element is trying to find
 
 Primary link style tokens:

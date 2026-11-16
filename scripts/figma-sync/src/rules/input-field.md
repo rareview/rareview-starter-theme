@@ -1,7 +1,5 @@
 # Input Field Extractor Logic
 
-Source: `scripts/figma-sync/elements/input-field.mjs`
-
 ## What this element is trying to find
 
 Input field metrics:
@@ -44,7 +42,7 @@ Single-character text only counts if it matches the placeholder regex or uses lo
 
 ### 1) Scoped pass (highest confidence)
 
-- Nodes are descendants of keyword-matched input/form frames (see `getScopedNodes` in `lib/node-utils.mjs`).
+- Nodes are descendants of keyword-matched input/form frames (see `getScopedNodes` in `scripts/figma-sync/lib/node-utils.mjs`).
 - Uses **`isBaseInputFieldCandidate(node, false)`**: sizing band, not decorative, **and** `hasInputStyleTextChild`.
 - Then frequency aggregation for border width (with stroke range), height, radius — same sub-extractors as pass 2.
 

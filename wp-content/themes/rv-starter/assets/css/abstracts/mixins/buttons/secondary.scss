@@ -14,7 +14,7 @@
 	font-weight: $button-secondary-font-weight;
 	letter-spacing: $button-secondary-letter-spacing;
 	text-transform: $button-secondary-text-transform;
-	border: $button-secondary-border-width solid $button-secondary-background-color;
+	border: $button-secondary-border-width solid $button-secondary-border-color;
 	border-radius: $button-secondary-border-radius;
 	padding: $button-secondary-padding-y $button-secondary-padding-x;
 	height: $button-secondary-height;
@@ -29,7 +29,9 @@
 
 	@if $outline == true {
 		background-color: transparent;
-		color: $button-secondary-background-color;
+		border-width: $button-outline-border-width;
+		border-color: $button-secondary-outline-color;
+		color: $button-secondary-outline-color;
 	}
 
 	/* Hover. */
@@ -40,7 +42,7 @@
 
 			@if $outline == true {
 				background-color: $button-secondary-background-color;
-				border-color: $button-secondary-background-color;
+				border-color: $button-secondary-border-color;
 				color: $button-secondary-font-color;
 			}
 		}

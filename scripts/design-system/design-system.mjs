@@ -1198,7 +1198,7 @@ function sectionHeader(title) {
 	return `\n${bar} ${color.bold(title)} ${fill}`;
 }
 
-// ─── Figma sync runner ────────────────────────────────────────────────────────
+// ─── Figma Sync runner ────────────────────────────────────────────────────────
 
 function runScript(scriptPath, args = []) {
 	return new Promise((resolve, reject) => {
@@ -1229,7 +1229,7 @@ async function main() {
 	console.log('');
 	console.log(`  ${color.bold('1.')}  Set variables manually  ${color.dim('(variable mapping guide)')}`);
 	console.log(`  ${color.bold('2.')}  Set variables in the terminal`);
-	console.log(`  ${color.bold('3.')}  Figma sync  ${color.dim('(beta)')}`);
+	console.log(`  ${color.bold('3.')}  Figma Sync  ${color.dim('(beta)')}`);
 	console.log('');
 
 	if (DRY_RUN) {
@@ -1271,10 +1271,10 @@ async function main() {
 			return;
 		}
 
-		// ── Option 3: figma sync ───────────────────────────────────────────────
+		// ── Option 3: Figma Sync ─────────────────────────────────────────────
 		if (choice === '3') {
 			console.log(`  ${color.yellow('⚠')}  ${color.bold('Figma Sync')} ${color.dim('(beta)')}`);
-			console.log(color.dim('  This will ask for Figma URL, fetch design tokens, then apply them.\n'));
+			console.log(color.dim('  This will ask for Figma page links, fetch design tokens, then apply them.\n'));
 			// Release stdin before spawning an interactive child process.
 			rl.close();
 			const syncExit = await runScript(resolve(__dirname, '..', 'figma-sync', 'figma-sync.mjs'), DRY_RUN ? ['--dry-run'] : []);

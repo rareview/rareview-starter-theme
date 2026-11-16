@@ -1,7 +1,5 @@
 # Colors Extractor Logic
 
-Source: `scripts/figma-sync/elements/colors.mjs`
-
 ## What this element is trying to find
 
 - dominant color palette,
@@ -64,6 +62,6 @@ Extracted hex values (e.g. from `colors.mono.*`, `colors.colored.*`, or other Fi
 For **`variables.scss`** only, that type now means:
 
 - **Exact** match to a `theme.json` palette `color` → emit **`$color-<slug>`**.
-- Otherwise → emit **literal hex** and log a fallback line (see **`README.md`** in this folder for the full policy).
+- Otherwise → emit **literal hex** and log a fallback line (see [`AI.md`](../../AI.md) for the full policy).
 
 Keeping **`theme.json`** palette entries aligned with real brand hexes makes SCSS stay on **`$color-*`** references instead of literals.

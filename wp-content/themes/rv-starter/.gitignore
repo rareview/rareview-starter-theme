@@ -33,3 +33,7 @@ Desktop.ini
 # Others
 /debug.log
 
+# Figma sync provenance for Playground (rewritten each sync)
+/generated/*
+!/generated/.gitkeep
+
