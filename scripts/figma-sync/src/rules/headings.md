@@ -1,7 +1,5 @@
 # Headings Extractor Logic
 
-Source: `scripts/figma-sync/elements/headings.mjs`
-
 ## What this element is trying to find
 
 Desktop and mobile heading styles (`H1`..`H6`) with typography properties.

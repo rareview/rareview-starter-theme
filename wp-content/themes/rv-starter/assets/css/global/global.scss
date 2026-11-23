@@ -63,7 +63,7 @@ input:not([type="submit"], [type="reset"], [type="checkbox"]),
 select {
 	@include input-text;
 
-	.rv-background-dark & {
+	.rv-background-dark &:not(.rv-preview__light-panel *) {
 		@include input-text( $background: "dark" );
 	}
 }
@@ -71,7 +71,7 @@ select {
 select {
 	@include input-select;
 
-	.rv-background-dark & {
+	.rv-background-dark &:not(.rv-preview__light-panel *) {
 		@include input-select( $background: "dark" );
 	}
 }
@@ -79,7 +79,7 @@ select {
 input[type="checkbox"] {
 	@include input-checkbox;
 
-	.rv-background-dark & {
+	.rv-background-dark &:not(.rv-preview__light-panel *) {
 		@include input-checkbox( $background: "dark" );
 	}
 }
@@ -87,7 +87,7 @@ input[type="checkbox"] {
 input[type="radio"] {
 	@include input-radio;
 
-	.rv-background-dark & {
+	.rv-background-dark &:not(.rv-preview__light-panel *) {
 		@include input-radio( $background: "dark" );
 	}
 }
@@ -96,7 +96,7 @@ legend,
 label {
 	@include input-label;
 
-	.rv-background-dark & {
+	.rv-background-dark &:not(.rv-preview__light-panel *) {
 		@include input-label( $background: "dark" );
 	}
 }

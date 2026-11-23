@@ -1,0 +1,168 @@
+/**
+ * Preview page — layout helpers for the global styles page (includes/preview.php).
+ * Loaded on the frontend and in the editor (frontend.css is an editor style).
+ *
+ * @author Rareview <hello@rareview.com>
+ */
+
+.rv-preview__section {
+	margin-bottom: 4rem;
+	padding-bottom: 3rem;
+	border-bottom: 1px solid $color-dark-grey;
+}
+
+.rv-preview__section:last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.rv-preview__section-label {
+	margin-top: 0;
+}
+
+.rv-preview__subsection-label {
+	margin: 2.5rem 0 1rem;
+}
+
+.rv-preview__note {
+	margin: 0 0 1.5rem;
+	opacity: 0.75;
+}
+
+.rv-preview__row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+}
+
+.rv-preview__color-grid {
+	gap: 1rem;
+}
+
+.rv-preview__color-tile {
+	display: flex;
+	flex: 1 1 7.5rem;
+	flex-direction: column;
+	gap: 0.5rem;
+	max-width: 12rem;
+}
+
+.rv-preview__color-chip {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 100px;
+	padding: 0.5rem;
+	border: 1px solid color-mix(in srgb, $color-body 25%, transparent);
+	text-align: center;
+}
+
+.rv-preview__color-label {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.rv-preview__color-chip.is-light .rv-preview__color-label {
+	color: #111;
+}
+
+.rv-preview__color-chip.is-dark .rv-preview__color-label {
+	color: #fff;
+}
+
+.rv-preview__light-panel,
+.rv-preview__dark-panel {
+	margin-bottom: 1.5rem;
+	padding: 1.5rem;
+}
+
+.rv-preview__dark-panel {
+	border: 1px solid $color-dark-grey;
+	background-color: $color-dark;
+}
+
+.rv-preview__light-panel {
+	border: 1px solid $color-grey-light;
+	background-color: $color-white;
+	color: $color-dark;
+}
+
+.rv-preview__light-panel label,
+.rv-preview__light-panel legend {
+	color: $color-dark;
+}
+
+/* Admin-only Figma links — fixed muted colors so the synced palette does not hide them. */
+.rv-preview__figma-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 0.75rem;
+	margin: 0.25rem 0 1.25rem;
+}
+
+.rv-preview__figma-link {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.125rem 0.5rem;
+	border: 1px solid #c8c8c8;
+	border-radius: 0.25rem;
+	background-color: #f4f4f4;
+	color: #555;
+	font-family: system-ui, sans-serif;
+	font-size: 0.6875rem;
+	font-weight: 500;
+	letter-spacing: 0;
+	line-height: 1.3;
+	text-decoration: none;
+	text-transform: none;
+	white-space: nowrap;
+}
+
+.rv-preview__figma-link:hover,
+.rv-preview__figma-link:focus-visible {
+	border-color: #a259ff;
+	background-color: #f3eaff;
+	color: #6b2bbd;
+}
+
+.rv-preview__sync-banner {
+	margin-bottom: 2.5rem;
+	padding: 1rem 1.25rem;
+	border: 1px solid #c8c8c8;
+	background-color: #f4f4f4;
+	color: #1a1a1a;
+	font-size: 0.875rem;
+}
+
+.rv-preview__sync-banner a {
+	color: #0b57d0;
+}
+
+.rv-preview__sync-banner code {
+	background-color: #e8e8e8;
+	color: #1a1a1a;
+}
+
+.rv-preview__sync-meta {
+	margin: 0;
+}
+
+.rv-preview__sync-warnings {
+	margin: 0.75rem 0 0;
+	padding-left: 1.25rem;
+	font-size: 0.8125rem;
+}
+
+/* Responsiveness. */
+@media (max-width: $breakpoint-tablet) {
+	.rv-preview__section {
+		margin-bottom: 3rem;
+		padding-bottom: 2rem;
+	}
+}

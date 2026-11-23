@@ -16,9 +16,10 @@ WordPress starter theme built on 10up Toolkit. PHP 8.2+, Node 20+.
 - `npm run setup` - interactive project setup (rename, rebrand)
 - `npm run create-block -- --name="name"` - scaffold new block
 - `npm run design-system` - update design tokens interactively
-- `npm run figma-sync` - Figma fetch/export + apply (see `scripts/figma-sync/README.md`)
+- `npm run figma-sync` - paste Figma page links; AI (key from WP Settings → Connectors) reads them and picks the styles, then apply, then the AI edits button/link/input SCSS for details like shadows and icons, starting from the clean starter styles each run (`-- --no-styles` to skip; see `scripts/figma-sync/README.md`)
 - `npm run figma-apply` - apply `generated/figma-export.json` + CSV only (`scripts/figma-sync/figma-apply.mjs`)
-- `lando start` / `lando poweroff` - local environment
+- `lando start` / `lando poweroff` - local environment (start also runs `wp create-preview`)
+- `npm run create-preview` - create (or bring back and rewrite) the Preview page (`/preview/`, real blocks showing the global styles; `includes/preview.php`; runs `lando wp create-preview --force`). `lando start` creates it once per environment, then it is a normal page (Lando never touches it again; a deleted page stays deleted). `npm run figma-sync` rewrites it fully (`--rewrite`, edits replaced)
 
 ## Coding Standards
 - Indentation: tabs (not spaces)

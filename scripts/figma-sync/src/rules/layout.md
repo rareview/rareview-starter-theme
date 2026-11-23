@@ -1,7 +1,5 @@
 # Layout Extractor Logic
 
-Source: `scripts/figma-sync/elements/layout.mjs`
-
 ## What this element is trying to find
 
 - container width

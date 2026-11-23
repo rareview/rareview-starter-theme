@@ -19,3 +19,5 @@ wp plugin activate wordpress-seo
 
 wp rewrite structure '/%postname%/'
 wp rewrite flush
+
+wp create-preview

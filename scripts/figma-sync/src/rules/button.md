@@ -1,7 +1,5 @@
 # Button Extractor Logic
 
-Source: `scripts/figma-sync/elements/button.mjs`
-
 ## What this element is trying to find
 
 Primary and secondary button tokens (background, border, radius, spacing, text style, font color).
@@ -73,6 +71,6 @@ Extract up to two button variants by first indexing button component sets, then 
 
 ## Downstream: `figma-apply` — button font colors
 
-In `variable_mapping_figma_sync.csv`, **`buttons.0.fontColor`** / **`buttons.1.fontColor`** map to SCSS targets **`button-primary-font-color`** and **`button-secondary-font-color`** with **`scss_value_type` = `scss-color-match`**.
+In `variable_mapping.csv`, **`buttons.0.fontColor`** / **`buttons.1.fontColor`** map to SCSS targets **`button-primary-font-color`** and **`button-secondary-font-color`** with **`scss_value_type` = `scss-color-match`**.
 
-When apply runs, those rows use the **exact palette match or literal hex** policy for **`variables.scss`** (see this folder’s **`README.md`**). If Figma’s label hex is not identical to any `theme.json` palette swatch after normalization, SCSS will contain the **hex** until you add or adjust a palette entry to match.
+When apply runs, those rows use the **exact palette match or literal hex** policy for **`variables.scss`** (see [`AI.md`](../../AI.md)). If Figma’s label hex is not identical to any `theme.json` palette swatch after normalization, SCSS will contain the **hex** until you add or adjust a palette entry to match.

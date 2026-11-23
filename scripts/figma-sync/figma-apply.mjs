@@ -3,7 +3,7 @@
 /**
  * Rareview Starter Theme — Figma Apply
  *
- * Reads generated/figma-export.json and variable_mapping_figma_sync.csv in this directory,
+ * Reads generated/figma-export.json and variable_mapping.csv in this directory,
  * resolves each token (Figma value first, CSV default as fallback), then writes
  * the resolved values to theme.json and variables.scss.
  *
@@ -11,10 +11,9 @@
  *   npm run figma-apply               # Apply and write
  *   npm run figma-apply -- --dry-run  # Preview without writing
  *
- * CSV column schema (variable_mapping_figma_sync.csv):
+ * CSV column schema (variable_mapping.csv):
  *   figma_sync_slug         – machine-readable key (used for logs)
  *   label                   – human description
- *   figma_tag               – optional: first Figma node whose name contains this string; used as priority lookup via taggedNodes[tag][figma_path]
  *   figma_path              – dot-notation path into figma-export.json (empty/NULL = no figma source)
  *   theme_json_target       – custom.<dot.path> | palette:<slug> | typography:<slug> | NULL
  *   theme_json_value_type   – px | hex | rem | number | string | font-family | scss-color-match | NULL
@@ -28,7 +27,7 @@
  * @author Rareview <hello@rareview.com>
  */
 
-import { appendFile, mkdir, readFile, writeFile, readdir } from 'node:fs/promises';
+import { appendFile, mkdir, readFile, writeFile, readdir, copyFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -38,6 +37,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
+/** Run by figma-sync as one of its steps: figma-sync prints the title and the final lines. */
+const AS_STEP = process.env.RV_FIGMA_SYNC_STEP === '1';
 const VERBOSE = args.includes('--verbose');
 const GENERATED_DIR = resolve(__dirname, 'generated');
 const LOG_FILE_PATH = resolve(GENERATED_DIR, 'figma-sync.log');
@@ -140,12 +141,7 @@ function getCsvColumns(headerRow) {
 	];
 	const missing = required.filter((name) => !columns.has(name));
 	if (missing.length > 0) {
-		throw new Error(`variable_mapping_figma_sync.csv is missing required column(s): ${missing.join(', ')}`);
-	}
-
-	// figma_tag is optional
-	if (!columns.has('figma_tag')) {
-		columns.set('figma_tag', -1);
+		throw new Error(`variable_mapping.csv is missing required column(s): ${missing.join(', ')}`);
 	}
 
 	return columns;
@@ -339,6 +335,10 @@ function normalizeValue(rawValue, type, context = {}) {
 			return value;
 		case 'scss-ref':
 		default:
+			// A hex color from Figma (e.g. button colors): same short, lowercase form as "hex" ("#FFFFFF" → "#fff").
+			if (/^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(value.trim())) {
+				return normalizeValue(value.trim(), 'hex');
+			}
 			return value.replace(/^0[a-zA-Z%]+$/, '0');
 	}
 }
@@ -382,12 +382,15 @@ function getDeepSettings(themeJson, pathStr) {
  * Creates a new entry if the slug does not yet exist.
  * Returns "updated" or "created".
  */
-function updatePalette(themeJson, slug, hex, label) {
+function updatePalette(themeJson, slug, hex, label, name = '') {
 	const palette = themeJson.settings.color.palette;
-	const newEntryName = label && String(label).trim() ? label.trim() : slug;
+	const newEntryName = name || (label && String(label).trim() ? label.trim() : slug);
 	const entry = palette.find((e) => e.slug === slug);
 	if (entry) {
 		entry.color = hex;
+		if (name) {
+			entry.name = name;
+		}
 		return 'updated';
 	}
 	palette.push({ name: newEntryName, slug, color: hex });
@@ -513,6 +516,33 @@ function replaceScssVar(scss, varName, newValue) {
 	return scss.replace(re, `$1${newValue}$3`);
 }
 
+/**
+ * Add `$varName: value;` after the declaration whose name shares the most leading words with it
+ * ($button-primary-border-color goes after $button-primary-border-width), or at the end of the file.
+ */
+function insertScssVar(scss, varName, value) {
+	const words = varName.split('-');
+	let best = null;
+	let bestShared = 0;
+	for (const match of scss.matchAll(/^\$([a-z0-9-]+):[^;]*;[^\n]*$/gm)) {
+		const other = match[1].split('-');
+		let shared = 0;
+		while (shared < words.length && words[shared] === other[shared]) {
+			shared += 1;
+		}
+		if (shared > 0 && shared >= bestShared) {
+			bestShared = shared;
+			best = match;
+		}
+	}
+	const line = `$${varName}: ${value};`;
+	if (!best) {
+		return `${scss.replace(/\n*$/, '')}\n${line}\n`;
+	}
+	const end = best.index + best[0].length;
+	return `${scss.slice(0, end)}\n${line}${scss.slice(end)}`;
+}
+
 /** Return true if the SCSS file already declares `$varName`. */
 function scssHasVar(scss, varName) {
 	return new RegExp(`\\$${escRe(varName)}:`).test(scss);
@@ -602,10 +632,7 @@ async function findThemeDir() {
 
 async function findFigmaExport() {
 	const primary = resolve(GENERATED_DIR, 'figma-export.json');
-	const fallback = resolve(GENERATED_DIR, 'figma-ai-export.json');
-	if (existsSync(primary)) return primary;
-	if (existsSync(fallback)) return fallback;
-	return null;
+	return existsSync(primary) ? primary : null;
 }
 
 // ─── Font check ───────────────────────────────────────────────────────────────
@@ -886,11 +913,13 @@ async function runFontCheck(figmaExport, themeJson, themeDir, allFontFiles) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-	console.log('');
-	console.log(c.bold('  Rareview Starter Theme — Figma Sync'));
-	console.log(c.dim('  ─────────────────────────────────'));
+	if (!AS_STEP) {
+		console.log('');
+		console.log(c.bold('  Rareview Starter Theme — Figma Sync'));
+		console.log(c.dim('  ─────────────────────────────────'));
+	}
 	if (DRY_RUN) console.log(c.yellow('\n  DRY RUN — no files will be written'));
-	console.log('');
+	if (!AS_STEP) console.log('');
 
 	// Figma export
 	const figmaExportPath = await findFigmaExport();
@@ -911,7 +940,7 @@ async function main() {
 	logLines.push('');
 
 	// CSV
-	const csvPath = resolve(__dirname, 'variable_mapping_figma_sync.csv');
+	const csvPath = resolve(__dirname, 'variable_mapping.csv');
 	const rows = parseCsv(await readFile(csvPath, 'utf-8'));
 	const [headerRow, ...dataRows] = rows;
 	const columns = getCsvColumns(headerRow ?? []);
@@ -948,7 +977,6 @@ async function main() {
 	for (const row of dataRows) {
 		const slug = csvCell(row, columns, 'figma_sync_slug');
 		const label = csvCell(row, columns, 'label') || slug;
-		const figmaKey = csvCell(row, columns, 'figma_tag');
 		const figmaPath = csvCell(row, columns, 'figma_path');
 		const scssTarget = csvCell(row, columns, 'scss_target');
 		const tjTarget = csvCell(row, columns, 'theme_json_target');
@@ -971,24 +999,26 @@ async function main() {
 		if (!scssTarget && !tjTargetResolved) continue;
 
 		// Resolution priority:
-		//   1. taggedNodes[figma_tag][figma_path]  — tag-matched node (most specific)
-		//   2. keyedBySlug[slug]                   — pre-extracted per-slug value (legacy)
-		//   3. figma_path on structured export     — broad heuristic extraction (fallback)
-		let figmaRaw = null;
-		if (figmaKey && figmaPathResolved) {
-			const taggedNode = figmaExport.taggedNodes?.[figmaKey];
-			if (taggedNode != null) {
-				figmaRaw = taggedNode[figmaPathResolved] ?? null;
-			}
-		}
-		if (figmaRaw == null && figmaKey) {
-			figmaRaw = resolveFromFigma(figmaExport, `keyedBySlug.${slug}`);
-		}
+		//   1. keyedBySlug[slug]               — AI / sync value for this slug
+		//   2. figma_path on structured export — section path fallback
+		let figmaRaw = resolveFromFigma(figmaExport, `keyedBySlug.${slug}`);
 		if (figmaRaw == null && figmaPathResolved) {
 			figmaRaw = resolveFromFigma(figmaExport, figmaPathResolved);
 		}
 
 		// ── theme.json side ────────────────────────────────────────────────────
+		// AI sync: a brand color the design does not have is removed from the palette, so no starter
+		// colors stay next to the design's colors. (The $color-brand-N SCSS variable stays; nothing uses it.)
+		const brandSlot = /^palette:(brand-\d+)$/.exec(tjTargetResolved ?? '')?.[1];
+		if (brandSlot && figmaRaw == null && figmaExport.meta?.extractor === 'ai') {
+			const palette = themeJson.settings.color.palette;
+			const at = palette.findIndex((e) => e.slug === brandSlot);
+			if (at !== -1) {
+				palette.splice(at, 1);
+				changes.themeJson.push({ label, target: `palette:${brandSlot}`, value: 'removed (not in the design)', source: 'figma' });
+			}
+			continue;
+		}
 		if (tjTargetResolved && tjType) {
 			let rawTjValue = figmaRaw != null ? figmaRaw : tjDefault;
 
@@ -1057,7 +1087,11 @@ async function main() {
 					changes.themeJson.push({ label, target: tjTargetResolved, value: tjValue, source });
 				} else if (tjTargetResolved.startsWith('palette:')) {
 					const palSlug = tjTargetResolved.slice('palette:'.length);
-					const action = updatePalette(themeJson, palSlug, tjValue, label);
+					// AI sync: brand colors get the AI's name ("Green"), or the CSV label when it gave none,
+					// so a name from an earlier design never stays on a new color.
+					const paletteName =
+						figmaExport.colorNames && /^brand-\d+$/.test(palSlug) ? figmaExport.colorNames[palSlug] || label : '';
+					const action = updatePalette(themeJson, palSlug, tjValue, label, paletteName);
 					changes.themeJson.push({ label, target: `palette:${palSlug}`, value: tjValue, source });
 
 					// Auto-create SCSS color var for new palette entries
@@ -1100,8 +1134,12 @@ async function main() {
 				);
 			} else if (scssType === 'theme-json-var-ref') {
 				if (tjType === 'font-family' && figmaRaw != null) {
-					// Derive the CSS custom property from the actual Figma font name
-					value = `var(--wp--preset--font-family--${slugifyFont(String(figmaRaw))})`;
+					// A typography:<slug> row writes the Figma font into that preset (and drops the font's own preset),
+					// so point SCSS at the same preset. Otherwise use the slug of the Figma font name.
+					const presetSlug = tjTargetResolved.startsWith('typography:')
+						? tjTargetResolved.slice('typography:'.length)
+						: slugifyFont(String(figmaRaw));
+					value = `var(--wp--preset--font-family--${presetSlug})`;
 				} else {
 					// For non-font refs (sizes, etc.), always use the static var() reference
 					value = scssDefault || String(rawScssValue);
@@ -1111,13 +1149,9 @@ async function main() {
 			}
 
 			if (!scssHasVar(scss, scssTarget)) {
-				const warning = `  ! $${scssTarget} not found in variables.scss - skipping`;
-				logLines.push(warning);
-				if (VERBOSE) {
-					console.log(c.yellow(warning));
-				}
-				skipped++;
-				continue;
+				// A variable added to the CSV later (e.g. a button border color): add it next to its closest relative.
+				scss = insertScssVar(scss, scssTarget, value);
+				logLines.push(`  + $${scssTarget} added to variables.scss`);
 			}
 			scss = replaceScssVar(scss, scssTarget, value);
 			changes.scss.push({ label, target: `$${scssTarget}`, value, source });
@@ -1178,20 +1212,38 @@ async function main() {
 	// ── Write ──────────────────────────────────────────────────────────────────
 	if (VERBOSE) {
 		console.log('');
-	} else {
+	} else if (!AS_STEP) {
 		console.log('Applying values...');
 	}
 	if (!DRY_RUN) {
 		await writeFile(themeJsonPath, JSON.stringify(themeJson, null, '  ') + '\n', 'utf-8');
-		progressBar('Applying', 1, 2);
+		if (!AS_STEP) {
+			progressBar('Applying', 1, 2);
+		}
 		if (VERBOSE) {
 			console.log(`  ${c.green('✓')} Updated theme.json`);
 		}
 
 		await writeFile(scssPath, scss, 'utf-8');
-		progressBar('Applying', 2, 2);
+		if (!AS_STEP) {
+			progressBar('Applying', 2, 2);
+		}
 		if (VERBOSE) {
 			console.log(`  ${c.green('✓')} Updated variables.scss`);
+		} else if (AS_STEP) {
+			const count = changes.themeJson.length + changes.scss.length;
+			console.log(`  ${c.green('✓')} Updated theme.json and variables.scss ${c.dim(`· ${count} values`)}`);
+		}
+
+		// Figma links for the Preview page (written by the AI sync). No file = no links, so old links never show.
+		const sourcesFrom = resolve(GENERATED_DIR, 'figma-sources.json');
+		const sourcesTo = resolve(themeDir, 'generated', 'figma-sources.json');
+		if (existsSync(sourcesFrom)) {
+			await mkdir(dirname(sourcesTo), { recursive: true });
+			await copyFile(sourcesFrom, sourcesTo);
+			logLines.push(`Updated ${sourcesTo.replace(ROOT + '/', '')}`);
+		} else {
+			await rm(sourcesTo, { force: true });
 		}
 
 		logLines.push('');
@@ -1199,10 +1251,12 @@ async function main() {
 		logLines.push('Updated variables.scss');
 		await appendSyncLog();
 
-		console.log('');
-		console.log(c.bold(c.green('  ✓ Figma sync complete')));
-		console.log(c.dim(`  Log: ${LOG_FILE_PATH.replace(ROOT + '/', '')}`));
-		console.log(c.dim('  Run `npm run build` to rebuild with the updated tokens.'));
+		if (!AS_STEP) {
+			console.log('');
+			console.log(c.bold(c.green('  ✓ Figma Sync complete')));
+			console.log(c.dim(`  Log: ${LOG_FILE_PATH.replace(ROOT + '/', '')}`));
+			console.log(c.dim('  Run `npm run build` to rebuild with the updated tokens.'));
+		}
 
 		if (missingFonts.length > 0) {
 			console.log('');
